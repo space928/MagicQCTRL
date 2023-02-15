@@ -2,10 +2,11 @@
 #include <Adafruit_NeoPixel.h>
 #include <RotaryEncoder.h>
 #include <Wire.h>
-#include "Config.h"
-#include "Globals.h"
-#include "Display.h"
-#include "EncoderKeysIO.h"
+#include "src/modules/Config.h"
+#include "src/modules/Globals.h"
+#include "src/modules/Display.h"
+#include "src/modules/HID.h"
+#include "src/modules/EncoderKeysIO.h"
 
 
 // ===================================
@@ -20,37 +21,40 @@ uint8_t j = 0;
 // ===================================
 // METHODS
 void setup() {
-  Serial.begin(115200);
-  //while (!Serial) { delay(10); }     // wait till serial port is opened
-  delay(100);  // RP2040 delay is not a bad idea
+	Serial.begin(115200);
+	//while (!Serial) { delay(10); }     // wait till serial port is opened
+	delay(100);  // RP2040 delay is not a bad idea
 
-  Serial.println("MagicQ CTRL Init");
+	Serial.println("MagicQ CTRL Init");
 
-  // start pixels!
-  pixels.begin();
-  pixels.setBrightness(DEFAULT_BRIGHTNESS);
-  pixels.show(); // Initialize all pixels to 'off'
+	// start pixels!
+	pixels.begin();
+	pixels.setBrightness(DEFAULT_BRIGHTNESS);
+	pixels.show(); // Initialize all pixels to 'off'
 
-  // Setup everything required for the OLED
-  setupDisplay();
+	// Setup everything required for the OLED
+	setupDisplay();
 
-  // Setup everything required for the encoders and keys
-  setupIO();
+	// Setup everything required for the encoders and keys
+	setupIO();
+
+	// Setup the hid device
+	initHID();
 }
 
 void loop() {
-  for (int i = 0; i < pixels.numPixels(); i++) {
-    pixels.setPixelColor(i, 0x4A3520);
-  }
-  
-  // Read the state of all the keys and encoders
-  tickIO();
+	for (int i = 0; i < pixels.numPixels(); i++) {
+		pixels.setPixelColor(i, 0x4A3520);
+	}
+	
+	// Read the state of all the keys and encoders
+	tickIO();
 
-  // show neopixels, increment swirl
-  pixels.show();
+	// show neopixels, increment swirl
+	pixels.show();
 
-  // Update the display
-  updateDisplay();
-  
-  j++;
+	// Update the display
+	updateDisplay();
+	
+	j++;
 }

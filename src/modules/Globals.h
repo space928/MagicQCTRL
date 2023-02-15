@@ -2,8 +2,8 @@
  * Project wide globals
  */
 
-#ifndef GLOBALS_INCLUDED
-#define GLOBALS_INCLUDED
+#ifndef GLOBALS_H
+#define GLOBALS_H
 
 #include <RotaryEncoder.h>
 #include <Adafruit_SH110X.h>
@@ -25,4 +25,4 @@ extern int display_page;
 
 extern Adafruit_NeoPixel pixels;
 
-#endif //GLOBALS_INCLUDED
+#endif //GLOBALS_H

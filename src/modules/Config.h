@@ -2,8 +2,8 @@
  * Configuration file storing compile time defaults and config variables
  */
 
-#ifndef CONFIG_INCLUDED
-#define CONFIG_INCLUDED
+#ifndef CONFIG_H
+#define CONFIG_H
 
 
 // ===================================
@@ -13,4 +13,4 @@
 #define ENABLE_DEBUG_PAGE 1 // Set to 1 to enable; 0 to disable
 #define DEFAULT_BRIGHTNESS 40 // Default neopixel brightness
 
-#endif //CONFIG_INCLUDED
+#endif //CONFIG_H

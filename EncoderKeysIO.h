@@ -1,3 +1,0 @@
-void setupIO();
-
-void tickIO();

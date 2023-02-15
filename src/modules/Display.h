@@ -1,5 +1,5 @@
-#ifndef DISPLAY_INCLUDED
-#define DISPLAY_INCLUDED
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
 void setupDisplay();
 
@@ -11,4 +11,4 @@ void setPage(int page);
 
 void changePage(int dir);
 
-#endif // DISPLAY_INCLUDED
+#endif // DISPLAY_H
