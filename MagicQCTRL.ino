@@ -1,3 +1,5 @@
+#include <Arduino.h>
+//#include <pins_arduino.h>
 #include <Adafruit_SH110X.h>
 #include <Adafruit_NeoPixel.h>
 #include <RotaryEncoder.h>

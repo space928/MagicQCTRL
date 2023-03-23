@@ -2,5 +2,6 @@
     "configuration": "flash=8388608_0,freq=133,opt=Small,rtti=Disabled,stackprotect=Disabled,exceptions=Disabled,dbgport=Disabled,dbglvl=None,usbstack=tinyusb,ipstack=ipv4only",
     "board": "rp2040:rp2040:adafruit_macropad2040",
     "sketch": "MagicQCTRL.ino",
-    "output": "./build/"
+    "output": "./build/",
+    "port": "COM4"
 }

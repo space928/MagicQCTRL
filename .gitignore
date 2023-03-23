@@ -1,2 +1,6 @@
 .vscode/c_cpp_properties.json
 build/
+/.pio/libdeps
+/cmake-build-debug
+/CMakeListsPrivate.txt
+/CMakeLists.txt
