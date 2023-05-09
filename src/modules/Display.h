@@ -7,8 +7,8 @@ void updateDisplay();
 
 void wakeDisplay();
 
-void setPage(int page);
+void setPage(int8_t page);
 
-void changePage(int dir);
+void changePage(int8_t dir);
 
 #endif // DISPLAY_H

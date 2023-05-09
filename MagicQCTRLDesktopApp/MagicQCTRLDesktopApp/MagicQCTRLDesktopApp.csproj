@@ -3,15 +3,47 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
+    <Nullable>disable</Nullable>
+    <UseWPF>True</UseWPF>
+    <ApplicationIcon>Resources\IconFull.ico</ApplicationIcon>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
+    <Title>MagicQCTRL Desktop Application</Title>
+    <PackageIcon>IconMid.png</PackageIcon>
+    <Authors>Thomas Mathieson</Authors>
+    <Company>Thomas Mathieson</Company>
+    <Product>MagicQCTRL Desktop Application</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <None Remove="Resources\IconFull.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\IconFull.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="HidSharpCore" Version="1.2.1.1" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
+    <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\IconFull.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Resources\IconMid.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

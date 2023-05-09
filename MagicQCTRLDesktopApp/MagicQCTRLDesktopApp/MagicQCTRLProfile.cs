@@ -12,6 +12,11 @@ namespace MagicQCTRLDesktopApp
     public struct MagicQCTRLProfile
     {
         public MagicQCTRLPage[] pages;
+
+        public MagicQCTRLProfile()
+        {
+            pages = new MagicQCTRLPage[3];
+        }
     }
 
     [Serializable]

@@ -2,6 +2,7 @@
 #include <RotaryEncoder.h>
 #include <Wire.h>
 #include "Config.h"
+#include "debug.h"
 #include "Display.h"
 #include "Globals.h"
 #include "HID.h"
@@ -72,7 +73,7 @@ void tickIO() {
     // Check encoder press
     if (!digitalRead(PIN_SWITCH)) {
         wakeDisplay();
-        Serial.println("Encoder button");
+        dbg_log("Encoder button");
     }
     
     // Read keyswitches

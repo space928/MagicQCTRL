@@ -24,5 +24,10 @@ namespace MagicQCTRLDesktopApp
         {
             InitializeComponent();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ((ViewModel)DataContext).CloseLogExecute();
+        }
     }
 }

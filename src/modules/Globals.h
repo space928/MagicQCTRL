@@ -21,7 +21,7 @@ extern int encoder_pos;
 extern bool switch_states[12];
 
 extern Adafruit_SH1106G display;
-extern int display_page;
+extern int8_t display_page;
 
 extern Adafruit_NeoPixel pixels;
 

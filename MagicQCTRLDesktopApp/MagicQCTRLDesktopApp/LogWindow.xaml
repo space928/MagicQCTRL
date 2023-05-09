@@ -10,6 +10,6 @@
         <local:ViewModel></local:ViewModel>
     </Window.DataContext>
     <Grid>
-        <ListBox ItemsSource="{Binding LogList}" FontSize="11" FontFamily="Cascadia Mono"/>
+        <ListBox ItemsSource="{Binding LogList}" FontSize="11" FontFamily="Cascadia Mono" x:Name="LogListBox" ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"/>
     </Grid>
 </Window>

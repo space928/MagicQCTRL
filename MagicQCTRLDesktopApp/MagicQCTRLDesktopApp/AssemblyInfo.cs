@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Windows;
 
 [assembly: ThemeInfo(
@@ -8,3 +9,5 @@ using System.Windows;
                                               //(used if a resource is not found in the page,
                                               // app, or any theme specific resource dictionaries)
 )]
+[assembly: AssemblyCopyright("Copyright © Thomas Mathieson 2023")]
+[assembly: AssemblyDescription("The MagicQCTRL Desktop Application")]

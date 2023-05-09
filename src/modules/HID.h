@@ -3,10 +3,10 @@
 
 void initHID();
 
-void sendKey(int page, int keyCode, bool value);
+void sendKey(uint8_t page, uint8_t keyCode, bool value);
 
-void sendButton(int page, int buttonCode, bool value);
+void sendButton(uint8_t page, uint8_t buttonCode, bool value);
 
-void sendEncoder(int page, int encoderId, int8_t delta);
+void sendEncoder(uint8_t page, uint8_t encoderId, int8_t delta);
 
 #endif //HID_H

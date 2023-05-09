@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="ThemesV2/Controls.xaml"/>
                 <ResourceDictionary Source="ThemesV2/CustomControls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <ImageSource x:Key="IconImage">/Resources/IconFull.ico</ImageSource>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

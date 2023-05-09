@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +25,16 @@ namespace MagicQCTRLDesktopApp
         public LogWindow()
         {
             InitializeComponent();
+        }
+
+        //https://stackoverflow.com/a/46548292
+        private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.OriginalSource is ScrollViewer scrollViewer &&
+                Math.Abs(e.ExtentHeightChange) > 0.0)
+            {
+                scrollViewer.ScrollToBottom();
+            }
         }
     }
 }
