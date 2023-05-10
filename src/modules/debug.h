@@ -8,6 +8,7 @@
 */
 
 #include <Arduino.h>
+#include <string>
 
 /**
  * Setup method called by the main task to initialise any resources needed by
@@ -65,6 +66,11 @@ void dbg_send_buffer(const float* buffer, size_t length);
  * @param freq the frequency in Hz to produce
 */
 void dbg_fill_sine_wave(uint16_t* buff, int window_index, float freq);
+
+/**
+ * Converts a byte array to a hex string, useful for debugging.
+*/
+std::string hexStr2(const uint8_t *data, int len);
 
 ///////////////////////////////////////
 //// SERIAL LOGGING

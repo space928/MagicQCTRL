@@ -3,6 +3,8 @@
 
 void setupDisplay();
 
+void setKeyName(uint8_t page, uint8_t keyId, uint8_t isEncoder, char const (&name)[KEY_NAME_LENGTH]);
+
 void updateDisplay();
 
 void wakeDisplay();

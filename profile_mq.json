@@ -1,0 +1,978 @@
+{
+  "pages": [
+    {
+      "keys": [
+        {
+          "name": "Include",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 198,
+            "g": 0,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 198,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "name": "Update",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 198,
+            "g": 0,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 198,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "name": "Record",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 198,
+            "g": 0,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 198,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "name": "Highlight",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 93,
+            "b": 255
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 93,
+            "b": 255
+          }
+        },
+        {
+          "name": "Single",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 147,
+            "g": 195,
+            "b": 221
+          },
+          "keyColourOff": {
+            "r": 147,
+            "g": 195,
+            "b": 221
+          }
+        },
+        {
+          "name": "All",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 147,
+            "g": 196,
+            "b": 221
+          },
+          "keyColourOff": {
+            "r": 147,
+            "g": 196,
+            "b": 221
+          }
+        },
+        {
+          "name": "",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "name": "Fan",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 147,
+            "g": 196,
+            "b": 221
+          },
+          "keyColourOff": {
+            "r": 147,
+            "g": 196,
+            "b": 221
+          }
+        },
+        {
+          "name": "Odd/Even",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 147,
+            "g": 196,
+            "b": 221
+          },
+          "keyColourOff": {
+            "r": 147,
+            "g": 196,
+            "b": 221
+          }
+        },
+        {
+          "name": "Clear",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 206,
+            "g": 206,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 206,
+            "g": 206,
+            "b": 0
+          }
+        },
+        {
+          "name": "\u003C",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          }
+        },
+        {
+          "name": "\u003E",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          }
+        },
+        {
+          "name": "A/Lay1/Pos/Col/Beam",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "B/Lay2",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "C/Lay3",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "D",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "E",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "F",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "X",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Y",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        }
+      ]
+    },
+    {
+      "keys": [
+        {
+          "name": "Rem",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 199,
+            "g": 0,
+            "b": 92
+          },
+          "keyColourOff": {
+            "r": 199,
+            "g": 0,
+            "b": 92
+          }
+        },
+        {
+          "name": "Move",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 199,
+            "g": 0,
+            "b": 93
+          },
+          "keyColourOff": {
+            "r": 199,
+            "g": 0,
+            "b": 93
+          }
+        },
+        {
+          "name": "Copy",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 199,
+            "g": 0,
+            "b": 93
+          },
+          "keyColourOff": {
+            "r": 199,
+            "g": 0,
+            "b": 93
+          }
+        },
+        {
+          "name": "Set",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 84,
+            "g": 79,
+            "b": 181
+          },
+          "keyColourOff": {
+            "r": 84,
+            "g": 79,
+            "b": 181
+          }
+        },
+        {
+          "name": "Blind",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 33,
+            "g": 32,
+            "b": 83
+          },
+          "keyColourOff": {
+            "r": 33,
+            "g": 32,
+            "b": 83
+          }
+        },
+        {
+          "name": "",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "name": "Prog",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 161,
+            "g": 97,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 161,
+            "g": 97,
+            "b": 0
+          }
+        },
+        {
+          "name": "Out",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 161,
+            "g": 98,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 161,
+            "g": 98,
+            "b": 0
+          }
+        },
+        {
+          "name": "Setup",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 161,
+            "g": 98,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 161,
+            "g": 98,
+            "b": 0
+          }
+        },
+        {
+          "name": "Clear",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 206,
+            "g": 207,
+            "b": 0
+          },
+          "keyColourOff": {
+            "r": 206,
+            "g": 207,
+            "b": 0
+          }
+        },
+        {
+          "name": "\u003C",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          }
+        },
+        {
+          "name": "\u003E",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          },
+          "keyColourOff": {
+            "r": 0,
+            "g": 229,
+            "b": 50
+          }
+        },
+        {
+          "name": "A/Lay1/Pos/Col/Beam",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "B/Lay2",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "C/Lay3",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "D",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "E",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "F",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "X",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Y",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        }
+      ]
+    },
+    {
+      "keys": [
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        }
+      ]
+    }
+  ],
+  "baseBrightness": 0.6238556,
+  "pressedBrightness": 1.6159943
+}

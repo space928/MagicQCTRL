@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rug.Osc;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,12 @@ using static MagicQCTRLDesktopApp.ViewModel;
 
 namespace MagicQCTRLDesktopApp
 {
-    internal class OSCDriver
+    internal class OSCDriver : IDisposable
     {
-        public ConcurrentQueue<string> RXMessages { get; private set; }
+        public ConcurrentQueue<OscPacket> RXMessages { get; private set; }
 
-        private UdpClient rxUdpClient;
-        private UdpClient txUdpClient;
-
-        private Task rxThread;
-        private Task txThread;
+        private OscReceiver oscReceiver;
+        private OscSender oscSender;
 
         private IPEndPoint rxIP;
         private IPEndPoint txIP;
@@ -26,20 +24,20 @@ namespace MagicQCTRLDesktopApp
         public bool OSCConnect(int rxPort, int txPort)
         {
             RXMessages = new();
-            rxIP = new IPEndPoint(IPAddress.Broadcast, rxPort);
-            txIP = new IPEndPoint(IPAddress.Loopback, rxPort);
+            rxIP = new IPEndPoint(IPAddress.Any, rxPort);
+            txIP = new IPEndPoint(IPAddress.Broadcast, txPort);
 
             Log($"Connecting to OSC... rx={rxIP} tx={txIP}");
 
             try
             {
-                rxUdpClient = new();
-                txUdpClient = new();
+                oscReceiver = new(rxPort);
+                oscReceiver.Connect();
 
-                rxUdpClient.Connect(rxIP);
-                txUdpClient.Connect(txIP);
+                oscSender = new(txIP.Address, 0, txIP.Port);
+                oscSender.Connect();
 
-                rxThread = new Task(OSCRXThread);
+                Task.Run(OSCRXThread);
             } catch (Exception e)
             {
                 Log($"Failed to connect to OSC port: {e}", LogLevel.Error);
@@ -51,21 +49,31 @@ namespace MagicQCTRLDesktopApp
             return true;
         }
 
+        public void SendMessage(OscPacket packet)
+        {
+            oscSender.Send(packet);
+        }
+
         private void OSCRXThread()
         {
-            rxUdpClient.Client.ReceiveTimeout = -1;
-            while(rxUdpClient.Client.Connected)
+            while(oscReceiver.State == OscSocketState.Connected)
             {
                 try
                 {
-                    string msg = Encoding.UTF8.GetString(rxUdpClient.Receive(ref rxIP));
-                    RXMessages.Enqueue(msg);
-                    Log($"Recv osc msg: {msg}", LogLevel.Debug);
+                    var pkt = oscReceiver.Receive();
+                    RXMessages.Enqueue(pkt);
+                    // Log($"Recv osc msg: {pkt}", LogLevel.Debug);
                 } catch (Exception e)
                 {
                     Log($"OSC Network connection lost: {e}", LogLevel.Warning);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            oscReceiver.Dispose();
+            oscSender.Dispose();
         }
     }
 }

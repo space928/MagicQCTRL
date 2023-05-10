@@ -44,14 +44,14 @@ void setup() {
     // Setup the hid device
     initHID();
 
+    for (int i = 0; i < pixels.numPixels(); i++) {
+        pixels.setPixelColor(i, 0x4A3520);
+    }
+
     dbg_log_info("Initialisation completed!");
 }
 
 void loop() {
-    for (int i = 0; i < pixels.numPixels(); i++) {
-        pixels.setPixelColor(i, 0x4A3520);
-    }
-    
     // Read the state of all the keys and encoders
     tickIO();
 

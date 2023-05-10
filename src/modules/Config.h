@@ -10,8 +10,13 @@
 // CONSTS
 #define DISPLAY_TIMEOUT 1000 // Display timeout in ms
 #define N_PAGES 3 // How many pages of keys are allowed
-#define ENABLE_DEBUG_PAGE 1 // Set to 1 to enable; 0 to disable
-#define DEFAULT_BRIGHTNESS 40 // Default neopixel brightness
+#define N_KEYS 12
+#define N_ENCODERS 8
+#define ENABLE_DEBUG_PAGE 0 // Set to 1 to enable; 0 to disable
+#define DEFAULT_BRIGHTNESS 128 // Default neopixel brightness 0-255
+#define KEY_NAME_LENGTH 6
+#define DISPLAY_WIDTH 128
+#define VERSION_STRING "1.2"
 
 ///////////////////////////////////////
 //// DEBUGGING CONSTS

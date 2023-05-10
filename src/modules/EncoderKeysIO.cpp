@@ -14,7 +14,10 @@ RotaryEncoder encoder(PIN_ROTB, PIN_ROTA, RotaryEncoder::LatchMode::FOUR3);
 
 // our encoder position state
 int encoder_pos = 0;
-bool switch_states[12] = {false};
+bool encoder_pressed = false;
+bool switch_states[N_KEYS] = {false};
+uint32_t key_colours_low[N_KEYS * N_PAGES] = {0x4A3520};
+uint32_t key_colours_high[N_KEYS * N_PAGES] = {0xAAAAAA};
 
 // ===================================
 // METHODS
@@ -60,6 +63,11 @@ void setupIO() {
     pinMode(PIN_SPEAKER, INPUT);
 }
 
+void setKeyCol(uint8_t keyId, uint32_t colLow, uint32_t colHigh) {
+    key_colours_low[keyId] = colLow;
+    key_colours_high[keyId] = colHigh;
+}
+
 void tickIO() {
     // Read the encoder
     encoder.tick();          
@@ -71,15 +79,20 @@ void tickIO() {
     }
 
     // Check encoder press
+    encoder_pressed = false;
     if (!digitalRead(PIN_SWITCH)) {
+        encoder_pressed = true;
         wakeDisplay();
-        dbg_log("Encoder button");
     }
     
     // Read keyswitches
     for (int i = 1; i <= 12; i++) {
         if (!digitalRead(i)) { // switch pressed!
-            pixels.setPixelColor(i - 1, hue2RGB(((i * 256 / pixels.numPixels()) + millis()/8) & 255)); // make colourful
+            if (display_page == -1 || display_page == N_PAGES)
+                pixels.setPixelColor(i - 1, hue2RGB(((i * 256 / pixels.numPixels()) + millis()/8) & 255)); // make colourful
+            else
+                pixels.setPixelColor(i - 1, key_colours_high[i-1 + display_page * N_KEYS]);
+
             wakeDisplay();
 
             if(!switch_states[i-1])
@@ -90,6 +103,11 @@ void tickIO() {
             if(switch_states[i-1])
                 sendKey(display_page, i-1, false);
             
+            if (display_page == -1 || display_page == N_PAGES)
+                pixels.setPixelColor(i - 1, 0x110f0a);
+            else
+                pixels.setPixelColor(i - 1, key_colours_low[i-1 + display_page * N_KEYS]);
+
             switch_states[i-1] = false;
         }
     }

@@ -18,6 +18,7 @@ extern RotaryEncoder encoder;
 
 // our encoder position state
 extern int encoder_pos;
+extern bool encoder_pressed;
 extern bool switch_states[12];
 
 extern Adafruit_SH1106G display;
