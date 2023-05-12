@@ -64,6 +64,7 @@ namespace MagicQCTRLDesktopApp
         private static bool started = false;
         private static USBDriver usbDriver = null;
         private static OSCDriver oscDriver = null;
+        private static MagicQDriver magicQDriver = null;
         private static ObservableCollection<string> logList;
         private static object logListLock = new();
         private JsonSerializerOptions jsonSerializerOptions = new()
@@ -89,6 +90,7 @@ namespace MagicQCTRLDesktopApp
 
             usbDriver = new();
             oscDriver = new();
+            magicQDriver = new();
 
             // Bind commands
             ConnectCommand = new(ConnectExecute, CanConnect);
@@ -129,6 +131,8 @@ namespace MagicQCTRLDesktopApp
                             magicQCTRLProfile.pages[page].keys[id].oscMessagePress = ed.OnPressOSC; break;
                         case nameof(ButtonEditorViewModel.OnRotateOSC):
                             magicQCTRLProfile.pages[page].keys[id].oscMessageRotate = ed.OnRotateOSC; break;
+                        case nameof(ButtonEditorViewModel.SpecialFunction):
+                            magicQCTRLProfile.pages[page].keys[id].specialFunction = ed.SpecialFunction; break;
                     }
                 };
             }
@@ -161,6 +165,8 @@ namespace MagicQCTRLDesktopApp
 
             // Auto load last profile
             OpenProfile(LAST_PROFILE);
+
+            magicQDriver.Connect();
 
             usbDriver.OnMessageReceived += OnUSBMessageReceived;
         }
@@ -325,12 +331,14 @@ namespace MagicQCTRLDesktopApp
                 string oscMsg = null;
                 int oscParam = 0;
                 MagicQCTRLKey key;
+                MagicQCTRLSpecialFunction specialFunction = MagicQCTRLSpecialFunction.None;
                 switch (msg.msgType)
                 {
                     case MagicQCTRLMessageType.Key:
                         if (msg.value == 1)
                         {
                             key = magicQCTRLProfile.pages[msg.page].keys[msg.keyCode];
+                            specialFunction = key.specialFunction;
                             if (key.specialFunction == MagicQCTRLSpecialFunction.None)
                                 oscMsg = key.oscMessagePress;
                             //oscParam = msg.value;
@@ -340,6 +348,7 @@ namespace MagicQCTRLDesktopApp
                         if (msg.value == 1)
                         {
                             key = magicQCTRLProfile.pages[msg.page].keys[msg.keyCode + COLOUR_BUTTON_COUNT];
+                            specialFunction = key.specialFunction;
                             if (key.specialFunction == MagicQCTRLSpecialFunction.None)
                                 oscMsg = key.oscMessagePress;
                             //oscParam = msg.value;
@@ -357,19 +366,19 @@ namespace MagicQCTRLDesktopApp
 
                 if (!string.IsNullOrEmpty(oscMsg))
                 {
-                    /*OscMessage oscPacket;
-                    string[] splitMsg = oscMsg.Split(' ');
-                    if(oscParam != 0)
-                        oscPacket = new OscMessage(splitMsg[0], oscParam);
-                    else
-                        oscPacket = new OscMessage(splitMsg[0], (object[])splitMsg.Skip(1));*/
                     if (oscParam != 0)
                         oscMsg = $"{oscMsg} {oscParam}";
-                    if (OscMessage.TryParse(oscMsg, out OscMessage oscPacket))
+                    try
                     {
-                        oscDriver.SendMessage(oscPacket);
+                        (string address, var args) = OSCMessageParser.ParseOSCMessage(oscMsg);
+                        oscDriver.SendMessage(new OscMessage(address, args));
+                    } catch(Exception e) 
+                    {
+                        Log($"Failed to parse OSC message: {oscMsg}\nError: {e.Message}", LogLevel.Warning);
                     }
                 }
+
+                magicQDriver.ExecuteCommand(specialFunction);
             }
         }
 

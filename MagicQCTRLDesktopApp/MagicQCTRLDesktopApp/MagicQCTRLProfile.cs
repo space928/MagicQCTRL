@@ -64,6 +64,15 @@ namespace MagicQCTRLDesktopApp
     public enum MagicQCTRLSpecialFunction
     {
         None,
+        Layout1,
+        Layout2,
+        Layout3,
+
+        Include,
+        Update,
+        Record,
+
+        Highlight
     }
 
     [Serializable]

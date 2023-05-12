@@ -37,15 +37,35 @@
             <StackPanel x:Name="ButtonKnobEditor" Grid.Row="1" Visibility="Visible" DataContext="{Binding ButtonEditor, Mode=OneWay}" Grid.RowSpan="2">
                 <DockPanel>
                     <Label Content="Name:" Margin="2"/>
-                    <TextBox Text="{Binding Name}" Padding="4" Margin="2"/>
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
                 </DockPanel>
                 <DockPanel ToolTip="OSC messages should be written in the form /foo/bar,&quot;stringArg&quot;,123">
                     <Label Content="OnPress OSC:" Margin="2"/>
-                    <TextBox Text="{Binding OnPressOSC}" Padding="4" Margin="2"/>
+                    <TextBox Padding="4" Margin="2">
+                        <TextBox.Text>
+                            <Binding Path="OnPressOSC" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:ValidOSCRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </DockPanel>
                 <DockPanel ToolTip="OSC messages should be written in the form /foo/bar,&quot;stringArg&quot;,123">
                     <Label Content="OnRotate OSC:" Margin="2"/>
-                    <TextBox Text="{Binding OnRotateOSC}" Padding="4" Margin="2"/>
+                    <TextBox Padding="4" Margin="2">
+                        <TextBox.Text>
+                            <Binding Path="OnRotateOSC" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:ValidOSCRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Special Function:" Margin="2"/>
+                    <ComboBox ItemsSource="{Binding SpecialFunctions}" SelectedItem="{Binding SpecialFunction}"/>
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Colour:" Margin="2"/>

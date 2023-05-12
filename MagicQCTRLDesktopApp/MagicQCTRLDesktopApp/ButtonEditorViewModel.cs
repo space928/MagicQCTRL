@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
@@ -18,6 +19,7 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public string Name { get; set; } = "Button";
         [Reactive] public string OnPressOSC { get; set; } = "/";
         [Reactive] public string OnRotateOSC { get; set; } = "/";
+        [Reactive] public ObservableCollection<MagicQCTRLSpecialFunction> SpecialFunctions { get; private set; }
         [Reactive] public MagicQCTRLSpecialFunction SpecialFunction { get; set; } = MagicQCTRLSpecialFunction.None;
         [Reactive] public ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
         [Reactive] public ColorState ActiveColour { get; set; }
@@ -26,6 +28,7 @@ namespace MagicQCTRLDesktopApp
         public ButtonEditorViewModel(int id)
         {
             this.Id = id;
+            SpecialFunctions = new ObservableCollection<MagicQCTRLSpecialFunction>(Enum.GetValues<MagicQCTRLSpecialFunction>());
         }
 
         /// <summary>
