@@ -1,5 +1,6 @@
 # MagicQCTRL
 A custom controller for the MagicQ lighting software built around the Adafruit MacroPad RP2040.
+![image](https://github.com/space928/MagicQCTRL/assets/15130114/3cb6eed8-b5b3-486b-bec7-f252c55654e3)
 
 ## Building
 The project is split into two parts, the software which runs on the macropad and the client application.
