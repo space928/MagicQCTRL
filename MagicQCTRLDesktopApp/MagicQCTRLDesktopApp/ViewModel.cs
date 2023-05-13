@@ -132,7 +132,9 @@ namespace MagicQCTRLDesktopApp
                         case nameof(ButtonEditorViewModel.OnRotateOSC):
                             magicQCTRLProfile.pages[page].keys[id].oscMessageRotate = ed.OnRotateOSC; break;
                         case nameof(ButtonEditorViewModel.SpecialFunction):
-                            magicQCTRLProfile.pages[page].keys[id].specialFunction = ed.SpecialFunction; break;
+                            magicQCTRLProfile.pages[page].keys[id].specialFunction = ed.SpecialFunction.SpecialFunction; break;
+                        case nameof(ButtonEditorViewModel.CustomKeyCode):
+                            magicQCTRLProfile.pages[page].keys[id].customKeyCode = ed.CustomKeyCode; break;
                     }
                 };
             }
@@ -328,10 +330,15 @@ namespace MagicQCTRLDesktopApp
         {
             if (usbDriver.RXMessages.TryDequeue(out var msg))
             {
+                // Currently the setup page counts as page 4, so skip it for now
+                if (msg.page > MAX_PAGES)
+                    return;
+
                 string oscMsg = null;
                 int oscParam = 0;
                 MagicQCTRLKey key;
                 MagicQCTRLSpecialFunction specialFunction = MagicQCTRLSpecialFunction.None;
+                int customKeyCode = -1;
                 switch (msg.msgType)
                 {
                     case MagicQCTRLMessageType.Key:
@@ -342,6 +349,7 @@ namespace MagicQCTRLDesktopApp
                             if (key.specialFunction == MagicQCTRLSpecialFunction.None)
                                 oscMsg = key.oscMessagePress;
                             //oscParam = msg.value;
+                            customKeyCode = key.customKeyCode;
                         }
                         break;
                     case MagicQCTRLMessageType.Button:
@@ -352,6 +360,7 @@ namespace MagicQCTRLDesktopApp
                             if (key.specialFunction == MagicQCTRLSpecialFunction.None)
                                 oscMsg = key.oscMessagePress;
                             //oscParam = msg.value;
+                            customKeyCode = key.customKeyCode;
                         }
                         break;
                     case MagicQCTRLMessageType.Encoder:
@@ -364,7 +373,7 @@ namespace MagicQCTRLDesktopApp
                         break;
                 }
 
-                if (!string.IsNullOrEmpty(oscMsg))
+                if (!string.IsNullOrEmpty(oscMsg) && oscMsg != "/")
                 {
                     if (oscParam != 0)
                         oscMsg = $"{oscMsg} {oscParam}";
@@ -379,6 +388,8 @@ namespace MagicQCTRLDesktopApp
                 }
 
                 magicQDriver.ExecuteCommand(specialFunction);
+                if(customKeyCode != -1)
+                    magicQDriver.PressMQKey(customKeyCode);
             }
         }
 

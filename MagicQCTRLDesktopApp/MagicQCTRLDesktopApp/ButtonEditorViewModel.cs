@@ -3,10 +3,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Sources;
+using System.Windows.Data;
 using System.Windows.Media;
 using static MagicQCTRLDesktopApp.ViewModel;
 
@@ -19,8 +23,10 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public string Name { get; set; } = "Button";
         [Reactive] public string OnPressOSC { get; set; } = "/";
         [Reactive] public string OnRotateOSC { get; set; } = "/";
-        [Reactive] public ObservableCollection<MagicQCTRLSpecialFunction> SpecialFunctions { get; private set; }
-        [Reactive] public MagicQCTRLSpecialFunction SpecialFunction { get; set; } = MagicQCTRLSpecialFunction.None;
+        [Reactive] public ObservableCollection<SpecialFunctionItem> SpecialFunctions { get; private set; }
+        [Reactive] public ListCollectionView SpecialFunctionsView { get; private set; }
+        [Reactive] public SpecialFunctionItem SpecialFunction { get; set; } = new() { SpecialFunction=MagicQCTRLSpecialFunction.None, Category="" };
+        [Reactive] public int CustomKeyCode { get; set; } = -1;
         [Reactive] public ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
         [Reactive] public ColorState ActiveColour { get; set; }
         #endregion
@@ -28,7 +34,21 @@ namespace MagicQCTRLDesktopApp
         public ButtonEditorViewModel(int id)
         {
             this.Id = id;
-            SpecialFunctions = new ObservableCollection<MagicQCTRLSpecialFunction>(Enum.GetValues<MagicQCTRLSpecialFunction>());
+            var specialFunctionItemsCategories = typeof(MagicQCTRLSpecialFunction)
+                .GetMembers(BindingFlags.Public | BindingFlags.Static)
+                .Select(x => (x.Name, x.GetCustomAttribute<ItemCategoryAttribute>()?.Category))
+                .ToDictionary(x => x.Name, y => y.Category);
+
+            SpecialFunctions = new ObservableCollection<SpecialFunctionItem>(
+                Enum.GetValues<MagicQCTRLSpecialFunction>()
+                .Select(x => new SpecialFunctionItem() 
+                { 
+                    SpecialFunction = x, 
+                    Category = specialFunctionItemsCategories[x.ToString()]
+                }));
+
+            SpecialFunctionsView = new(SpecialFunctions);
+            SpecialFunctionsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SpecialFunctionItem.Category)));
         }
 
         /// <summary>
@@ -39,6 +59,12 @@ namespace MagicQCTRLDesktopApp
             OnPropertyChanged(nameof(Colour));
             OnPropertyChanged(nameof(ActiveColour));
         }
+    }
+
+    public record SpecialFunctionItem
+    {
+        public MagicQCTRLSpecialFunction SpecialFunction { get; set; } = MagicQCTRLSpecialFunction.None;
+        public string Category { get; set; } = "";
     }
 
     public static partial class ExtensionMethods
@@ -68,7 +94,8 @@ namespace MagicQCTRLDesktopApp
                 //ed.Colour.SetColor(profile.pages[page].keys[id].keyColourOff);
                 ed.ActiveColour = profile.pages[page].keys[id].keyColourOn.ToColorState();
                 //ed.ActiveColour.SetColor(profile.pages[page].keys[id].keyColourOn);
-                ed.SpecialFunction = profile.pages[page].keys[id].specialFunction;
+                var specialFunction = profile.pages[page].keys[id].specialFunction;
+                ed.SpecialFunction = new() { SpecialFunction=specialFunction, Category=specialFunction.GetAttributeOfType<ItemCategoryAttribute>().Category };
 
                 id++;
                 if(id >= BUTTON_COUNT)
@@ -99,7 +126,7 @@ namespace MagicQCTRLDesktopApp
                 profile.pages[page].keys[id].oscMessageRotate = ed.OnRotateOSC;
                 profile.pages[page].keys[id].keyColourOff = ed.Colour.ToColor();
                 profile.pages[page].keys[id].keyColourOn = ed.ActiveColour.ToColor();
-                profile.pages[page].keys[id].specialFunction = ed.SpecialFunction;
+                profile.pages[page].keys[id].specialFunction = ed.SpecialFunction.SpecialFunction;
 
                 id++;
                 if (id >= BUTTON_COUNT)
@@ -127,6 +154,20 @@ namespace MagicQCTRLDesktopApp
             c.SetARGB(1, x.r / 255d, x.g / 255d, x.b / 255d);
 
             return c;
+        }
+
+        /// <summary>
+        /// Gets an attribute on an enum field value
+        /// </summary>
+        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
+        /// <param name="enumVal">The enum value</param>
+        /// <returns>The attribute of type T that exists on the enum value</returns>
+        public static T GetAttributeOfType<T>(this Enum enumVal) where T : System.Attribute
+        {
+            var type = enumVal.GetType();
+            var memInfo = type.GetMember(enumVal.ToString());
+            var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
+            return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
     }
 }

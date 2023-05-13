@@ -65,7 +65,15 @@
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Special Function:" Margin="2"/>
-                    <ComboBox ItemsSource="{Binding SpecialFunctions}" SelectedItem="{Binding SpecialFunction}"/>
+                    <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}">
+                        <ComboBox.GroupStyle>
+                            <GroupStyle/>
+                        </ComboBox.GroupStyle>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Custom Key Code:" Margin="2"/>
+                    <TextBox Text="{Binding CustomKeyCode, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Colour:" Margin="2"/>

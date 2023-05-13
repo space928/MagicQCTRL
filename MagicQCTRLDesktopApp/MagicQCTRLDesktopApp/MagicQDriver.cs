@@ -56,17 +56,13 @@ namespace MagicQCTRLDesktopApp
 
         public void ExecuteCommand(MagicQCTRLSpecialFunction function)
         {
-            switch(function)
-            {
-                case MagicQCTRLSpecialFunction.None:
-                    break;
-                case MagicQCTRLSpecialFunction.Layout1:
-                    break;
-                case MagicQCTRLSpecialFunction.Highlight:
-                    //mqKeyFunction?.Invoke(0xd7);
-                    asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, 0xd7);
-                    break;
-            }
+            if(function != MagicQCTRLSpecialFunction.None)
+                asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, (int)function);
+        }
+
+        public void PressMQKey(int keyId)
+        {
+            asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, keyId);
         }
     }
 
