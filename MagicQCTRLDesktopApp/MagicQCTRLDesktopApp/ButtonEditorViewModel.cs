@@ -95,6 +95,13 @@ namespace MagicQCTRLDesktopApp
                 ed.ActiveColour = profile.pages[page].keys[id].keyColourOn.ToColorState();
                 //ed.ActiveColour.SetColor(profile.pages[page].keys[id].keyColourOn);
                 var specialFunction = profile.pages[page].keys[id].specialFunction;
+                if(!Enum.IsDefined(specialFunction))
+                {
+                    // Quick fix in case an invalid SpecialFunction is loaded.
+                    specialFunction = MagicQCTRLSpecialFunction.None;
+                    profile.pages[page].keys[id].specialFunction = specialFunction;
+                }
+
                 ed.SpecialFunction = new() { SpecialFunction=specialFunction, Category=specialFunction.GetAttributeOfType<ItemCategoryAttribute>().Category };
 
                 id++;

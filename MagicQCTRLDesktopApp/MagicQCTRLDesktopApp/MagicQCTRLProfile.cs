@@ -76,9 +76,9 @@ namespace MagicQCTRLDesktopApp
     {
         [ItemCategory("")] None = 0,
 
-        [ItemCategory("Window Management")] Layout1 = 224,
-        [ItemCategory("Window Management")] Layout2 = 225,
-        [ItemCategory("Window Management")] Layout3 = 226,
+        [ItemCategory("Window Management")] Layout1 = 236,
+        [ItemCategory("Window Management")] Layout2 = 237,
+        [ItemCategory("Window Management")] Layout3 = 238,
 
         [ItemCategory("Window Management")] Prog = 208,
         [ItemCategory("Window Management")] Out = 209,
@@ -150,6 +150,24 @@ namespace MagicQCTRLDesktopApp
 
         [ItemCategory("Other")] LampOnAll = 235,
         [ItemCategory("Other")] QuickSave = 265,
+    }
+
+    [Serializable]
+    public enum MagicQCTRLEncoderType : ushort
+    {
+        X = 0,
+        Y = 1,
+        F = 2,
+        E = 3,
+        D = 4,
+        C = 5,
+        B = 6,
+        A = 7,
+        _1 = 8, 
+        _2 = 9,
+        _3 = 10,
+        _4 = 11,
+        I = 12,
     }
 
     [Serializable]

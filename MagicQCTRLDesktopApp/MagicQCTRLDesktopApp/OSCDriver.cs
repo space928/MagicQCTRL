@@ -31,6 +31,8 @@ namespace MagicQCTRLDesktopApp
 
             try
             {
+                Dispose();
+
                 oscReceiver = new(rxPort);
                 oscReceiver.Connect();
 
@@ -72,8 +74,8 @@ namespace MagicQCTRLDesktopApp
 
         public void Dispose()
         {
-            oscReceiver.Dispose();
-            oscSender.Dispose();
+            oscReceiver?.Dispose();
+            oscSender?.Dispose();
         }
     }
 

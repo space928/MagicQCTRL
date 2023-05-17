@@ -22,7 +22,8 @@ namespace MagicQCTRLDesktopApp
         #region Bindable propeties
         [Reactive] public string USBConnectionStatus => isUSBConnected ? "Connected" : "Disconnected";
         [Reactive] public string OSCConnectionStatus => isOSCConnected ? "Connected" : "Disconnected";
-        [Reactive] public string ConnectButtonText => (isUSBConnected || isOSCConnected) ? "Reconnect" : "Connect";
+        [Reactive] public string MQConnectionStatus => isMQConnected ? "Connected" : "Disconnected";
+        [Reactive] public string ConnectButtonText => (isUSBConnected || isOSCConnected || isMQConnected) ? "Reconnect" : "MagicQConnect";
         [Reactive] public int OSCRXPort { get; set; } = 9000;
         [Reactive] public int OSCTXPort { get; set; } = 8000;
         [Reactive] public RelayCommand ConnectCommand { get; private set; }
@@ -49,6 +50,9 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public ButtonEditorViewModel ButtonEditor => ButtonEditors[SelectedButton];
         [Reactive] public float BaseBrightness { get; set; } = 0.5f;
         [Reactive] public float PressedBrightness { get; set; } = 2.5f;
+
+        [Reactive] public RelayCommand DebugPlusCommand { get; private set; }
+        [Reactive] public RelayCommand DebugMinusCommand { get; private set; }
         #endregion
 
         public const int MAX_PAGES = 3;
@@ -59,6 +63,7 @@ namespace MagicQCTRLDesktopApp
 
         private bool isUSBConnected = false;
         private bool isOSCConnected = false;
+        private bool isMQConnected = false;
         private MagicQCTRLProfile magicQCTRLProfile = new();
         private static LogWindow logWindow;
         private static bool started = false;
@@ -99,6 +104,8 @@ namespace MagicQCTRLDesktopApp
             SaveProfileCommand = new(SaveProfileExecute);
             EditControlCommand = new(EditControlCommandExecute);
             PageIncrementCommand = new(PageIncrementCommandExecute);
+            DebugPlusCommand = new(() => magicQDriver.TurnEncoder(MagicQCTRLEncoderType.X, 1));
+            DebugMinusCommand = new(() => magicQDriver.TurnEncoder(MagicQCTRLEncoderType.X, -1));
 
             // Bind button properties
             foreach(var editor in ButtonEditors)
@@ -168,8 +175,6 @@ namespace MagicQCTRLDesktopApp
             // Auto load last profile
             OpenProfile(LAST_PROFILE);
 
-            magicQDriver.Connect();
-
             usbDriver.OnMessageReceived += OnUSBMessageReceived;
         }
 
@@ -177,6 +182,7 @@ namespace MagicQCTRLDesktopApp
         {
             Log("Shutting down...");
             oscDriver.Dispose();
+            magicQDriver.Dispose();
             SaveProfile(LAST_PROFILE);
             Log("Goodbye!");
         }
@@ -191,13 +197,18 @@ namespace MagicQCTRLDesktopApp
             if(oscDriver.OSCConnect(OSCRXPort, OSCTXPort))
                 isOSCConnected = true;
 
+            if(magicQDriver.MagicQConnect())
+                isMQConnected = true;
+
             OnPropertyChanged(nameof(OSCConnectionStatus));
             OnPropertyChanged(nameof(USBConnectionStatus));
+            OnPropertyChanged(nameof(MQConnectionStatus));
 
             usbDriver.OnClose += () =>
             {
                 isUSBConnected = false;
                 OnPropertyChanged(nameof(USBConnectionStatus));
+                Log("USB device disconnected!", LogLevel.Warning);
             };
         }
 

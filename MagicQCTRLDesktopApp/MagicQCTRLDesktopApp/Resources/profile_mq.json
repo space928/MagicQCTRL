@@ -197,13 +197,13 @@
           "customKeyCode": 0,
           "keyColourOn": {
             "r": 0,
-            "g": 255,
-            "b": 47
+            "g": 229,
+            "b": 50
           },
           "keyColourOff": {
             "r": 0,
-            "g": 255,
-            "b": 47
+            "g": 229,
+            "b": 50
           }
         },
         {
@@ -435,7 +435,7 @@
           "name": "Lay 1",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 224,
+          "specialFunction": 236,
           "customKeyCode": 0,
           "keyColourOn": {
             "r": 161,
@@ -1033,6 +1033,6 @@
       ]
     }
   ],
-  "baseBrightness": 0.55885386,
-  "pressedBrightness": 1.5571299
+  "baseBrightness": 0.5985428,
+  "pressedBrightness": 1.5989138
 }

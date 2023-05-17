@@ -13,8 +13,8 @@ namespace MagicQCTRLDesktopApp
         private readonly string procName = "mqqt";
 
         private ProcessSharp mqProcess;
-        //private MagicQNativeMethods.PressMQKey mqKeyFunction;
         private nint mqKeyFunctionAddr;
+        private nint mqEncoderFunctionAddr;
         private AssemblyFactory asmFactory;
 
         public MagicQDriver() 
@@ -22,47 +22,84 @@ namespace MagicQCTRLDesktopApp
 
         }
 
-        public bool Connect()
+        public bool MagicQConnect()
         {
             try
             {
-                // TODO: Cleanup this mess...
-                if (System.Diagnostics.Process.GetProcessesByName(procName).Length > 0)
+                Log("Searching for MagicQ process...");
+                Dispose();
+                var procs = System.Diagnostics.Process.GetProcessesByName(procName);
+                if (procs.Length > 0)
                 {
-                    var proc = System.Diagnostics.Process.GetProcessesByName(procName)[0];
-                    mqProcess = new ProcessSharp(proc, Process.NET.Memory.MemoryType.Remote);
+                    mqProcess = new ProcessSharp(procs[0], Process.NET.Memory.MemoryType.Remote);
 
                     asmFactory = new AssemblyFactory(mqProcess, new ReloadedAssembler());
-                    var matcher = new Process.NET.Patterns.PatternScanner(mqProcess.ModuleFactory.MainModule);
-                    var match = matcher.Find(new DwordPattern(MagicQNativeMethods.PressMQKeySignature));
-                    mqKeyFunctionAddr = 0x0078e530;//match.BaseAddress;
-                    //new RemoteFunction(mqProcess, offset.ReadAddress, "MQKey").GetDelegate<MagicQNativeMethods.PressMQKey>();
-                } else
+                    FindHookAddresses();
+                }
+                else
                 {
                     throw new Exception("Couldn't find MagicQ process!");
                 }
             } catch (Exception e) 
             {
                 Log($"Error while attaching to MagicQ: {e}", LogLevel.Error);
+                return false;
             }
 
+            Log("Connected to MagicQ instance!");
             return true;
         }
 
         public void Dispose()
         {
-
+            mqProcess?.Dispose();
+            asmFactory?.Dispose();
         }
 
+        private void FindHookAddresses()
+        {
+            var matcher = new Process.NET.Patterns.PatternScanner(mqProcess.ModuleFactory.MainModule);
+
+            var match = matcher.Find(new DwordPattern(MagicQNativeMethods.PressMQKeySignature));
+            if(match.Found)
+                mqKeyFunctionAddr = match.BaseAddress;
+            else
+                mqKeyFunctionAddr = 0x0078e530; // Correct for 1.9.3.8
+
+            match = matcher.Find(new DwordPattern(MagicQNativeMethods.MQEncoderSignature));
+            if(match.Found)
+                mqEncoderFunctionAddr = match.BaseAddress;
+            else
+                mqEncoderFunctionAddr = 0x007f9b70; // Correct for 1.9.3.8
+        }
+
+        /// <summary>
+        /// Executes a MagicQ special function.
+        /// </summary>
+        /// <param name="function">the function to execute</param>
         public void ExecuteCommand(MagicQCTRLSpecialFunction function)
         {
             if(function != MagicQCTRLSpecialFunction.None)
                 asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, (int)function);
         }
 
+        /// <summary>
+        /// Presses the given MagicQ key.
+        /// </summary>
+        /// <param name="keyId">the MagicQ keyID to press</param>
         public void PressMQKey(int keyId)
         {
             asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, keyId);
+        }
+
+        /// <summary>
+        /// Sends an encoder change message for given MagicQ encoder.
+        /// </summary>
+        /// <param name="encoder">the encoder to turn</param>
+        /// <param name="delta">how much to rotate the encoder by</param>
+        public void TurnEncoder(MagicQCTRLEncoderType encoder, int delta)
+        {
+            asmFactory?.Execute(mqEncoderFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, (ushort)encoder, delta);
         }
     }
 
@@ -91,5 +128,13 @@ namespace MagicQCTRLDesktopApp
         /// <returns>always true</returns>
         public delegate bool PressMQKey(int keyID);
         public static readonly string PressMQKeySignature = "55 89 e5 53 83 ec 14 8b 5d 08 c7 44 24 04 00 00 00 00 89 d8 0d 00 00 80 00 89 04 24";
+
+        /// <summary>
+        /// Delegate for the remote method which handles encoder turns in MagicQ
+        /// </summary>
+        /// <param name="encoderID"></param>
+        /// <param name="delta"></param>
+        public delegate void HandleMQEncoder(ushort encoderID, int delta);
+        public static readonly string MQEncoderSignature = "55 89 e5 81 ec a8 00 00 00 8d 45 f8 8b 4d 08";
     }
 }

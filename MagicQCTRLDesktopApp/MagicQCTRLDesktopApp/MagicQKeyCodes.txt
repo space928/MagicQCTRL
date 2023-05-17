@@ -47,16 +47,17 @@
 160 = >
 161 = FULL
 162 = @
+163 = Blank Button
 164 = Sel
 165 = Undo
 167 = Clear
 169 = Copy
-170 = Update
+170 = Update #
 171 = Remove
 172 = Set
 173 = Move
-174 = Include
-175 = Record
+174 = Include #
+175 = Record #
 176 = Locate
 177 = Fan
 178 = Odd/Even
@@ -95,15 +96,18 @@
 211 = Patch
 212 = Playback Store
 213 = Cue Stack
+214 = Release
 215 = Highlight
 216 = Scroll Left
 217 = Scroll Right
 218 = Add/Swap
+219 = Jump Forward
+220 = Jump Backward
 221 = Vis
 222 = Plot
-224 = Layout 1
-225 = Layout 2
-226 = Layout 3
+224 = Layout 1 #
+225 = Layout 2 #
+226 = Layout 3 #
 227 = Timeline
 228 = Media
 229 = Execute
@@ -115,6 +119,9 @@
 239 = Exec
 240 = Include
 241 = Update
+256 = Flash (PB1)
+...
+265 = Flash (PB10)
 264 = CTRL+SHIFT?
 265 = Quick Save
 266 = Pause (PB1)
@@ -140,6 +147,7 @@
 286 = Go (Selected)
 287 = Pause (Selected) (weird behaviour?)
 290 = Go (Selected)
+291 = Prev Page
 293 = Next Page
 295 = Sel (PB1)
 ..

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MagicQCTRLDesktopApp"
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
-        Title="MagicQ CTRL Desktop App" Height="550" Width="700" MinWidth="400" MinHeight="300" Style="{DynamicResource CustomWindowStyle}" Icon="{StaticResource IconImage}" Closed="Window_Closed" Loaded="Window_Loaded">
+        Title="MagicQ CTRL Desktop App" Height="600" Width="700" MinWidth="400" MinHeight="300" Style="{DynamicResource CustomWindowStyle}" Icon="{StaticResource IconImage}" Closed="Window_Closed" Loaded="Window_Loaded">
     <Window.DataContext>
         <local:ViewModel></local:ViewModel>
     </Window.DataContext>
@@ -16,84 +16,103 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Rectangle Height="Auto" Width="Auto" Fill="{DynamicResource AREghZyBrush.Deep.3.Background.Static}" Margin="0,0,0,0" Grid.Column="1"/>
-        <Grid Grid.Column="1" Margin="0,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="180"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1" Grid.RowSpan="1"/>
-            <Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1" Grid.RowSpan="1" Grid.Row="2"/>
-            <TextBox Margin="89,36,10,0" TextWrapping="Wrap" Text="{Binding OSCTXPort}" VerticalAlignment="Top"/>
-            <Label Content="Connection" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top"/>
-            <Label Content="OSC TX Port" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top"/>
-            <TextBox Margin="89,67,10,0" TextWrapping="Wrap" Text="{Binding OSCRXPort}" VerticalAlignment="Top"/>
-            <Label Content="OSC RX Port" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
-            <Label Content="USB Connection: " Margin="10,94,10,0" Height="26" VerticalAlignment="Top"/>
-            <TextBlock Margin="10,99,10,0" Height="26" VerticalAlignment="Top" TextAlignment="Right" Text="{Binding USBConnectionStatus, Mode=OneWay}" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
-            <Label Content="OSC Connection: " Margin="10,120,10,0" Height="26" VerticalAlignment="Top"/>
-            <TextBlock Margin="10,125,10,0" Height="26" VerticalAlignment="Top" TextAlignment="Right" Text="{Binding OSCConnectionStatus, Mode=OneWay}" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
-            <Button Content="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,5" Width="72"/>
-            <StackPanel x:Name="ButtonKnobEditor" Grid.Row="1" Visibility="Visible" DataContext="{Binding ButtonEditor, Mode=OneWay}" Grid.RowSpan="2">
-                <DockPanel>
-                    <Label Content="Name:" Margin="2"/>
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
-                </DockPanel>
-                <DockPanel ToolTip="OSC messages should be written in the form /foo/bar,&quot;stringArg&quot;,123">
-                    <Label Content="OnPress OSC:" Margin="2"/>
-                    <TextBox Padding="4" Margin="2">
-                        <TextBox.Text>
-                            <Binding Path="OnPressOSC" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <local:ValidOSCRule/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                </DockPanel>
-                <DockPanel ToolTip="OSC messages should be written in the form /foo/bar,&quot;stringArg&quot;,123">
-                    <Label Content="OnRotate OSC:" Margin="2"/>
-                    <TextBox Padding="4" Margin="2">
-                        <TextBox.Text>
-                            <Binding Path="OnRotateOSC" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <local:ValidOSCRule/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Special Function:" Margin="2"/>
-                    <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}">
-                        <ComboBox.GroupStyle>
-                            <GroupStyle/>
-                        </ComboBox.GroupStyle>
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Custom Key Code:" Margin="2"/>
-                    <TextBox Text="{Binding CustomKeyCode, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Colour:" Margin="2"/>
-                    <colorpicker:PortableColorPicker ColorState="{Binding Colour, Mode=TwoWay}" Padding="4" Margin="2" ShowAlpha="True"/>
-                </DockPanel>
-            </StackPanel>
-            <StackPanel x:Name="PageEditor" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2">
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1">
+                    <StackPanel>
+                        <Label Content="Connection" Margin="2,5" FontWeight="Bold"/>
+                        <DockPanel ToolTip="The port to transmit OSC messages on (should be the same as MagicQ's OSC RX port).">
+                            <Label Content="OSC TX Port" HorizontalAlignment="Left" Margin="10,0" DockPanel.Dock="Left"/>
+                            <TextBox Text="{Binding OSCTXPort}" Margin="10,2" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="The port to receive OSC messages on (should be the same as MagicQ's OSC TX port).">
+                            <Label Content="OSC RX Port" HorizontalAlignment="Left" Margin="10,0" DockPanel.Dock="Left"/>
+                            <TextBox Text="{Binding OSCRXPort}" Margin="10,2" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="USB Connection: " Margin="10,0" Height="26" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding USBConnectionStatus, Mode=OneWay}" Margin="10,2" VerticalAlignment="Center" TextAlignment="Right" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="OSC Connection: " Margin="10,0" Height="26" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding OSCConnectionStatus, Mode=OneWay}" Margin="10,2" VerticalAlignment="Center" TextAlignment="Right" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="MQ Connection: " Margin="10,0" Height="26" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding MQConnectionStatus, Mode=OneWay}" Margin="10,2" VerticalAlignment="Center" TextAlignment="Right" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
+                        </DockPanel>
+                        <Button Content="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="20,4" Margin="0,5,5,5"/>
+                    </StackPanel>
+                </Border>
+                <Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1">
+                    <StackPanel x:Name="ButtonKnobEditor" Grid.Row="1" Visibility="Visible" DataContext="{Binding ButtonEditor, Mode=OneWay}" Grid.RowSpan="2">
+                        <Label Content="Button Properties" Margin="2,5" FontWeight="Bold"/>
+                        <DockPanel ToolTip="The name of the button or encoder. On the hardware, this will be truncated to 6 characters.">
+                            <Label Content="Name:" Margin="10,2"/>
+                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="OSC messages should be written in the form /foo/bar &quot;stringArg&quot; 123">
+                            <Label Content="OnPress OSC:" Margin="10,2"/>
+                            <TextBox Padding="4" Margin="2">
+                                <TextBox.Text>
+                                    <Binding Path="OnPressOSC" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:ValidOSCRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+                        <DockPanel ToolTip="OSC messages should be written in the form /foo/bar &quot;stringArg&quot; 123">
+                            <Label Content="OnRotate OSC:" Margin="10,2"/>
+                            <TextBox Padding="4" Margin="2">
+                                <TextBox.Text>
+                                    <Binding Path="OnRotateOSC" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:ValidOSCRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+                        <DockPanel ToolTip="This field allows the button to emulate a MagicQ key press.">
+                            <Label Content="Special Function:" Margin="10,2"/>
+                            <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}">
+                                <ComboBox.GroupStyle>
+                                    <GroupStyle/>
+                                </ComboBox.GroupStyle>
+                            </ComboBox>
+                        </DockPanel>
+                        <DockPanel ToolTip="This field allows a custom MagicQ keycode to be pressed when the button is pressed. All the useful keycodes are in the special function field, this setting is for advanced users only.">
+                            <Label Content="Custom Key Code:" Margin="10,2"/>
+                            <TextBox Text="{Binding CustomKeyCode, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="Sets a custom colour for the key which is replicated on the hardware. Note that encoders don't have LEDs under them.">
+                            <Label Content="Colour:" Margin="10,2"/>
+                            <colorpicker:PortableColorPicker ColorState="{Binding Colour, Mode=TwoWay}" Padding="4" Margin="2" ShowAlpha="True"/>
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
+                <!--<Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1">
+                    <StackPanel x:Name="PageEditor" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2">
 
+                    </StackPanel>
+                </Border>-->
+                <Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1">
+                    <StackPanel x:Name="GlobalSettingsEditor" Grid.Row="2">
+                        <Label Content="Global Settings" Margin="2,5" FontWeight="Bold"/>
+                        <DockPanel ToolTip="The base brightness of all the keys when un-pressed.">
+                            <Label Content="Base Brightness:" Margin="10,2"/>
+                            <Slider Value="{Binding BaseBrightness}" Minimum="0" Maximum="1" VerticalAlignment="Center" AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.1" AutoToolTipPrecision="2"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="The brightness of a key when pressed.">
+                            <Label Content="Press Brightness:" Margin="10,2"/>
+                            <Slider Value="{Binding PressedBrightness}" Minimum="0" Maximum="4" VerticalAlignment="Center" AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" LargeChange="0.2" SmallChange="0.02" TickFrequency="0.5" AutoToolTipPrecision="2"/>
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
             </StackPanel>
-            <StackPanel x:Name="GlobalSettingsEditor" Grid.Row="2">
-                <DockPanel>
-                    <Label Content="Base Brightness:" Margin="2"/>
-                    <Slider Value="{Binding BaseBrightness}" Minimum="0" Maximum="1" VerticalAlignment="Center" AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.1" AutoToolTipPrecision="1"/>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Press Brightness:" Margin="2"/>
-                    <Slider Value="{Binding PressedBrightness}" Minimum="0" Maximum="4" VerticalAlignment="Center" AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" LargeChange="0.2" SmallChange="0.02" TickFrequency="0.5" AutoToolTipPrecision="1"/>
-                </DockPanel>
-            </StackPanel>
-        </Grid>
+        </ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -110,7 +129,7 @@
                     <RowDefinition MaxHeight="50"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button Content="{Binding CurrentPageString}" Margin="5" Grid.Column="1" Padding="10" HorizontalAlignment="Left"/>
+                <Button Content="{Binding CurrentPageString}" Margin="5" Grid.Column="1" Padding="10" HorizontalAlignment="Left" FontWeight="Bold" Focusable="False" IsTabStop="False" IsHitTestVisible="False"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Command="{Binding PageIncrementCommand}" CommandParameter="-" Content="Prev" Margin="5" Padding="10" HorizontalAlignment="Right"/>
                     <Button Command="{Binding PageIncrementCommand}" CommandParameter="+" Content="Next" Margin="5" Padding="10" HorizontalAlignment="Right"/>
@@ -123,10 +142,10 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="12"  Content="{Binding ButtonNames[12]}"  Background="{Binding ButtonColours[12]}"  BorderThickness="{Binding ButtonSelection[12]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="0"/>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="13"  Content="{Binding ButtonNames[13]}"  Background="{Binding ButtonColours[13]}"  BorderThickness="{Binding ButtonSelection[13]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="1"/>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="14"  Content="{Binding ButtonNames[14]}"  Background="{Binding ButtonColours[14]}"  BorderThickness="{Binding ButtonSelection[14]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="2"/>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="15"  Content="{Binding ButtonNames[15]}"  Background="{Binding ButtonColours[15]}"  BorderThickness="{Binding ButtonSelection[15]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="3"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="12"  Content="{Binding ButtonNames[12]}"  Background="{Binding ButtonColours[12]}"  BorderThickness="{Binding ButtonSelection[12]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" MaxHeight="50" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" Grid.Column="0" Grid.Row="0"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="13"  Content="{Binding ButtonNames[13]}"  Background="{Binding ButtonColours[13]}"  BorderThickness="{Binding ButtonSelection[13]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" MaxHeight="50" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" Grid.Column="0" Grid.Row="1"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="14"  Content="{Binding ButtonNames[14]}"  Background="{Binding ButtonColours[14]}"  BorderThickness="{Binding ButtonSelection[14]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" MaxHeight="50" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" Grid.Column="0" Grid.Row="2"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="15"  Content="{Binding ButtonNames[15]}"  Background="{Binding ButtonColours[15]}"  BorderThickness="{Binding ButtonSelection[15]}" Style="{DynamicResource RoundButton}" Padding="2" Margin="5" MaxHeight="50" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" Grid.Column="0" Grid.Row="3"/>
                 </Grid>
                 <Grid x:Name="Keys" Grid.Column="1" Grid.Row="1" MaxHeight="230" MaxWidth="180">
                     <Grid.ColumnDefinitions>
@@ -161,10 +180,10 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="16"  Content="{Binding ButtonNames[16]}"  Background="{Binding ButtonColours[16]}"  BorderThickness="{Binding ButtonSelection[16]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="0"/>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="17"  Content="{Binding ButtonNames[17]}"  Background="{Binding ButtonColours[17]}"  BorderThickness="{Binding ButtonSelection[17]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="1"/>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="18"  Content="{Binding ButtonNames[18]}"  Background="{Binding ButtonColours[18]}"  BorderThickness="{Binding ButtonSelection[18]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="2"/>
-                    <Button Command="{Binding EditControlCommand}" CommandParameter="19"  Content="{Binding ButtonNames[19]}"  Background="{Binding ButtonColours[19]}"  BorderThickness="{Binding ButtonSelection[19]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="50" MaxHeight="50" Grid.Column="0" Grid.Row="3"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="16"  Content="{Binding ButtonNames[16]}"  Background="{Binding ButtonColours[16]}"  BorderThickness="{Binding ButtonSelection[16]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" MaxHeight="50" Grid.Column="0" Grid.Row="0"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="17"  Content="{Binding ButtonNames[17]}"  Background="{Binding ButtonColours[17]}"  BorderThickness="{Binding ButtonSelection[17]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" MaxHeight="50" Grid.Column="0" Grid.Row="1"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="18"  Content="{Binding ButtonNames[18]}"  Background="{Binding ButtonColours[18]}"  BorderThickness="{Binding ButtonSelection[18]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" MaxHeight="50" Grid.Column="0" Grid.Row="2"/>
+                    <Button Command="{Binding EditControlCommand}" CommandParameter="19"  Content="{Binding ButtonNames[19]}"  Background="{Binding ButtonColours[19]}"  BorderThickness="{Binding ButtonSelection[19]}" Style="{DynamicResource RoundButton}" HorizontalAlignment="Left" Padding="2" Margin="5" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" MaxHeight="50" Grid.Column="0" Grid.Row="3"/>
                 </Grid>
             </Grid>
             <Rectangle Height="Auto" Width="Auto" Fill="{DynamicResource AREghZyBrush.Deep.3.Background.Static}"/>
@@ -174,6 +193,9 @@
                 <Button Content="Save Profile" Command="{Binding SaveProfileCommand}" HorizontalAlignment="Left" Margin="5" Width="100"/>
                 <Button Content="Open Log" Command="{Binding OpenLogCommand}" HorizontalAlignment="Left" Margin="5" Width="100"/>
             </StackPanel>
+            <!--<Button Content="DBG -" Width="70" Height="30" Command="{Binding DebugMinusCommand}" HorizontalAlignment="Left" Margin="10,0,0,10" Grid.Row="2" VerticalAlignment="Bottom"/>-->
+            <!--<Button Content="DBG +" Width="70" Height="30" Command="{Binding DebugPlusCommand}" HorizontalAlignment="Left" Margin="10,0,0,40" Grid.Row="2" VerticalAlignment="Bottom"/>-->
+            <TextBlock Text="Copyright Thomas Mathieson 2023" HorizontalAlignment="Right" Margin="5" Grid.Row="2" VerticalAlignment="Bottom" Foreground="{DynamicResource AREghZyBrush.Primary.2.Background.Disabled}" FontSize="10"/>
         </Grid>
     </Grid>
 </Window>

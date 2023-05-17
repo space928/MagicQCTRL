@@ -41,7 +41,7 @@ namespace MagicQCTRLDesktopApp
 
             foreach(var device in DeviceList.Local.GetAllDevices())
             {
-                Log($"Found device: path={device.DevicePath}; canOpen={device.CanOpen}; name={device.GetFriendlyName()}; fsName={device.GetFileSystemName()}", LogLevel.Debug);
+                // Log($"Found device: path={device.DevicePath}; canOpen={device.CanOpen}; name={device.GetFriendlyName()}; fsName={device.GetFileSystemName()}", LogLevel.Debug);
 
                 if(device.GetFriendlyName() == MQCTRL_DEVICE_NAME)
                 {
@@ -71,7 +71,7 @@ namespace MagicQCTRLDesktopApp
         {
             if (usbDevice == null)
             {
-                Log($"Failed to send configuration data to hardware. USB device is not initialised!", LogLevel.Error);
+                // Log($"Failed to send configuration data to hardware. USB device is not initialised!", LogLevel.Error);
                 return;
             }
 
