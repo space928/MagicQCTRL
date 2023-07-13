@@ -26,6 +26,8 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public ObservableCollection<SpecialFunctionItem> SpecialFunctions { get; private set; }
         [Reactive] public ListCollectionView SpecialFunctionsView { get; private set; }
         [Reactive] public SpecialFunctionItem SpecialFunction { get; set; } = new() { SpecialFunction=MagicQCTRLSpecialFunction.None, Category="" };
+        [Reactive] public ObservableCollection<MagicQCTRLEncoderType> EncoderFunctions { get; private set; }
+        [Reactive] public MagicQCTRLEncoderType EncoderFunction { get; set; } = MagicQCTRLEncoderType.None; 
         [Reactive] public int CustomKeyCode { get; set; } = -1;
         [Reactive] public ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
         [Reactive] public ColorState ActiveColour { get; set; }
@@ -49,6 +51,9 @@ namespace MagicQCTRLDesktopApp
 
             SpecialFunctionsView = new(SpecialFunctions);
             SpecialFunctionsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SpecialFunctionItem.Category)));
+
+            EncoderFunctions = new(Enum.GetValues<MagicQCTRLEncoderType>());
+            EncoderFunction = MagicQCTRLEncoderType.None;
         }
 
         /// <summary>
@@ -61,8 +66,10 @@ namespace MagicQCTRLDesktopApp
         }
     }
 
-    public record SpecialFunctionItem
+    public struct SpecialFunctionItem
     {
+        public SpecialFunctionItem() { }
+
         public MagicQCTRLSpecialFunction SpecialFunction { get; set; } = MagicQCTRLSpecialFunction.None;
         public string Category { get; set; } = "";
     }
@@ -101,8 +108,19 @@ namespace MagicQCTRLDesktopApp
                     specialFunction = MagicQCTRLSpecialFunction.None;
                     profile.pages[page].keys[id].specialFunction = specialFunction;
                 }
+                ed.SpecialFunction = new() 
+                { 
+                    SpecialFunction = specialFunction, 
+                    Category = specialFunction.GetAttributeOfType<ItemCategoryAttribute>().Category 
+                };
 
-                ed.SpecialFunction = new() { SpecialFunction=specialFunction, Category=specialFunction.GetAttributeOfType<ItemCategoryAttribute>().Category };
+                var encoderFunction = profile.pages[page].keys[id].encoderFunction;
+                if(!Enum.IsDefined(encoderFunction))
+                {
+                    encoderFunction = MagicQCTRLEncoderType.None;
+                    profile.pages[page].keys[id].encoderFunction = MagicQCTRLEncoderType.None;
+                }
+                ed.EncoderFunction = encoderFunction;
 
                 id++;
                 if(id >= BUTTON_COUNT)
@@ -134,6 +152,7 @@ namespace MagicQCTRLDesktopApp
                 profile.pages[page].keys[id].keyColourOff = ed.Colour.ToColor();
                 profile.pages[page].keys[id].keyColourOn = ed.ActiveColour.ToColor();
                 profile.pages[page].keys[id].specialFunction = ed.SpecialFunction.SpecialFunction;
+                profile.pages[page].keys[id].encoderFunction = ed.EncoderFunction;
 
                 id++;
                 if (id >= BUTTON_COUNT)

@@ -140,6 +140,8 @@ namespace MagicQCTRLDesktopApp
                             magicQCTRLProfile.pages[page].keys[id].oscMessageRotate = ed.OnRotateOSC; break;
                         case nameof(ButtonEditorViewModel.SpecialFunction):
                             magicQCTRLProfile.pages[page].keys[id].specialFunction = ed.SpecialFunction.SpecialFunction; break;
+                        case nameof(ButtonEditorViewModel.EncoderFunction):
+                            magicQCTRLProfile.pages[page].keys[id].encoderFunction = ed.EncoderFunction; break;
                         case nameof(ButtonEditorViewModel.CustomKeyCode):
                             magicQCTRLProfile.pages[page].keys[id].customKeyCode = ed.CustomKeyCode; break;
                     }
@@ -349,6 +351,7 @@ namespace MagicQCTRLDesktopApp
                 int oscParam = 0;
                 MagicQCTRLKey key;
                 MagicQCTRLSpecialFunction specialFunction = MagicQCTRLSpecialFunction.None;
+                MagicQCTRLEncoderType encoderType = MagicQCTRLEncoderType.None;
                 int customKeyCode = -1;
                 switch (msg.msgType)
                 {
@@ -379,6 +382,7 @@ namespace MagicQCTRLDesktopApp
                         if (key.specialFunction == MagicQCTRLSpecialFunction.None)
                             oscMsg = key.oscMessageRotate;
                         oscParam = msg.delta;
+                        encoderType = key.encoderFunction;
                         break;
                     default:
                         break;
@@ -401,6 +405,8 @@ namespace MagicQCTRLDesktopApp
                 magicQDriver.ExecuteCommand(specialFunction);
                 if(customKeyCode != -1)
                     magicQDriver.PressMQKey(customKeyCode);
+                if (encoderType != MagicQCTRLEncoderType.None)
+                    magicQDriver.TurnEncoder(encoderType, -msg.delta);
             }
         }
 

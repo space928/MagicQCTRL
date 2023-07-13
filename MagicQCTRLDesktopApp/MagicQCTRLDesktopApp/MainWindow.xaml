@@ -77,7 +77,7 @@
                         </DockPanel>
                         <DockPanel ToolTip="This field allows the button to emulate a MagicQ key press.">
                             <Label Content="Special Function:" Margin="10,2"/>
-                            <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}">
+                            <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}" Margin="2">
                                 <ComboBox.GroupStyle>
                                     <GroupStyle/>
                                 </ComboBox.GroupStyle>
@@ -87,9 +87,13 @@
                             <Label Content="Custom Key Code:" Margin="10,2"/>
                             <TextBox Text="{Binding CustomKeyCode, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
                         </DockPanel>
+                        <DockPanel ToolTip="This field allows a MagicQ encoder to be emulated.">
+                            <Label Content="Encoder Function:" Margin="10,2"/>
+                            <ComboBox ItemsSource="{Binding EncoderFunctions}" SelectedItem="{Binding EncoderFunction}" Padding="4" Margin="2"/>
+                        </DockPanel>
                         <DockPanel ToolTip="Sets a custom colour for the key which is replicated on the hardware. Note that encoders don't have LEDs under them.">
                             <Label Content="Colour:" Margin="10,2"/>
-                            <colorpicker:PortableColorPicker ColorState="{Binding Colour, Mode=TwoWay}" Padding="4" Margin="2" ShowAlpha="True"/>
+                            <colorpicker:PortableColorPicker Style="{StaticResource DefaultColorPickerStyle}" ColorState="{Binding Colour, Mode=TwoWay}" Padding="4" Margin="2" ShowAlpha="False"/>
                         </DockPanel>
                     </StackPanel>
                 </Border>

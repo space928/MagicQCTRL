@@ -55,10 +55,13 @@ namespace MagicQCTRLDesktopApp
         public string name;
         public string oscMessagePress;
         public string oscMessageRotate;
-        public MagicQCTRLSpecialFunction specialFunction;
+        public MagicQCTRLSpecialFunction specialFunction = MagicQCTRLSpecialFunction.None;
         public int customKeyCode;
+        public MagicQCTRLEncoderType encoderFunction = MagicQCTRLEncoderType.None;
         public MagicQCTRLColour keyColourOn;
         public MagicQCTRLColour keyColourOff;
+
+        public MagicQCTRLKey() { }
     }
 
     public class ItemCategoryAttribute : Attribute
@@ -168,6 +171,7 @@ namespace MagicQCTRLDesktopApp
         _3 = 10,
         _4 = 11,
         I = 12,
+        None = ushort.MaxValue
     }
 
     [Serializable]

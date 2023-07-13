@@ -42,25 +42,28 @@ namespace MagicQCTRLDesktopApp
             foreach(var device in DeviceList.Local.GetAllDevices())
             {
                 // Log($"Found device: path={device.DevicePath}; canOpen={device.CanOpen}; name={device.GetFriendlyName()}; fsName={device.GetFileSystemName()}", LogLevel.Debug);
-
-                if(device.GetFriendlyName() == MQCTRL_DEVICE_NAME)
+                try
                 {
-                    Log("Found MagicQ CTRL hardware! Connecting...");
-                    try
+                    if (device.GetFriendlyName() == MQCTRL_DEVICE_NAME)
                     {
-                        usbDevice = device.Open();
-                        //usbDevice.Closed += UsbDevice_Closed;
-                        usbDevice.ReadTimeout = -1;
-                        usbRXTask = Task.Run(UsbRXTask);
-                    } catch (Exception ex)
-                    {
-                        Log($"Failed to open USB device: {ex}", LogLevel.Error);
-                        return false;
-                    }
+                        Log("Found MagicQ CTRL hardware! Connecting...");
+                        try
+                        {
+                            usbDevice = device.Open();
+                            //usbDevice.Closed += UsbDevice_Closed;
+                            usbDevice.ReadTimeout = -1;
+                            usbRXTask = Task.Run(UsbRXTask);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log($"Failed to open USB device: {ex}", LogLevel.Error);
+                            return false;
+                        }
 
-                    Log("Connected to MagicQ CTRL hardware.");
-                    return true;
-                }
+                        Log("Connected to MagicQ CTRL hardware.");
+                        return true;
+                    }
+                } catch { } // For some reason some devices fail to present a FriendlyName, we can ignore them
             }
 
             Log("No compatible device found!", LogLevel.Error);
@@ -179,7 +182,7 @@ namespace MagicQCTRLDesktopApp
         [FieldOffset(4)] public byte buttonCode;
         [FieldOffset(4)] public byte encoderId;
         [FieldOffset(5)] public byte value;
-        [FieldOffset(5)] public byte delta;
+        [FieldOffset(5)] public sbyte delta;
 
         public override string ToString() => $"{{header=0x{BinaryPrimitives.ReverseEndianness(header):X}; type={msgType}; page={page}; id={keyCode}; value={value}}}";
     }

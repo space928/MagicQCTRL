@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2023-06-05T03:33:54Z",
+        "GenerationSoftware": {
+            "Application": "Fusion 360 Electronics",
+            "Vendor": "Autodesk",
+            "Version": "9.7.0"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.6608,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "MagicQCtrlPadEncoderPCB v5"
+        },
+        "Owner": "Thomas Mathieson <thomas.mathieson02@gmail.com>",
+        "Size": {
+            "X": 113,
+            "Y": 119.500031
+        }
+    }
+}

@@ -16,7 +16,11 @@
 #define DEFAULT_BRIGHTNESS 128 // Default neopixel brightness 0-255
 #define KEY_NAME_LENGTH 6
 #define DISPLAY_WIDTH 128
-#define VERSION_STRING "1.2"
+#define VERSION_STRING "1.4"
+#define PCF_L_ADDR 0x20
+#define PCF_R_ADDR 0x21
+#define ENCODER_MSG_RATE 90
+#define ENCODER_ACCELERATION 1.5
 
 ///////////////////////////////////////
 //// DEBUGGING CONSTS
@@ -28,19 +32,5 @@
 // #define DEBUG_INFO
 // #define DEBUG_WARNING
 // #define DEBUG_FATAL
-
-// Display
-#ifdef PLATFORM_HELTEC_WIFIKIT_32
-#define DEBUG_DISPLAY_ENABLE
-#define DEBUG_DISPLAY_AUDIO
-#define DEBUG_DISPLAY_FFT
-
-#define DEBUG_DISPLAY_WIDTH 128
-#define DEBUG_DISPLAY_HEIGHT 64
-#define DEBUG_SCREEN_ADDRESS 0x3c
-#define DEBUG_DISPLAY_HARDWARE_PARAMS DEBUG_DISPLAY_WIDTH, DEBUG_DISPLAY_HEIGHT, &Wire, RST_OLED
-
-#define CPU_FREQ_KHZ 240000
-#endif
 
 #endif //CONFIG_H

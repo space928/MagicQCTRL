@@ -52,13 +52,8 @@ void setup() {
 }
 
 void loop() {
-    // Read the state of all the keys and encoders
     tickIO();
-
-    // show neopixels, increment swirl
     pixels.show();
-
-    // Update the display
     updateDisplay();
     
     j++;

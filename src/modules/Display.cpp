@@ -79,6 +79,11 @@ void drawPage() {
     }
 }
 
+void drawKeyText(int keyInd, String text) {
+    display.setCursor((keyInd % 3) * 42 + 1, 24 + (keyInd / 3) * 10);
+    display.print(text);
+}
+
 void drawSetup() {
     display.setCursor(4, 8);
     display.print("###### ");
@@ -86,6 +91,14 @@ void drawSetup() {
     display.print("SETUP");
     display.setCursor(DISPLAY_WIDTH - 6 - 5*8, 8);
     display.print(" ######");
+
+    drawKeyText(0, "Debug");
+    if(switch_states[0])
+        display_page = -1;
+
+    drawKeyText(1, "Test");
+    if(switch_states[1])
+        display_page = -2;
 }
 
 void drawDebug() {
@@ -109,12 +122,35 @@ void drawDebug() {
     } 
 
     // move the text into a 3x4 grid
+    display.setCursor(0, 32);
+    //display.print("Key states: ");
     for (int i = 0; i < 12; i++) {
-        if(switch_states[i]) {
-            display.setCursor((i % 3) * 48, 32 + (i / 3) * 8);
-            display.print("KEY");
-            display.print(i+1);
-        }
+        display.drawRect(52 + (i % 3) * 8, 32 + (i / 3) * 8, 8, 8, 1);
+        drawFilledRect(52 + (i % 3) * 8 + 1, 32 + (i / 3) * 8 + 1, 6, 6, switch_states[i]?1:0);
+    }
+
+    for (int i = 0; i < 8; i++) {
+        display.drawRect(40 + (i/4) * 40, 32 + (i%4) * 8, 8, 8, 1);
+        drawFilledRect(40 + (i/4) * 40 + 1, 32 + (i%4) * 8 + 1, 6, 6, (encoder_switches[i]&1)==1?1:0);
+    }
+
+    for (int i = 0; i < 8; i++) {
+        display.setCursor((DISPLAY_WIDTH-8*3)*(i/4), 32+(i%4)*8);
+        display.print(encoder_dirs[i]);
+        display.drawFastHLine((DISPLAY_WIDTH-8*3)*(i/4), 32+(i%4)*8+7, abs(encoder_dirs[i])*2, 1);
+    }
+}
+
+void drawTest() {
+    int16_t lastY = (int16_t)(((sin((millis()/10)/(float)5))+1)*32);
+    for(int i = 0; i < DISPLAY_WIDTH-2; i += 2) {
+        int16_t y = (int16_t)(((sin((i+millis()/10)/(float)5))+1)*32);
+        display.drawLine(i, lastY, i+2, y, 1);
+        lastY = y;
+    }
+
+    if(encoder_pressed) {
+        display_page = N_PAGES;
     }
 }
 
@@ -126,7 +162,20 @@ void updateDisplay() {
         display.print("# MagicQ CTRL V" VERSION_STRING " #");
 
         if (display_page < 0) {
-            drawDebug();
+            switch (display_page)
+            {
+            case -1:
+                drawDebug();
+                break;
+            case -2:
+                drawTest();
+                break;
+            default:
+                display.setCursor(4, 8);
+                display.print("Page ");
+                display.print(display_page + 1);
+                break;
+            }
         } else if (display_page == N_PAGES) {
             drawSetup();
         } else {

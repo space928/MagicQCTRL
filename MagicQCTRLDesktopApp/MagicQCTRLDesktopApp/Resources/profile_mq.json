@@ -8,6 +8,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 174,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 198,
             "g": 0,
@@ -25,6 +26,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 170,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 198,
             "g": 0,
@@ -42,6 +44,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 175,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 198,
             "g": 0,
@@ -59,6 +62,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 215,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 93,
@@ -76,6 +80,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 179,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 195,
@@ -93,6 +98,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 180,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 196,
@@ -110,6 +116,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 183,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 255,
             "g": 102,
@@ -127,6 +134,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 177,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 196,
@@ -144,6 +152,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 178,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 196,
@@ -161,6 +170,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 167,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 206,
             "g": 206,
@@ -178,6 +188,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 287,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -195,6 +206,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 290,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -210,8 +222,9 @@
           "name": "A/Lay1/Pos/Col/Beam",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 224,
           "customKeyCode": 0,
+          "encoderFunction": 7,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -227,8 +240,9 @@
           "name": "B/Lay2",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 225,
           "customKeyCode": 0,
+          "encoderFunction": 6,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -244,8 +258,9 @@
           "name": "C/Lay3",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 226,
           "customKeyCode": 0,
+          "encoderFunction": 5,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -263,6 +278,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 4,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -280,6 +296,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 3,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -297,23 +314,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          },
-          "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          }
-        },
-        {
-          "name": "X",
-          "oscMessagePress": "/",
-          "oscMessageRotate": "/",
-          "specialFunction": 0,
-          "customKeyCode": 0,
+          "encoderFunction": 2,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -331,6 +332,25 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 1,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          }
+        },
+        {
+          "name": "X",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 0,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -352,6 +372,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 171,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 199,
             "g": 0,
@@ -369,6 +390,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 173,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 199,
             "g": 0,
@@ -386,6 +408,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 169,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 199,
             "g": 0,
@@ -403,6 +426,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 172,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 84,
             "g": 79,
@@ -420,6 +444,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 198,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 33,
             "g": 32,
@@ -435,8 +460,9 @@
           "name": "Lay 1",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 236,
+          "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 98,
@@ -454,6 +480,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 208,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 97,
@@ -471,6 +498,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 209,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 98,
@@ -488,6 +516,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 199,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 98,
@@ -505,6 +534,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 167,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 206,
             "g": 207,
@@ -522,6 +552,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 287,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -539,6 +570,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 290,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -556,6 +588,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 7,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -573,6 +606,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 6,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -590,6 +624,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 5,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -607,6 +642,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 4,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -624,6 +660,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 3,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -641,6 +678,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 2,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -658,6 +696,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 0,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -675,6 +714,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 1,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -696,6 +736,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -713,6 +754,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -730,6 +772,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -747,6 +790,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -764,6 +808,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -781,6 +826,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -798,6 +844,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -815,6 +862,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -832,6 +880,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -849,6 +898,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -866,6 +916,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -883,6 +934,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -900,6 +952,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -917,6 +970,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -934,6 +988,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -951,6 +1006,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -968,6 +1024,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -985,6 +1042,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1002,6 +1060,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1019,6 +1078,7 @@
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
