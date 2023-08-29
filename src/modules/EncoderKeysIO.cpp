@@ -219,7 +219,7 @@ void tickIO() {
         if (switchVal != 0 || switchVal != 3) {
             // Copy the current value bit to the previous value bit
             encoder_switches[i] = switchVal | (switchVal << 1);
-            sendButton(display_page, i, (switchVal & 1) == 1);
+            //sendButton(display_page, i, (switchVal & 1) == 1);
         }
     }
 }

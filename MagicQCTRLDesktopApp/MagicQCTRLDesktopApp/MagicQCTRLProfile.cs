@@ -60,6 +60,9 @@ namespace MagicQCTRLDesktopApp
         public MagicQCTRLEncoderType encoderFunction = MagicQCTRLEncoderType.None;
         public MagicQCTRLColour keyColourOn;
         public MagicQCTRLColour keyColourOff;
+        public int executeItemPage;
+        public int executeItemIndex;
+        public ExecuteItemCommand executeItemAction;
 
         public MagicQCTRLKey() { }
     }
@@ -153,6 +156,12 @@ namespace MagicQCTRLDesktopApp
 
         [ItemCategory("Other")] LampOnAll = 235,
         [ItemCategory("Other")] QuickSave = 265,
+
+        [ItemCategory("Special")] SLampOnAll = 1000,
+        [ItemCategory("Special")] SLampOffAll = 1001,
+        [ItemCategory("Special")] SResetAll = 1002,
+        [ItemCategory("Special")] SOpenLayout = 1003,
+
     }
 
     [Serializable]

@@ -51,6 +51,7 @@
                             <Label Content="Name:" Margin="10,2"/>
                             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
                         </DockPanel>
+                        <Separator Height="3" Background="#0000"/>
                         <DockPanel ToolTip="OSC messages should be written in the form /foo/bar &quot;stringArg&quot; 123">
                             <Label Content="OnPress OSC:" Margin="10,2"/>
                             <TextBox Padding="4" Margin="2">
@@ -75,6 +76,7 @@
                                 </TextBox.Text>
                             </TextBox>
                         </DockPanel>
+                        <Separator Height="3" Background="#0000"/>
                         <DockPanel ToolTip="This field allows the button to emulate a MagicQ key press.">
                             <Label Content="Special Function:" Margin="10,2"/>
                             <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}" Margin="2">
@@ -87,10 +89,26 @@
                             <Label Content="Custom Key Code:" Margin="10,2"/>
                             <TextBox Text="{Binding CustomKeyCode, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
                         </DockPanel>
+                        <Separator Height="3" Background="#0000"/>
+                        <DockPanel ToolTip="This field allows a MagicQ Execute item to be controlled.">
+                            <Label Content="Execute Item (page, index):" Margin="10,2"/>
+                            <TextBox Text="{Binding ExecuteItemPage, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" Padding="4" Margin="2"/>
+                            <TextBox Text="{Binding ExecuteItemIndex, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" Padding="4" Margin="2"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="" IsEnabled="{Binding ExecuteItemEnabled}">
+                            <Label Content="Execute Item Action:" Margin="10,2"/>
+                            <ComboBox ItemsSource="{Binding ExecuteItemCommands}" SelectedItem="{Binding ExecuteItemCommand}" Padding="4" Margin="2"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="" IsEnabled="{Binding ExecuteItemEnabled}">
+                            <Label Content="Colour From Execute Item:" Margin="10,2"/>
+                            <CheckBox IsChecked="{Binding ColorFromExecuteItem}" Padding="4" Margin="2"/>
+                        </DockPanel>
+                        <Separator Height="3" Background="#0000"/>
                         <DockPanel ToolTip="This field allows a MagicQ encoder to be emulated.">
                             <Label Content="Encoder Function:" Margin="10,2"/>
                             <ComboBox ItemsSource="{Binding EncoderFunctions}" SelectedItem="{Binding EncoderFunction}" Padding="4" Margin="2"/>
                         </DockPanel>
+                        <Separator Height="3" Background="#0000"/>
                         <DockPanel ToolTip="Sets a custom colour for the key which is replicated on the hardware. Note that encoders don't have LEDs under them.">
                             <Label Content="Colour:" Margin="10,2"/>
                             <colorpicker:PortableColorPicker Style="{StaticResource DefaultColorPickerStyle}" ColorState="{Binding Colour, Mode=TwoWay}" Padding="4" Margin="2" ShowAlpha="False"/>
@@ -138,6 +156,7 @@
                     <Button Command="{Binding PageIncrementCommand}" CommandParameter="-" Content="Prev" Margin="5" Padding="10" HorizontalAlignment="Right"/>
                     <Button Command="{Binding PageIncrementCommand}" CommandParameter="+" Content="Next" Margin="5" Padding="10" HorizontalAlignment="Right"/>
                 </StackPanel>
+                <Button Grid.Column="2" Command="{Binding TestButtonsCommand}" BorderThickness="{Binding TestButtonsEnabled}" Content="Test Buttons" HorizontalAlignment="Right" MaxWidth="100" Margin="5" Padding="10"/>
                 <Grid x:Name="KnobsA" Grid.Column="0" Grid.Row="1" MaxHeight="300" MaxWidth="100" HorizontalAlignment="Right">
                     <Grid.RowDefinitions>
                         <RowDefinition/>

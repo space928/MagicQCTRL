@@ -5,6 +5,12 @@ using Process.NET.Assembly;
 using Process.NET.Assembly.Assemblers;
 using Process.NET.Patterns;
 using static MagicQCTRLDesktopApp.ViewModel;
+using Process.NET.Memory;
+using Process.NET.Native.Types;
+using Reloaded.Memory.Buffers.Internal.Utilities;
+using System.Printing.IndexedProperties;
+using System.Text;
+using System.Linq;
 
 namespace MagicQCTRLDesktopApp
 {
@@ -15,6 +21,11 @@ namespace MagicQCTRLDesktopApp
         private ProcessSharp mqProcess;
         private nint mqKeyFunctionAddr;
         private nint mqEncoderFunctionAddr;
+        private nint mqOpenLayoutAddr;
+        private nint mqSetExecItemStateAddr;
+        private nint mqGetExecItemStateAddr;
+        private nint mqLampOnOffAllAddr;
+        private nint mqResetAllHeadsAddr;
         private AssemblyFactory asmFactory;
 
         public MagicQDriver() 
@@ -32,6 +43,9 @@ namespace MagicQCTRLDesktopApp
                 if (procs.Length > 0)
                 {
                     mqProcess = new ProcessSharp(procs[0], Process.NET.Memory.MemoryType.Remote);
+
+                    if (procs.Length > 1)
+                        Log($"More than one MagicQ process found! Connecting to pid: {mqProcess.Native.Id}", LogLevel.Warning);
 
                     asmFactory = new AssemblyFactory(mqProcess, new ReloadedAssembler());
                     FindHookAddresses();
@@ -71,16 +85,63 @@ namespace MagicQCTRLDesktopApp
                 mqEncoderFunctionAddr = match.BaseAddress;
             else
                 mqEncoderFunctionAddr = 0x007f9b70; // Correct for 1.9.3.8
+
+            match = matcher.Find(new DwordPattern(MagicQNativeMethods.OpenLayoutSignature));
+            if (match.Found)
+                mqOpenLayoutAddr = match.BaseAddress;
+            else
+                mqOpenLayoutAddr = 0x006879f0; // Correct for 1.9.3.8
+
+            match = matcher.Find(new DwordPattern(MagicQNativeMethods.SetExecItemStateSignature));
+            if (match.Found)
+                mqSetExecItemStateAddr = match.BaseAddress;
+            else
+                mqSetExecItemStateAddr = 0x0058a960; // Correct for 1.9.3.8
+
+            match = matcher.Find(new DwordPattern(MagicQNativeMethods.GetExecuteItemStateSignature));
+            if (match.Found)
+                mqGetExecItemStateAddr = match.BaseAddress;
+            else
+                mqGetExecItemStateAddr = 0x0062dbc0; // Correct for 1.9.3.8
+
+            match = matcher.Find(new DwordPattern(MagicQNativeMethods.LampOnOffAllSignature));
+            if (match.Found)
+                mqLampOnOffAllAddr = match.BaseAddress;
+            else
+                mqLampOnOffAllAddr = 0x0052bfd0; // Correct for 1.9.3.8
+
+            match = matcher.Find(new DwordPattern(MagicQNativeMethods.ResetAllHeadsSignature));
+            if (match.Found)
+                mqResetAllHeadsAddr = match.BaseAddress;
+            else
+                mqResetAllHeadsAddr = 0x0052c000; // Correct for 1.9.3.8
         }
 
         /// <summary>
         /// Executes a MagicQ special function.
         /// </summary>
         /// <param name="function">the function to execute</param>
-        public void ExecuteCommand(MagicQCTRLSpecialFunction function)
+        public void ExecuteCommand(MagicQCTRLSpecialFunction function, int param = 0)
         {
-            if(function != MagicQCTRLSpecialFunction.None)
-                asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, (int)function);
+            switch(function)
+            {
+                case MagicQCTRLSpecialFunction.None: break;
+                case MagicQCTRLSpecialFunction.SLampOnAll:
+                    LampOnOffAll(true);
+                    break;
+                case MagicQCTRLSpecialFunction.SLampOffAll:
+                    LampOnOffAll(false);
+                    break;
+                case MagicQCTRLSpecialFunction.SOpenLayout:
+                    OpenLayout(param);
+                    break;
+                case MagicQCTRLSpecialFunction.SResetAll:
+                    ResetAllHeads();
+                    break;
+                default:
+                    asmFactory?.Execute<int>(mqKeyFunctionAddr, CallingConventions.Cdecl, (int)function);
+                    break;
+            }
         }
 
         /// <summary>
@@ -89,7 +150,7 @@ namespace MagicQCTRLDesktopApp
         /// <param name="keyId">the MagicQ keyID to press</param>
         public void PressMQKey(int keyId)
         {
-            asmFactory?.Execute<int>(mqKeyFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, keyId);
+            asmFactory?.Execute<int>(mqKeyFunctionAddr, CallingConventions.Cdecl, keyId);
         }
 
         /// <summary>
@@ -99,7 +160,61 @@ namespace MagicQCTRLDesktopApp
         /// <param name="delta">how much to rotate the encoder by</param>
         public void TurnEncoder(MagicQCTRLEncoderType encoder, int delta)
         {
-            asmFactory?.Execute(mqEncoderFunctionAddr, Process.NET.Native.Types.CallingConventions.Cdecl, (ushort)encoder, delta);
+            asmFactory?.Execute(mqEncoderFunctionAddr, CallingConventions.Cdecl, (ushort)encoder, delta);
+        }
+
+        /// <summary>
+        /// Opens the chosen layout in MagicQ
+        /// </summary>
+        /// <param name="layoutId">the layout number to open</param>
+        public void OpenLayout(int layoutId)
+        {
+            asmFactory?.Execute(mqOpenLayoutAddr, CallingConventions.Cdecl, (ushort)layoutId);
+        }
+
+        /// <summary>
+        /// Sets the state of a given execute item
+        /// </summary>
+        /// <param name="execPage">the page of the execute item</param>
+        /// <param name="execItem">the index of the execute item</param>
+        /// <param name="state">the state to set the execute item to</param>
+        public void SetExecItemState(ushort execPage, uint execItem, ExecuteItemCommand state)
+        {
+            if(state < 0)
+            {
+                switch (state)
+                {
+                    case ExecuteItemCommand.Toggle:
+                        var s = GetExecItemState(execPage, execItem, out byte[] execItemState, out string name);
+                        Log($"Exec item state for {execPage}/{execItem} = {s}; \n\tstate = {string.Join(' ', execItemState.Select(x=>$"{x:x2}"))}; \n\tname = {name}");
+                        break;
+                }
+            }
+
+            asmFactory?.Execute(mqSetExecItemStateAddr, CallingConventions.Cdecl, execPage, execItem, (int)state);
+        }
+
+        public int GetExecItemState(ushort execPage, uint execItem, out byte[] execItemState, out string name)
+        {
+            using var resBuff = mqProcess.MemoryFactory.Allocate("GetExecItemStateRes", 0x23);
+            using var nameBuff = mqProcess.MemoryFactory.Allocate("GetExecItemStateName", 0x10);
+
+            var ret = asmFactory?.Execute<int>(mqGetExecItemStateAddr, CallingConventions.Cdecl, 0x1b, execPage, execItem, resBuff.BaseAddress, nameBuff.BaseAddress) ?? 0;
+
+            execItemState = resBuff.Read(0, resBuff.Size);
+            name = Encoding.UTF8.GetString(nameBuff.Read(0, nameBuff.Size));
+
+            return ret;
+        }
+
+        public void LampOnOffAll(bool state)
+        {
+            asmFactory?.Execute(mqLampOnOffAllAddr, CallingConventions.Cdecl, state?1:0);
+        }
+
+        public void ResetAllHeads()
+        {
+            asmFactory?.Execute(mqResetAllHeadsAddr, CallingConventions.Cdecl);
         }
     }
 
@@ -116,6 +231,39 @@ namespace MagicQCTRLDesktopApp
         {
             asm = $"use32\norg 0x{baseAddress.ToInt64():X8}\n" + asm;
             return assembler.Assemble(asm);
+        }
+    }
+
+    public class RemoteFunction : IDisposable
+    {
+        private nint targetFunctionAddr;
+        private IAllocatedMemory functionWrapperAddr;
+        private AssemblyFactory asmFactory;
+
+        public RemoteFunction(nint targetFunctionAddr, AssemblyFactory asmFactory)
+        {
+            this.targetFunctionAddr = targetFunctionAddr;
+            this.asmFactory = asmFactory;
+            Inject();
+        }
+
+        public void Execute(params object[] args)
+        {
+            if(functionWrapperAddr.IsValid)
+                asmFactory.Execute(functionWrapperAddr.BaseAddress, args);
+        }
+
+        private void Inject()
+        {
+            string asm = $"""
+
+                """;
+            functionWrapperAddr = asmFactory.Inject(asm);
+        }
+
+        public void Dispose()
+        {
+            asmFactory.Dispose();
         }
     }
 
@@ -136,5 +284,34 @@ namespace MagicQCTRLDesktopApp
         /// <param name="delta"></param>
         public delegate void HandleMQEncoder(ushort encoderID, int delta);
         public static readonly string MQEncoderSignature = "55 89 e5 81 ec a8 00 00 00 8d 45 f8 8b 4d 08";
+
+        public delegate void OpenLayout(ushort layout);
+        public static readonly string OpenLayoutSignature = "55 89 e5 8b 45 08 66 3d 90 00 77 09";
+
+        public delegate int SetExecItemState(ushort execPage, uint execItem, ExecuteItemCommand state);
+        public static readonly string SetExecItemStateSignature = "55 89 e5 56 53 83 ec 10 8b 5d 10";
+
+        public delegate int GetExecuteItemState(int param_1, ushort execPage, uint execItem, nint out_execItemState, nint out_Extra);
+        public static readonly string GetExecuteItemStateSignature = "55 89 e5 53 83 ec 14 8b 45 08 8b 55 0c 8d 1c c5";
+
+        public delegate void LampOnOffAll(bool state);
+        public static readonly string LampOnOffAllSignature = "55 89 e5 66 83 7d 08 00 75 16";
+
+        public delegate void ResetAllHeads();
+        public static readonly string ResetAllHeadsSignature = "55 89 e5 83 ec 18 c7 04 24 d4 9c 30 01";
+    }
+
+    public enum ExecuteItemCommand : int
+    {
+        Toggle, // In some cases acts as a toggle
+        Unk1, // In some cases, releases
+        Activate,
+        Release,
+        Unk4, // In some cases acts as a toggle
+        Unk5,
+        Unk6, // In some cases releases
+
+        // Special cases
+        //Toggle = -1
     }
 }

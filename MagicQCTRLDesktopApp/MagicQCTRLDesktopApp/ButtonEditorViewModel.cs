@@ -18,6 +18,8 @@ namespace MagicQCTRLDesktopApp
 {
     public class ButtonEditorViewModel : ObservableObject
     {
+        private int executeItemPage = 0;
+        private int executeItemIndex = 0;
         #region Bindable Properties
         [Reactive] public int Id { get; init; }
         [Reactive] public string Name { get; set; } = "Button";
@@ -31,6 +33,12 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public int CustomKeyCode { get; set; } = -1;
         [Reactive] public ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
         [Reactive] public ColorState ActiveColour { get; set; }
+        [Reactive] public int ExecuteItemPage { get => executeItemPage; set { executeItemPage = value; OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
+        [Reactive] public int ExecuteItemIndex { get => executeItemIndex; set { executeItemIndex = value; OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
+        [Reactive] public ObservableCollection<ExecuteItemCommand> ExecuteItemCommands { get; private set; }
+        [Reactive] public ExecuteItemCommand ExecuteItemCommand { get; set; } = ExecuteItemCommand.Toggle;
+        [Reactive] public bool ColorFromExecuteItem { get; set; } = true;
+        [Reactive] public bool ExecuteItemEnabled => ExecuteItemPage > 0 && ExecuteItemIndex >= 0;
         #endregion
 
         public ButtonEditorViewModel(int id)
@@ -54,6 +62,9 @@ namespace MagicQCTRLDesktopApp
 
             EncoderFunctions = new(Enum.GetValues<MagicQCTRLEncoderType>());
             EncoderFunction = MagicQCTRLEncoderType.None;
+
+            ExecuteItemCommands = new(Enum.GetValues<ExecuteItemCommand>());
+            ExecuteItemCommand = ExecuteItemCommand.Toggle;
         }
 
         /// <summary>
@@ -94,14 +105,15 @@ namespace MagicQCTRLDesktopApp
             int id = 0;
             foreach(var ed in x)
             {
-                ed.Name = profile.pages[page].keys[id].name;
-                ed.OnPressOSC = profile.pages[page].keys[id].oscMessagePress;
-                ed.OnRotateOSC = profile.pages[page].keys[id].oscMessageRotate;
+                var key = profile.pages[page].keys[id];
+                ed.Name = key.name;
+                ed.OnPressOSC = key.oscMessagePress;
+                ed.OnRotateOSC = key.oscMessageRotate;
                 ed.Colour = profile.pages[page].keys[id].keyColourOff.ToColorState();
                 //ed.Colour.SetColor(profile.pages[page].keys[id].keyColourOff);
-                ed.ActiveColour = profile.pages[page].keys[id].keyColourOn.ToColorState();
+                ed.ActiveColour = key.keyColourOn.ToColorState();
                 //ed.ActiveColour.SetColor(profile.pages[page].keys[id].keyColourOn);
-                var specialFunction = profile.pages[page].keys[id].specialFunction;
+                var specialFunction = key.specialFunction;
                 if(!Enum.IsDefined(specialFunction))
                 {
                     // Quick fix in case an invalid SpecialFunction is loaded.
@@ -114,13 +126,23 @@ namespace MagicQCTRLDesktopApp
                     Category = specialFunction.GetAttributeOfType<ItemCategoryAttribute>().Category 
                 };
 
-                var encoderFunction = profile.pages[page].keys[id].encoderFunction;
+                var encoderFunction = key.encoderFunction;
                 if(!Enum.IsDefined(encoderFunction))
                 {
                     encoderFunction = MagicQCTRLEncoderType.None;
                     profile.pages[page].keys[id].encoderFunction = MagicQCTRLEncoderType.None;
                 }
                 ed.EncoderFunction = encoderFunction;
+
+                ed.ExecuteItemPage = key.executeItemPage;
+                ed.ExecuteItemIndex = key.executeItemIndex;
+                var execAction = key.executeItemAction;
+                if(!Enum.IsDefined(execAction))
+                {
+                    execAction = ExecuteItemCommand.Toggle;
+                    profile.pages[page].keys[id].executeItemAction = execAction;
+                }
+                ed.ExecuteItemCommand = execAction;
 
                 id++;
                 if(id >= BUTTON_COUNT)
@@ -153,6 +175,9 @@ namespace MagicQCTRLDesktopApp
                 profile.pages[page].keys[id].keyColourOn = ed.ActiveColour.ToColor();
                 profile.pages[page].keys[id].specialFunction = ed.SpecialFunction.SpecialFunction;
                 profile.pages[page].keys[id].encoderFunction = ed.EncoderFunction;
+                profile.pages[page].keys[id].executeItemPage = ed.ExecuteItemPage;
+                profile.pages[page].keys[id].executeItemIndex = ed.ExecuteItemIndex;
+                profile.pages[page].keys[id].executeItemAction = ed.ExecuteItemCommand;
 
                 id++;
                 if (id >= BUTTON_COUNT)

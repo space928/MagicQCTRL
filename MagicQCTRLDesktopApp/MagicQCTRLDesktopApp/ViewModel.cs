@@ -13,6 +13,7 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Windows.Data;
+using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace MagicQCTRLDesktopApp
@@ -32,6 +33,7 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public RelayCommand OpenLogCommand { get; private set; }
         [Reactive] public RelayCommand<string> EditControlCommand { get; private set; }
         [Reactive] public RelayCommand<string> PageIncrementCommand { get; private set; }
+        [Reactive] public RelayCommand TestButtonsCommand { get; private set; }
         [Reactive] public static ObservableCollection<string> LogList { get { return logList; }
             private set
             {
@@ -50,6 +52,7 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public ButtonEditorViewModel ButtonEditor => ButtonEditors[SelectedButton];
         [Reactive] public float BaseBrightness { get; set; } = 0.5f;
         [Reactive] public float PressedBrightness { get; set; } = 2.5f;
+        [Reactive] public float TestButtonsEnabled { get; set; } = 1;
 
         [Reactive] public RelayCommand DebugPlusCommand { get; private set; }
         [Reactive] public RelayCommand DebugMinusCommand { get; private set; }
@@ -106,6 +109,7 @@ namespace MagicQCTRLDesktopApp
             PageIncrementCommand = new(PageIncrementCommandExecute);
             DebugPlusCommand = new(() => magicQDriver.TurnEncoder(MagicQCTRLEncoderType.X, 1));
             DebugMinusCommand = new(() => magicQDriver.TurnEncoder(MagicQCTRLEncoderType.X, -1));
+            TestButtonsCommand = new(TestButtonsCommandExecute);
 
             // Bind button properties
             foreach(var editor in ButtonEditors)
@@ -144,6 +148,12 @@ namespace MagicQCTRLDesktopApp
                             magicQCTRLProfile.pages[page].keys[id].encoderFunction = ed.EncoderFunction; break;
                         case nameof(ButtonEditorViewModel.CustomKeyCode):
                             magicQCTRLProfile.pages[page].keys[id].customKeyCode = ed.CustomKeyCode; break;
+                        case nameof(ButtonEditorViewModel.ExecuteItemPage):
+                            magicQCTRLProfile.pages[page].keys[id].executeItemPage = ed.ExecuteItemPage; break;
+                        case nameof(ButtonEditorViewModel.ExecuteItemIndex):
+                            magicQCTRLProfile.pages[page].keys[id].executeItemIndex = ed.ExecuteItemIndex; break;
+                        case nameof(ButtonEditorViewModel.ExecuteItemCommand):
+                            magicQCTRLProfile.pages[page].keys[id].executeItemAction = ed.ExecuteItemCommand; break;
                     }
                 };
             }
@@ -286,6 +296,12 @@ namespace MagicQCTRLDesktopApp
 
             OnPropertyChanged(nameof(SelectedButton));
             OnPropertyChanged(nameof(ButtonEditor));
+
+            if (TestButtonsEnabled > 1)
+            {
+                var key = magicQCTRLProfile.pages[CurrentPage].keys[id];
+                ExecuteKeyAction(key, 0);
+            }
         }
 
         public void PageIncrementCommandExecute(string direction)
@@ -304,6 +320,14 @@ namespace MagicQCTRLDesktopApp
             OnPropertyChanged(nameof(ButtonEditor));
 
             Log($"Switched to page {CurrentPage}");
+        }
+
+        public void TestButtonsCommandExecute()
+        {
+            if (TestButtonsEnabled > 1)
+                TestButtonsEnabled = 1;
+            else
+                TestButtonsEnabled = 3;
         }
         #endregion
 
@@ -347,66 +371,75 @@ namespace MagicQCTRLDesktopApp
                 if (msg.page > MAX_PAGES)
                     return;
 
-                string oscMsg = null;
-                int oscParam = 0;
-                MagicQCTRLKey key;
-                MagicQCTRLSpecialFunction specialFunction = MagicQCTRLSpecialFunction.None;
-                MagicQCTRLEncoderType encoderType = MagicQCTRLEncoderType.None;
-                int customKeyCode = -1;
+                MagicQCTRLKey key = default;
                 switch (msg.msgType)
                 {
                     case MagicQCTRLMessageType.Key:
                         if (msg.value == 1)
-                        {
                             key = magicQCTRLProfile.pages[msg.page].keys[msg.keyCode];
-                            specialFunction = key.specialFunction;
-                            if (key.specialFunction == MagicQCTRLSpecialFunction.None)
-                                oscMsg = key.oscMessagePress;
-                            //oscParam = msg.value;
-                            customKeyCode = key.customKeyCode;
-                        }
                         break;
                     case MagicQCTRLMessageType.Button:
                         if (msg.value == 1)
-                        {
                             key = magicQCTRLProfile.pages[msg.page].keys[msg.keyCode + COLOUR_BUTTON_COUNT];
-                            specialFunction = key.specialFunction;
-                            if (key.specialFunction == MagicQCTRLSpecialFunction.None)
-                                oscMsg = key.oscMessagePress;
-                            //oscParam = msg.value;
-                            customKeyCode = key.customKeyCode;
-                        }
                         break;
                     case MagicQCTRLMessageType.Encoder:
                         key = magicQCTRLProfile.pages[msg.page].keys[msg.keyCode + COLOUR_BUTTON_COUNT];
-                        if (key.specialFunction == MagicQCTRLSpecialFunction.None)
-                            oscMsg = key.oscMessageRotate;
-                        oscParam = msg.delta;
-                        encoderType = key.encoderFunction;
                         break;
                     default:
                         break;
                 }
 
-                if (!string.IsNullOrEmpty(oscMsg) && oscMsg != "/")
+                ExecuteKeyAction(key, (sbyte)-msg.delta);
+            }
+        }
+
+        public static void ExecuteKeyAction(MagicQCTRLKey key, sbyte encoderDelta = 0)
+        {
+            if (encoderDelta == 0)
+            {
+                // Key press action
+                if (!string.IsNullOrEmpty(key.oscMessagePress) && key.oscMessagePress != "/")
                 {
-                    if (oscParam != 0)
-                        oscMsg = $"{oscMsg} {oscParam}";
                     try
                     {
-                        (string address, var args) = OSCMessageParser.ParseOSCMessage(oscMsg);
+                        (string address, var args) = OSCMessageParser.ParseOSCMessage(key.oscMessagePress);
                         oscDriver.SendMessage(new OscMessage(address, args));
-                    } catch(Exception e) 
+                    }
+                    catch (Exception e)
                     {
-                        Log($"Failed to parse OSC message: {oscMsg}\nError: {e.Message}", LogLevel.Warning);
+                        Log($"Failed to parse OSC message: {key.oscMessagePress}\nError: {e.Message}", LogLevel.Warning);
                     }
                 }
 
-                magicQDriver.ExecuteCommand(specialFunction);
-                if(customKeyCode != -1)
-                    magicQDriver.PressMQKey(customKeyCode);
-                if (encoderType != MagicQCTRLEncoderType.None)
-                    magicQDriver.TurnEncoder(encoderType, -msg.delta);
+                magicQDriver.ExecuteCommand(key.specialFunction, key.customKeyCode);
+                if (key.customKeyCode != -1 && key.specialFunction != MagicQCTRLSpecialFunction.SOpenLayout)
+                    magicQDriver.PressMQKey(key.customKeyCode);
+
+                if(key.executeItemPage > 0 && key.executeItemIndex >= 0)
+                {
+                    magicQDriver.SetExecItemState((ushort)key.executeItemPage, (uint)key.executeItemIndex, key.executeItemAction);
+                }
+            }
+            else
+            {
+                // Encoder action
+                if (key.encoderFunction != MagicQCTRLEncoderType.None)
+                {
+                    magicQDriver.TurnEncoder(key.encoderFunction, encoderDelta);
+
+                    if (!string.IsNullOrEmpty(key.oscMessageRotate) && key.oscMessageRotate != "/")
+                    {
+                        try
+                        {
+                            (string address, var args) = OSCMessageParser.ParseOSCMessage($"{key.oscMessageRotate} {encoderDelta}");
+                            oscDriver.SendMessage(new OscMessage(address, args));
+                        }
+                        catch (Exception e)
+                        {
+                            Log($"Failed to parse OSC message: {key.oscMessageRotate} {encoderDelta}\nError: {e.Message}", LogLevel.Warning);
+                        }
+                    }
+                }
             }
         }
 

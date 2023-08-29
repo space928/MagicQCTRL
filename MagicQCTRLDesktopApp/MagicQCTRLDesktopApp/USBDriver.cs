@@ -157,10 +157,10 @@ namespace MagicQCTRLDesktopApp
             {
                 try
                 {
-                    int bytesRead = usbDevice.Read(buffer);
+                    int bytesRead = usbDevice.ReadAtLeast(buffer, Marshal.SizeOf<MagicQCTRLUSBMessage>()+1);
                     var msg = MemoryMarshal.AsRef<MagicQCTRLUSBMessage>(buffer[1..]);
                     RXMessages.Enqueue(msg);
-                    // Log($"Recv usb msg: len={bytesRead} data={msg}", LogLevel.Debug);
+                    //Log($"Recv usb msg: len={bytesRead} data={msg}", LogLevel.Debug);
                     OnMessageReceived?.Invoke();
                 } catch (Exception e)
                 {
