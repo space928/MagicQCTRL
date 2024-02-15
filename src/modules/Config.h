@@ -16,11 +16,11 @@
 #define DEFAULT_BRIGHTNESS 128 // Default neopixel brightness 0-255
 #define KEY_NAME_LENGTH 6
 #define DISPLAY_WIDTH 128
-#define VERSION_STRING "1.4"
+#define VERSION_STRING "1.5"
 #define PCF_L_ADDR 0x20
 #define PCF_R_ADDR 0x21
-#define ENCODER_MSG_RATE 90
-#define ENCODER_ACCELERATION 1.5
+#define ENCODER_MSG_RATE 40
+#define ENCODER_ACCELERATION 1.7
 
 ///////////////////////////////////////
 //// DEBUGGING CONSTS
@@ -28,8 +28,8 @@
 #define DEBUG_SERIAL_LOGGING
 
 // Uncomment whichever level of logging you want
-#define DEBUG_VERBOSE
-// #define DEBUG_INFO
+// #define DEBUG_VERBOSE
+#define DEBUG_INFO
 // #define DEBUG_WARNING
 // #define DEBUG_FATAL
 

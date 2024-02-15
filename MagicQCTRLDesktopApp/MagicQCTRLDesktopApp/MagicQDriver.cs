@@ -7,10 +7,9 @@ using Process.NET.Patterns;
 using static MagicQCTRLDesktopApp.ViewModel;
 using Process.NET.Memory;
 using Process.NET.Native.Types;
-using Reloaded.Memory.Buffers.Internal.Utilities;
-using System.Printing.IndexedProperties;
 using System.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace MagicQCTRLDesktopApp
 {
@@ -132,14 +131,26 @@ namespace MagicQCTRLDesktopApp
                 case MagicQCTRLSpecialFunction.SLampOffAll:
                     LampOnOffAll(false);
                     break;
-                case MagicQCTRLSpecialFunction.SOpenLayout:
-                    OpenLayout(param);
-                    break;
                 case MagicQCTRLSpecialFunction.SResetAll:
                     ResetAllHeads();
                     break;
+                case MagicQCTRLSpecialFunction.SOpenLayout:
+                    OpenLayout(param);
+                    break;
+                case MagicQCTRLSpecialFunction.SOpenLayout + 1:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 2:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 3:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 4:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 5:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 6:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 7:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 8:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 9:
+                case MagicQCTRLSpecialFunction.SOpenLayout + 10:
+                    OpenLayout(function - MagicQCTRLSpecialFunction.SOpenLayout);
+                    break;
                 default:
-                    asmFactory?.Execute<int>(mqKeyFunctionAddr, CallingConventions.Cdecl, (int)function);
+                    PressMQKey((int)function);
                     break;
             }
         }
@@ -180,28 +191,20 @@ namespace MagicQCTRLDesktopApp
         /// <param name="state">the state to set the execute item to</param>
         public void SetExecItemState(ushort execPage, uint execItem, ExecuteItemCommand state)
         {
-            if(state < 0)
-            {
-                switch (state)
-                {
-                    case ExecuteItemCommand.Toggle:
-                        var s = GetExecItemState(execPage, execItem, out byte[] execItemState, out string name);
-                        Log($"Exec item state for {execPage}/{execItem} = {s}; \n\tstate = {string.Join(' ', execItemState.Select(x=>$"{x:x2}"))}; \n\tname = {name}");
-                        break;
-                }
-            }
+            //var s = GetExecItemState(execPage, execItem, out ExecuteItemState execItemState, out string name);
+            //Log($"Exec item state for {execPage}/{execItem} = {s}; \n\tstate = {execItemState}; \n\tname = {name}");
 
             asmFactory?.Execute(mqSetExecItemStateAddr, CallingConventions.Cdecl, execPage, execItem, (int)state);
         }
 
-        public int GetExecItemState(ushort execPage, uint execItem, out byte[] execItemState, out string name)
+        public int GetExecItemState(ushort execPage, uint execItem, out ExecuteItemState execItemState, out string name, int mode = 0x1b)
         {
             using var resBuff = mqProcess.MemoryFactory.Allocate("GetExecItemStateRes", 0x23);
             using var nameBuff = mqProcess.MemoryFactory.Allocate("GetExecItemStateName", 0x10);
 
-            var ret = asmFactory?.Execute<int>(mqGetExecItemStateAddr, CallingConventions.Cdecl, 0x1b, execPage, execItem, resBuff.BaseAddress, nameBuff.BaseAddress) ?? 0;
+            var ret = asmFactory?.Execute<int>(mqGetExecItemStateAddr, CallingConventions.Cdecl, mode, execPage, execItem, resBuff.BaseAddress, nameBuff.BaseAddress) ?? 0;
 
-            execItemState = resBuff.Read(0, resBuff.Size);
+            execItemState = resBuff.Read<ExecuteItemState>(0);
             name = Encoding.UTF8.GetString(nameBuff.Read(0, nameBuff.Size));
 
             return ret;
@@ -313,5 +316,22 @@ namespace MagicQCTRLDesktopApp
 
         // Special cases
         //Toggle = -1
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 0x23)]
+    public struct ExecuteItemState
+    {
+        [FieldOffset(0)] public short faderVal;
+        [FieldOffset(3)] public byte x;
+        [FieldOffset(4)] public byte y;
+        [FieldOffset(7)] public byte z;
+        [FieldOffset(8)] public byte activeState;
+        [FieldOffset(12)] public byte regionPos;
+        [FieldOffset(19)] public byte widthHeight;
+
+        public override string ToString()
+        {
+            return $"ExecuteItemState {{faderVal={faderVal}; x={x}; y={y}; z={z}; activeState={activeState}; regionPos={regionPos}; width={(widthHeight&0xf)+1}; height={(widthHeight>>0x10)+1}}}";
+        }
     }
 }

@@ -851,7 +851,7 @@
     {
       "keys": [
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -872,7 +872,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -893,7 +893,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -914,7 +914,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -935,7 +935,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -956,7 +956,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -977,7 +977,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -998,7 +998,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -1019,7 +1019,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -1040,49 +1040,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "Preload",
-          "oscMessagePress": "/",
-          "oscMessageRotate": "/",
-          "specialFunction": 0,
-          "customKeyCode": 0,
-          "encoderFunction": 65535,
-          "keyColourOn": {
-            "r": 158,
-            "g": 170,
-            "b": 255
-          },
-          "keyColourOff": {
-            "r": 158,
-            "g": 170,
-            "b": 255
-          },
-          "executeItemPage": 2,
-          "executeItemIndex": 108,
-          "executeItemAction": 0
-        },
-        {
-          "name": "Tap",
-          "oscMessagePress": "/",
-          "oscMessageRotate": "/",
-          "specialFunction": 0,
-          "customKeyCode": 0,
-          "encoderFunction": 65535,
-          "keyColourOn": {
-            "r": 178,
-            "g": 187,
-            "b": 30
-          },
-          "keyColourOff": {
-            "r": 178,
-            "g": 187,
-            "b": 30
-          },
-          "executeItemPage": 2,
-          "executeItemIndex": 109,
-          "executeItemAction": 2
-        },
-        {
-          "name": "",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
@@ -1103,12 +1061,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "A",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 7,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1124,12 +1082,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "B",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 6,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1145,12 +1103,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "C",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 5,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1166,12 +1124,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "D",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 4,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1187,12 +1145,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "E",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 3,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1208,12 +1166,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "F",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 2,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1229,12 +1187,12 @@
           "executeItemAction": 0
         },
         {
-          "name": "Y",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 1,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -1250,12 +1208,54 @@
           "executeItemAction": 0
         },
         {
-          "name": "X",
+          "name": "Button",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
-          "encoderFunction": 0,
+          "encoderFunction": 65535,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
+        },
+        {
+          "name": "Button",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,

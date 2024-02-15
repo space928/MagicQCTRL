@@ -82,9 +82,9 @@ namespace MagicQCTRLDesktopApp
     {
         [ItemCategory("")] None = 0,
 
-        [ItemCategory("Window Management")] Layout1 = 236,
-        [ItemCategory("Window Management")] Layout2 = 237,
-        [ItemCategory("Window Management")] Layout3 = 238,
+        [ItemCategory("Window Management")] Layout1 = SOpenLayout + 1,//224 | 0x100000,// 236, // The keycode values work sometimes, but often crash
+        [ItemCategory("Window Management")] Layout2 = SOpenLayout + 2,//225 | 0x100000,// 237,
+        [ItemCategory("Window Management")] Layout3 = SOpenLayout + 3,//226 | 0x100000,// 238,
 
         [ItemCategory("Window Management")] Prog = 208,
         [ItemCategory("Window Management")] Out = 209,
@@ -161,7 +161,16 @@ namespace MagicQCTRLDesktopApp
         [ItemCategory("Special")] SLampOffAll = 1001,
         [ItemCategory("Special")] SResetAll = 1002,
         [ItemCategory("Special")] SOpenLayout = 1003,
-
+        //1004 // Reserved space for SOpenLayout overrides
+        //1005
+        //1006
+        //1007
+        //1008
+        //1009
+        //1010
+        //1011
+        //1012
+        //1013
     }
 
     [Serializable]

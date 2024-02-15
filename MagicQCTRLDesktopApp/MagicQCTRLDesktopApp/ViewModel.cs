@@ -94,7 +94,7 @@ namespace MagicQCTRLDesktopApp
 
             LogList = new();
             Log("Starting MagicQCTRL Desktop App...");
-            Log("  Copyright Thomas Mathieson 2023");
+            Log("  Copyright Thomas Mathieson 2024");
 
             usbDriver = new();
             oscDriver = new();
@@ -238,7 +238,7 @@ namespace MagicQCTRLDesktopApp
                 Filter = "MagicQCTRL Profiles (*.json)|*.json|All files (*.*)|*.*",
                 OverwritePrompt = true,
                 Title = "Save MagicQCTRL Profile"
-            };
+            }; 
             if(saveFileDialog.ShowDialog() ?? false)
             {
                 SaveProfile(saveFileDialog.FileName);
@@ -372,6 +372,7 @@ namespace MagicQCTRLDesktopApp
                     return;
 
                 MagicQCTRLKey key = default;
+                sbyte delta = 0;
                 switch (msg.msgType)
                 {
                     case MagicQCTRLMessageType.Key:
@@ -384,12 +385,13 @@ namespace MagicQCTRLDesktopApp
                         break;
                     case MagicQCTRLMessageType.Encoder:
                         key = magicQCTRLProfile.pages[msg.page].keys[msg.keyCode + COLOUR_BUTTON_COUNT];
+                        delta = (sbyte)-msg.delta;
                         break;
                     default:
                         break;
                 }
 
-                ExecuteKeyAction(key, (sbyte)-msg.delta);
+                ExecuteKeyAction(key, delta);
             }
         }
 

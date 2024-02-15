@@ -28,7 +28,7 @@ void setup() {
     //while (!Serial) { delay(10); }     // wait till serial port is opened
     delay(100);  // RP2040 delay is not a bad idea
 
-    dbg_log_info("MagicQ CTRL Init");
+    dbg_log_info("MagicQ CTRL V" VERSION_STRING " Init");
 
     // start pixels!
     pixels.begin();
@@ -44,9 +44,12 @@ void setup() {
     // Setup the hid device
     initHID();
 
-    for (int i = 0; i < pixels.numPixels(); i++) {
-        pixels.setPixelColor(i, 0x4A3520);
-    }
+    display.setCursor(0, 16);
+    display.println("Initialised!");
+    display.display();
+
+    // Startup animation <3
+    startupAnim();
 
     dbg_log_info("Initialisation completed!");
 }

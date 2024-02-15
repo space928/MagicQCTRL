@@ -22,9 +22,11 @@ extern bool encoder_pressed;
 extern bool switch_states[N_KEYS];
 extern int8_t encoder_dirs[N_ENCODERS];
 extern uint8_t encoder_switches[N_ENCODERS];
+extern bool encoders_active;  // Is one of the encoders being turned?
 
 extern Adafruit_SH1106G display;
 extern int8_t display_page;
+extern uint8_t key_brightness;
 
 extern Adafruit_NeoPixel pixels;
 

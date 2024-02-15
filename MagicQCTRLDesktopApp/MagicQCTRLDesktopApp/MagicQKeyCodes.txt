@@ -105,9 +105,9 @@
 220 = Jump Backward
 221 = Vis
 222 = Plot
-224 = Layout 1 #
-225 = Layout 2 #
-226 = Layout 3 #
+224 = Layout 1 # (Normally ORed with 0x00a00000 -> 0x00200000)
+225 = Layout 2 # (Normally ORed with 0x00a00000 -> 0x00200000)
+226 = Layout 3 # (Normally ORed with 0x00a00000 -> 0x00200000)
 227 = Timeline
 228 = Media
 229 = Execute
