@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>True</UseWPF>
     <ApplicationIcon>Resources\IconFull.ico</ApplicationIcon>
@@ -17,7 +17,8 @@
     <PackageProjectUrl>https://github.com/space928/MagicQCTRL</PackageProjectUrl>
     <RepositoryUrl>https://github.com/space928/MagicQCTRL</RepositoryUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-	<Version>1.5.0</Version>
+	<Version>1.5.2</Version>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -38,13 +39,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="HidSharpCore" Version="1.2.1.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="HidSharpCore" Version="1.3.0" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.1" />
     <PackageReference Include="Process.NET" Version="1.0.8" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.5.39" />
-    <PackageReference Include="Reloaded.Assembler" Version="1.0.15" />
+    <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
+    <PackageReference Include="Reloaded.Assembler" Version="1.0.16" />
     <PackageReference Include="Rug.Osc" Version="1.2.5" />
   </ItemGroup>
 

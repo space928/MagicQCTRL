@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Sources;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using static MagicQCTRLDesktopApp.ViewModel;
@@ -31,6 +32,7 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public ObservableCollection<MagicQCTRLEncoderType> EncoderFunctions { get; private set; }
         [Reactive] public MagicQCTRLEncoderType EncoderFunction { get; set; } = MagicQCTRLEncoderType.None; 
         [Reactive] public int CustomKeyCode { get; set; } = -1;
+        //[Reactive] public bool RespondToButtonLight { get; set; } = true;//MagicQCTRLButtonLight ButtonLightBinding { get; set; };
         [Reactive] public ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
         [Reactive] public ColorState ActiveColour { get; set; }
         [Reactive] public int ExecuteItemPage { get => executeItemPage; set { executeItemPage = value; OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
@@ -38,7 +40,10 @@ namespace MagicQCTRLDesktopApp
         [Reactive] public ObservableCollection<ExecuteItemCommand> ExecuteItemCommands { get; private set; }
         [Reactive] public ExecuteItemCommand ExecuteItemCommand { get; set; } = ExecuteItemCommand.Toggle;
         [Reactive] public bool ColorFromExecuteItem { get; set; } = true;
+
         [Reactive] public bool ExecuteItemEnabled => ExecuteItemPage > 0 && ExecuteItemIndex >= 0;
+        [Reactive] public Visibility IsEncoder => (Id % BUTTON_COUNT) >= KEY_COUNT ? Visibility.Visible : Visibility.Collapsed;
+        [Reactive] public Visibility IsKey => (Id % BUTTON_COUNT) < KEY_COUNT ? Visibility.Visible : Visibility.Collapsed;
         #endregion
 
         public ButtonEditorViewModel(int id)

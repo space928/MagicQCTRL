@@ -33,14 +33,15 @@ namespace MagicQCTRLDesktopApp
             {
                 Dispose();
 
-                oscReceiver = new(rxPort);
+                oscReceiver = new(rxIP.Address, 0);
                 oscReceiver.Connect();
 
                 oscSender = new(txIP.Address, 0, txIP.Port);
                 oscSender.Connect();
 
                 Task.Run(OSCRXThread);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Log($"Failed to connect to OSC port: {e}", LogLevel.Error);
                 return false;
@@ -58,14 +59,15 @@ namespace MagicQCTRLDesktopApp
 
         private void OSCRXThread()
         {
-            while(oscReceiver.State == OscSocketState.Connected)
+            while (oscReceiver.State == OscSocketState.Connected)
             {
                 try
                 {
                     var pkt = oscReceiver.Receive();
                     RXMessages.Enqueue(pkt);
                     // Log($"Recv osc msg: {pkt}", LogLevel.Debug);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     Log($"OSC Network connection lost: {e}", LogLevel.Warning);
                 }
@@ -99,24 +101,25 @@ namespace MagicQCTRLDesktopApp
             int argsStart = message.IndexOf(' ');
             var args = new List<object>();
             string address = message;
-            if(argsStart != -1)
+            if (argsStart != -1)
             {
                 address = message[..argsStart];
-                var strArgs = message[(argsStart+1)..].Split(' ');
-                for(int i = 0; i < strArgs.Length; i++) 
+                var strArgs = message[(argsStart + 1)..].Split(' ');
+                for (int i = 0; i < strArgs.Length; i++)
                 {
                     if (bool.TryParse(strArgs[i], out var bVal))
                         args.Add(bVal);
-                    else if(int.TryParse(strArgs[i], out var iVal))
+                    else if (int.TryParse(strArgs[i], out var iVal))
                         args.Add(iVal);
-                    else if(float.TryParse(strArgs[i], out var fVal))
+                    else if (float.TryParse(strArgs[i], out var fVal))
                         args.Add(fVal);
                     else if (strArgs[i].Length > 0 && strArgs[i][0] == '\"')
                     {
                         if (strArgs[i].Length > 1 && strArgs[i][^1] == '\"')
                         {
                             args.Add(strArgs[i][1..^1]);
-                        } else
+                        }
+                        else
                         {
                             // String must have spaces in it, search for the next arg that ends in a double quote
                             StringBuilder sb = new(strArgs[i][1..]);
@@ -132,10 +135,12 @@ namespace MagicQCTRLDesktopApp
 
                             args.Add(sb.ToString());
                         }
-                    } else if (strArgs[i].Length > 3 && strArgs[i][0] == '`' && strArgs[i][^1] == '`')
+                    }
+                    else if (strArgs[i].Length > 3 && strArgs[i][0] == '`' && strArgs[i][^1] == '`')
                     {
                         args.Add(StringToByteArrayFastest(strArgs[i][1..^1]));
-                    } else
+                    }
+                    else
                     {
                         throw new ArgumentException($"Unparsable OSC argument encountered: {strArgs[i]}");
                     }

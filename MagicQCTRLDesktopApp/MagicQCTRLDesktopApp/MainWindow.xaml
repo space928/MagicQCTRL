@@ -64,7 +64,7 @@
                                 </TextBox.Text>
                             </TextBox>
                         </DockPanel>
-                        <DockPanel ToolTip="OSC messages should be written in the form /foo/bar &quot;stringArg&quot; 123">
+                        <DockPanel Visibility="{Binding IsEncoder}" ToolTip="OSC messages should be written in the form /foo/bar &quot;stringArg&quot; 123">
                             <Label Content="OnRotate OSC:" Margin="10,2"/>
                             <TextBox Padding="4" Margin="2">
                                 <TextBox.Text>
@@ -90,7 +90,7 @@
                             <TextBox Text="{Binding CustomKeyCode, UpdateSourceTrigger=PropertyChanged}" Padding="4" Margin="2"/>
                         </DockPanel>
                         <Separator Height="3" Background="#0000"/>
-                        <DockPanel ToolTip="This field allows a MagicQ Execute item to be controlled.">
+                        <DockPanel ToolTip="This field allows a MagicQ Execute item to be controlled. Set to 0, 0 to disable.">
                             <Label Content="Execute Item (page, index):" Margin="10,2"/>
                             <TextBox Text="{Binding ExecuteItemPage, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" Padding="4" Margin="2"/>
                             <TextBox Text="{Binding ExecuteItemIndex, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" Padding="4" Margin="2"/>
@@ -99,17 +99,17 @@
                             <Label Content="Execute Item Action:" Margin="10,2"/>
                             <ComboBox ItemsSource="{Binding ExecuteItemCommands}" SelectedItem="{Binding ExecuteItemCommand}" Padding="4" Margin="2"/>
                         </DockPanel>
-                        <DockPanel ToolTip="" IsEnabled="{Binding ExecuteItemEnabled}">
+                        <DockPanel ToolTip="" IsEnabled="{Binding ExecuteItemEnabled}" Visibility="{Binding IsKey}">
                             <Label Content="Colour From Execute Item:" Margin="10,2"/>
                             <CheckBox IsChecked="{Binding ColorFromExecuteItem}" Padding="4" Margin="2"/>
                         </DockPanel>
                         <Separator Height="3" Background="#0000"/>
-                        <DockPanel ToolTip="This field allows a MagicQ encoder to be emulated.">
+                        <DockPanel Visibility="{Binding IsEncoder}" ToolTip="This field allows a MagicQ encoder to be emulated.">
                             <Label Content="Encoder Function:" Margin="10,2"/>
                             <ComboBox ItemsSource="{Binding EncoderFunctions}" SelectedItem="{Binding EncoderFunction}" Padding="4" Margin="2"/>
                         </DockPanel>
                         <Separator Height="3" Background="#0000"/>
-                        <DockPanel ToolTip="Sets a custom colour for the key which is replicated on the hardware. Note that encoders don't have LEDs under them.">
+                        <DockPanel Visibility="{Binding IsKey}" ToolTip="Sets a custom colour for the key which is replicated on the hardware. Note that encoders don't have LEDs under them.">
                             <Label Content="Colour:" Margin="10,2"/>
                             <colorpicker:PortableColorPicker Style="{StaticResource DefaultColorPickerStyle}" ColorState="{Binding Colour, Mode=TwoWay}" Padding="4" Margin="2" ShowAlpha="False"/>
                         </DockPanel>

@@ -1,0 +1,34 @@
+0 - Flash 1
+1 - Flash ...
+10 - Pause 1
+11 - ...
+20 - Go 1
+21 - ...
+30 - Pause
+31 - Go
+32 - Grand Flash
+33 - Sub Flash
+35 - <<
+37 - >>
+38 - Go (Bottom)
+39 - Sel 1
+40 - Sel ...
+48 - Sel 10
+49 - Rel
+50 - Shift
+51 - Sel
+52 - Blind
+53 - Clr
+54 - <--
+55 - Undo
+56 - Set
+57 - Rem
+58 - Inc
+59 - Move
+60 - Update
+61 - Copy
+62 - Rec
+63 - Fan
+64 - Highlight
+67 - Single
+68 - Odd/Even
