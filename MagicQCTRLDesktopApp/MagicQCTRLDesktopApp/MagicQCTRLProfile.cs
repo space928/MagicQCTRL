@@ -52,9 +52,9 @@ public struct MagicQCTRLEncoder
 [Serializable]
 public struct MagicQCTRLKey
 {
-    public string name;
-    public string oscMessagePress;
-    public string oscMessageRotate;
+    public string name = string.Empty;
+    public string oscMessagePress = string.Empty;
+    public string oscMessageRotate = string.Empty;
     public MagicQCTRLSpecialFunction specialFunction = MagicQCTRLSpecialFunction.None;
     public int customKeyCode;
     public MagicQCTRLEncoderType encoderFunction = MagicQCTRLEncoderType.None;
@@ -67,14 +67,10 @@ public struct MagicQCTRLKey
     public MagicQCTRLKey() { }
 }
 
-public class ItemCategoryAttribute : Attribute
+[AttributeUsage(AttributeTargets.Field)]
+public class ItemCategoryAttribute(string category) : Attribute
 {
-    public string Category { get; init; }
-
-    public ItemCategoryAttribute(string category)
-    {
-        Category = category;
-    }
+    public string Category { get; init; } = category;
 }
 
 [Serializable]

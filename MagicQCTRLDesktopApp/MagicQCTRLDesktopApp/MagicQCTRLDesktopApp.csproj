@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
     <UseWPF>True</UseWPF>
     <ApplicationIcon>Resources\IconFull.ico</ApplicationIcon>
     <SignAssembly>True</SignAssembly>
@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/space928/MagicQCTRL</PackageProjectUrl>
     <RepositoryUrl>https://github.com/space928/MagicQCTRL</RepositoryUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-	<Version>1.5.2</Version>
+	<Version>1.5.3</Version>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 

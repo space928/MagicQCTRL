@@ -17,107 +17,96 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MagicQCTRLDesktopApp
+namespace MagicQCTRLDesktopApp;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            ((ViewModel)DataContext).CloseLogExecute();
-            ((ViewModel)DataContext).OnExit();
-        }
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        ((ViewModel)DataContext).CloseLogExecute();
+        ((ViewModel)DataContext).OnExit();
+    }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        int id = 0;
+        foreach (Button button in Enumerable.Concat(Keys.Children.Cast<Button>(), Enumerable.Concat(KnobsA.Children.Cast<Button>(), KnobsB.Children.Cast<Button>())))
         {
-            int id = 0;
-            foreach(Button button in Enumerable.Concat(Keys.Children.Cast<Button>(), Enumerable.Concat(KnobsA.Children.Cast<Button>(), KnobsB.Children.Cast<Button>())))
+            button.SetBinding(ContentProperty, new MultiBinding()
             {
-                button.SetBinding(ContentProperty, new MultiBinding()
+                Bindings =
                 {
-                    Bindings =
-                    {
-                        new Binding(nameof(ViewModel.ButtonEditors)),
-                        new Binding(nameof(ViewModel.CurrentPage)),
-                    },
-                    Converter = new ButtonIndexNameConverter(id),
-                    Mode = BindingMode.OneWay
-                });
-                button.SetBinding(BackgroundProperty, new MultiBinding()
+                    new Binding(nameof(ViewModel.ButtonEditors)),
+                    new Binding(nameof(ViewModel.CurrentPage)),
+                },
+                Converter = new ButtonIndexNameConverter(id),
+                Mode = BindingMode.OneWay
+            });
+            button.SetBinding(BackgroundProperty, new MultiBinding()
+            {
+                Bindings =
                 {
-                    Bindings =
-                    {
-                        new Binding(nameof(ViewModel.ButtonEditors)),
-                        new Binding(nameof(ViewModel.CurrentPage)),
-                    },
-                    Converter = new ButtonIndexColorConverter(id),
-                    Mode = BindingMode.OneWay
-                });
-                id++;
-                id %= ViewModel.BUTTON_COUNT;
-            }
+                    new Binding(nameof(ViewModel.ButtonEditors)),
+                    new Binding(nameof(ViewModel.CurrentPage)),
+                },
+                Converter = new ButtonIndexColorConverter(id),
+                Mode = BindingMode.OneWay
+            });
+            id++;
+            id %= ViewModel.BUTTON_COUNT;
         }
     }
+}
 
-    public class ButtonIndexNameConverter : IMultiValueConverter
+public class ButtonIndexNameConverter(int baseIndex) : IMultiValueConverter
+{
+    private readonly int baseIndex = baseIndex;
+
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        private int baseIndex;
+        if (values.Length != 2 || values[0] is not ObservableCollection<ButtonEditorViewModel> || values[1] is not int)
+            throw new NotImplementedException($"The button index converter does not support these object types. Expected: {{ObservableCollection<string>, int}} Found: {{{values.GetValue(0)?.GetType()}, {values.GetValue(1)?.GetType()}}}");
 
-        public ButtonIndexNameConverter(int baseIndex) 
-        {
-            this.baseIndex = baseIndex;
-        }
-
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if(values.Length != 2 || values[0] is not ObservableCollection<ButtonEditorViewModel> || values[1] is not int) 
-                throw new NotImplementedException($"The button index converter does not support these object types. Expected: {{ObservableCollection<string>, int}} Found: {{{values.GetValue(0)?.GetType()}, {values.GetValue(1)?.GetType()}}}");
-
-            return ((ObservableCollection<ButtonEditorViewModel>)values[0])[baseIndex + ((int)values[1]) * ViewModel.BUTTON_COUNT].Name;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return ((ObservableCollection<ButtonEditorViewModel>)values[0])[baseIndex + ((int)values[1]) * ViewModel.BUTTON_COUNT].Name;
     }
 
-    public class ButtonIndexColorConverter : IMultiValueConverter
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        private int baseIndex;
+        throw new NotImplementedException();
+    }
+}
 
-        public ButtonIndexColorConverter(int baseIndex)
-        {
-            this.baseIndex = baseIndex;
-        }
+public class ButtonIndexColorConverter(int baseIndex) : IMultiValueConverter
+{
+    private readonly int baseIndex = baseIndex;
 
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length != 2 || values[0] is not ObservableCollection<ButtonEditorViewModel> || values[1] is not int)
-                throw new NotImplementedException($"The button index converter does not support these object types. Expected: {{ObservableCollection<string>, int}} Found: {{{values.GetValue(0)?.GetType()}, {values.GetValue(1)?.GetType()}}}");
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values.Length != 2 || values[0] is not ObservableCollection<ButtonEditorViewModel> || values[1] is not int)
+            throw new NotImplementedException($"The button index converter does not support these object types. Expected: {{ObservableCollection<string>, int}} Found: {{{values.GetValue(0)?.GetType()}, {values.GetValue(1)?.GetType()}}}");
 
-            var colorState = ((ObservableCollection<ButtonEditorViewModel>)values[0])[baseIndex + ((int)values[1]) * ViewModel.BUTTON_COUNT].Colour;
-            return new SolidColorBrush(colorState.ToColor());
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        var colorState = ((ObservableCollection<ButtonEditorViewModel>)values[0])[baseIndex + ((int)values[1]) * ViewModel.BUTTON_COUNT].Colour;
+        return new SolidColorBrush(colorState.ToColor());
     }
 
-    public static partial class ExtensionMethods
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        public static Color ToColor(this ColorState x)
-        {
-            return Color.FromArgb((byte)(x.A*255), (byte)(x.RGB_R*255), (byte)(x.RGB_G*255), (byte)(x.RGB_B*255));
-        }
+        throw new NotImplementedException();
+    }
+}
+
+public static partial class ExtensionMethods
+{
+    public static Color ToColor(this ColorState x)
+    {
+        return Color.FromArgb((byte)(x.A * 255), (byte)(x.RGB_R * 255), (byte)(x.RGB_G * 255), (byte)(x.RGB_B * 255));
     }
 }

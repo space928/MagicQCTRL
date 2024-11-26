@@ -21,6 +21,10 @@
                 <Border BorderBrush="{DynamicResource Window.Static.Border}" BorderThickness="1">
                     <StackPanel>
                         <Label Content="Connection" Margin="2,5" FontWeight="Bold"/>
+                        <DockPanel ToolTip="The network interface to listen to OSC messages on.">
+                            <Label Content="Network Adaptor" HorizontalAlignment="Left" Margin="10,0" DockPanel.Dock="Left"/>
+                            <ComboBox ItemsSource="{Binding NICs}" SelectedIndex="{Binding SelectedNIC}" Margin="10,2" VerticalContentAlignment="Center"/>
+                        </DockPanel>
                         <DockPanel ToolTip="The port to transmit OSC messages on (should be the same as MagicQ's OSC RX port).">
                             <Label Content="OSC TX Port" HorizontalAlignment="Left" Margin="10,0" DockPanel.Dock="Left"/>
                             <TextBox Text="{Binding OSCTXPort}" Margin="10,2" TextWrapping="Wrap" VerticalContentAlignment="Center"/>

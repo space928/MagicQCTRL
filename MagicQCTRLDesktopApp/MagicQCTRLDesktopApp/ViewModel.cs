@@ -10,13 +10,15 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Net;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace MagicQCTRLDesktopApp;
@@ -27,9 +29,11 @@ internal class ViewModel : ObservableObject
     [Reactive] public string USBConnectionStatus => isUSBConnected ? "Connected" : "Disconnected";
     [Reactive] public string OSCConnectionStatus => isOSCConnected ? "Connected" : "Disconnected";
     [Reactive] public string MQConnectionStatus => isMQConnected ? "Connected" : "Disconnected";
-    [Reactive] public string ConnectButtonText => (isUSBConnected || isOSCConnected || isMQConnected) ? "Reconnect" : "MagicQConnect";
+    [Reactive] public string ConnectButtonText => (isUSBConnected || isOSCConnected || isMQConnected) ? "Reconnect" : "Connect";
     [Reactive] public int OSCRXPort { get; set; } = 9000;
     [Reactive] public int OSCTXPort { get; set; } = 8000;
+    [Reactive] public ObservableCollection<string> NICs => nics;
+    [Reactive] public int SelectedNIC { get; set; }
     [Reactive] public RelayCommand ConnectCommand { get; private set; }
     [Reactive] public RelayCommand OpenProfileCommand { get; private set; }
     [Reactive] public RelayCommand SaveProfileCommand { get; private set; }
@@ -72,44 +76,34 @@ internal class ViewModel : ObservableObject
     public const int MAX_NAME_LENGTH = 6;
     public static readonly string LAST_PROFILE = "last_profile.json";
 
-    private bool isUSBConnected = false;
-    private bool isOSCConnected = false;
-    private bool isMQConnected = false;
-    private MagicQCTRLProfile magicQCTRLProfile = new();
+    private readonly ObservableCollection<string> nics = [];
+    private readonly List<IPAddress> nicAddresses = [];
     private readonly HashSet<(int page, int id)> reactiveButtons = [];
-    private static LogWindow logWindow;
-    private static bool started = false;
-    private static USBDriver usbDriver = null;
-    private static OSCDriver oscDriver = null;
-    private static MagicQDriver magicQDriver = null;
-    private static ObservableCollection<string> logList;
-    private static object logListLock = new();
-    private JsonSerializerOptions jsonSerializerOptions = new()
+    private readonly JsonSerializerOptions jsonSerializerOptions = new()
     {
         IncludeFields = true,
         AllowTrailingCommas = true,
         WriteIndented = true,
     };
+    private bool isUSBConnected = false;
+    private bool isOSCConnected = false;
+    private bool isMQConnected = false;
+    private MagicQCTRLProfile magicQCTRLProfile = new();
+
+    private static LogWindow? logWindow;
+    private static readonly USBDriver usbDriver = new();
+    private static readonly OSCDriver oscDriver = new();
+    private static readonly MagicQDriver magicQDriver = new();
+    private static ObservableCollection<string> logList = [];
+    private static readonly object logListLock = new();
 
     public ViewModel()
     {
-        // Only run initialisation code once.
-        // Otherwise the log window resets everything when it's opened
-        if (started)
-        {
-            return;
-        }
-        started = true;
+        LogList = logList;
 
-        LogList = new();
         Log("Starting MagicQCTRL Desktop App...");
         Log($"  Version: {Assembly.GetExecutingAssembly().GetName().Version}");
         Log("  Copyright Thomas Mathieson 2024");
-
-        usbDriver = new();
-        oscDriver = new();
-        magicQDriver = new();
-        magicQDriver.OnKeyLightChange += MagicQDriver_OnKeyLightChange;
 
         // Bind commands
         ConnectCommand = new(ConnectExecute, CanConnect);
@@ -122,6 +116,28 @@ internal class ViewModel : ObservableObject
         DebugMinusCommand = new(() => magicQDriver.TurnEncoder(MagicQCTRLEncoderType.X, -1));
         TestButtonsCommand = new(TestButtonsCommandExecute);
 
+        // Subscribe to events
+        magicQDriver.OnConnectionStatusChanged += state =>
+        {
+            isMQConnected = state;
+            OnPropertyChanged(nameof(MQConnectionStatus));
+            OnPropertyChanged(nameof(ConnectButtonText));
+        };
+        oscDriver.OnConnectionStatusChanged += state =>
+        {
+            isOSCConnected = state;
+            OnPropertyChanged(nameof(OSCConnectionStatus));
+            OnPropertyChanged(nameof(ConnectButtonText));
+        };
+        usbDriver.OnConnectionStatusChanged += state =>
+        {
+            isUSBConnected = state;
+            OnPropertyChanged(nameof(USBConnectionStatus));
+            OnPropertyChanged(nameof(ConnectButtonText));
+        };
+        usbDriver.OnMessageReceived += OnUSBMessageReceived;
+        magicQDriver.OnKeyLightChange += MagicQDriver_OnKeyLightChange;
+
         // Bind button properties
         foreach (var editor in ButtonEditors)
         {
@@ -133,7 +149,9 @@ internal class ViewModel : ObservableObject
             // Synchronise the editor with the serialisable model
             editor.PropertyChanged += (o, e) =>
             {
-                var ed = (ButtonEditorViewModel)o;
+                if (o is not ButtonEditorViewModel ed)
+                    return;
+
                 int page = ed.Id / BUTTON_COUNT;
                 int id = ed.Id % BUTTON_COUNT;
                 switch (e.PropertyName)
@@ -199,21 +217,22 @@ internal class ViewModel : ObservableObject
             }
         });
 
+        QueryNICs();
+
         // Auto connect
         ConnectExecute();
 
         // Auto load last profile
         OpenProfile(LAST_PROFILE);
-
-        usbDriver.OnMessageReceived += OnUSBMessageReceived;
     }
 
     public void OnExit()
     {
         Log("Shutting down...");
+        SaveProfile(LAST_PROFILE);
         oscDriver.Dispose();
         magicQDriver.Dispose();
-        SaveProfile(LAST_PROFILE);
+        usbDriver.Dispose();
         Log("Goodbye!");
     }
 
@@ -221,25 +240,10 @@ internal class ViewModel : ObservableObject
     public void ConnectExecute()
     {
         Log("Connecting...");
-        if (usbDriver.USBConnect())
-            isUSBConnected = true;
 
-        if (oscDriver.OSCConnect(OSCRXPort, OSCTXPort))
-            isOSCConnected = true;
-
-        if (magicQDriver.MagicQConnect())
-            isMQConnected = true;
-
-        OnPropertyChanged(nameof(OSCConnectionStatus));
-        OnPropertyChanged(nameof(USBConnectionStatus));
-        OnPropertyChanged(nameof(MQConnectionStatus));
-
-        usbDriver.OnClose += () =>
-        {
-            isUSBConnected = false;
-            OnPropertyChanged(nameof(USBConnectionStatus));
-            Log("USB device disconnected!", LogLevel.Warning);
-        };
+        usbDriver.USBConnect();
+        oscDriver.OSCConnect(nicAddresses.Count == 0 ? IPAddress.Any : nicAddresses[SelectedNIC], OSCRXPort, OSCTXPort);
+        magicQDriver.MagicQConnect();
     }
 
     public bool CanConnect()
@@ -281,6 +285,7 @@ internal class ViewModel : ObservableObject
     public void OpenLogExecute()
     {
         logWindow = new();
+        logWindow.DataContext = this;
         //logWindow.Owner = ((Window)e.Source);
         Log("Opening log...");
         logWindow.Closed += (e, x) => { logWindow = null; };
@@ -293,7 +298,7 @@ internal class ViewModel : ObservableObject
         logWindow = null;
     }
 
-    public void EditControlCommandExecute(string controlId)
+    public void EditControlCommandExecute(string? controlId)
     {
         if (!int.TryParse(controlId, out int id))
         {
@@ -322,7 +327,7 @@ internal class ViewModel : ObservableObject
         }
     }
 
-    public void PageIncrementCommandExecute(string direction)
+    public void PageIncrementCommandExecute(string? direction)
     {
         if (string.IsNullOrEmpty(direction))
             return;
@@ -463,6 +468,25 @@ internal class ViewModel : ObservableObject
         }
     }
 
+    private void QueryNICs()
+    {
+        nics.Clear();
+        nicAddresses.Clear();
+        foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
+        {
+            var ipProps = nic.GetIPProperties();
+            var nicAddr = ipProps.UnicastAddresses.Select(x => x.Address);
+            if (nicAddr.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork) is IPAddress naddr
+                && ipProps.GatewayAddresses.Count > 0)
+            {
+                nicAddresses.AddRange(nicAddr);
+                foreach (var addr in nicAddr)
+                    nics.Add($"{nic.Name}: {addr}");
+                //Log($"\t{nic.Name}: {string.Join(", ", nicAddr)}");
+            }
+        }
+    }
+
     private void MagicQDriver_OnKeyLightChange(MagicQCTRLButtonLight button, KeyLightState state)
     {
         // Not very efficient, but in practice arrays should be small, calls infrequent
@@ -576,4 +600,10 @@ internal class ViewModel : ObservableObject
         Warning,
         Error
     }
+}
+
+internal interface INotifyConnectionStatus
+{
+    public event Action<bool> OnConnectionStatusChanged;
+    public bool IsConnected { get; }
 }

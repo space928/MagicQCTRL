@@ -14,21 +14,21 @@ using static MagicQCTRLDesktopApp.ViewModel;
 
 namespace MagicQCTRLDesktopApp;
 
-internal class USBDriver
+internal class USBDriver : IDisposable, INotifyConnectionStatus
 {
     /// <summary>
     /// A queue of messages received from the hardware to be processed.
     /// </summary>
-    public ConcurrentQueue<MagicQCTRLUSBMessage> RXMessages { get; private set; }
-    /// <summary>
-    /// An event which is invoked when the device is forcibly closed.
-    /// </summary>
-    public event Action OnClose;
-    public event Action OnMessageReceived;
+    public ConcurrentQueue<MagicQCTRLUSBMessage> RXMessages { get; private set; } = [];
+    public bool IsConnected => usbDevice?.CanRead ?? false;
+
+    public event Action? OnMessageReceived;
+    public event Action<bool>? OnConnectionStatusChanged;
 
     private readonly string MQCTRL_DEVICE_NAME = "MagicQ CTRL";
-    private DeviceStream usbDevice;
-    private Task usbRXTask;
+    private DeviceStream? usbDevice;
+    private Task? usbRXTask;
+    private volatile bool isDisposing;
 
     /// <summary>
     /// Connect to the MagicQCTRL USB device.
@@ -36,7 +36,8 @@ internal class USBDriver
     /// <returns>true if the device was connected to successfully.</returns>
     public bool USBConnect()
     {
-        RXMessages = new();
+        RXMessages.Clear();
+        OnConnectionStatusChanged?.Invoke(false);
 
         foreach (var device in DeviceList.Local.GetAllDevices())
         {
@@ -49,7 +50,6 @@ internal class USBDriver
                     try
                     {
                         usbDevice = device.Open();
-                        //usbDevice.Closed += UsbDevice_Closed;
                         usbDevice.ReadTimeout = -1;
                         usbRXTask = Task.Run(UsbRXTask);
                     }
@@ -59,6 +59,7 @@ internal class USBDriver
                         return false;
                     }
 
+                    OnConnectionStatusChanged?.Invoke(true);
                     Log("Connected to MagicQ CTRL hardware.");
                     return true;
                 }
@@ -149,14 +150,14 @@ internal class USBDriver
     private void UsbDevice_Closed(object sender, EventArgs e)
     {
         Log("USB device closed!", LogLevel.Warning);
-        OnClose?.Invoke();
+        OnConnectionStatusChanged?.Invoke(false);
     }
 
     private void UsbRXTask()
     {
         Span<byte> buffer = stackalloc byte[64];
 
-        while (usbDevice.CanRead)
+        while (usbDevice?.CanRead ?? false)
         {
             try
             {
@@ -168,11 +169,24 @@ internal class USBDriver
             }
             catch (Exception e)
             {
+                if (isDisposing)
+                    return;
+
                 Log($"USB device closed!\nError: {e}", LogLevel.Warning);
-                OnClose?.Invoke();
+                OnConnectionStatusChanged?.Invoke(false);
                 return;
             }
         }
+    }
+
+    public void Dispose()
+    {
+        isDisposing = true;
+        usbDevice?.Dispose();
+        usbRXTask?.Wait(200);
+        usbRXTask?.Dispose();
+        OnConnectionStatusChanged?.Invoke(false);
+        isDisposing = false;
     }
 }
 

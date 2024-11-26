@@ -15,17 +15,20 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MagicQCTRLDesktopApp;
 
-internal partial class MagicQDriver : IDisposable
+internal partial class MagicQDriver : IDisposable, INotifyConnectionStatus
 {
-    public event Action<MagicQCTRLButtonLight, KeyLightState> OnKeyLightChange;
+    public event Action<MagicQCTRLButtonLight, KeyLightState>? OnKeyLightChange;
+    public event Action<bool>? OnConnectionStatusChanged;
+    public bool IsConnected => initialized;
 
     private readonly string procName = "mqqt";
 
-    private ProcessSharp mqProcess;
-    private AssemblyFactory asmFactory;
+    private ProcessSharp? mqProcess;
+    private AssemblyFactory? asmFactory;
     private bool initialized;
     private nint mqKeyFunctionAddr;
     private nint mqEncoderFunctionAddr;
@@ -39,9 +42,9 @@ internal partial class MagicQDriver : IDisposable
     private nint mqKeyLightStateAddr;
 
     private volatile bool isDisposing;
-    private Thread mqPollingThread;
-    private KeyLightState[] mqKeyLightStates;
-    private KeyLightState[] mqPrevKeyLightStates;
+    private Thread? mqPollingThread;
+    private readonly KeyLightState[] mqKeyLightStates;
+    private readonly KeyLightState[] mqPrevKeyLightStates;
 
     public MagicQDriver() 
     {
@@ -71,6 +74,7 @@ internal partial class MagicQDriver : IDisposable
 
                     Log("Connected to MagicQ instance!");
                     initialized = true;
+                    OnConnectionStatusChanged?.Invoke(initialized);
                 });
             }
             else
@@ -88,6 +92,7 @@ internal partial class MagicQDriver : IDisposable
 
     public void Dispose()
     {
+        OnConnectionStatusChanged?.Invoke(false);
         initialized = false;
         isDisposing = true;
         mqPollingThread?.Join();
@@ -98,7 +103,10 @@ internal partial class MagicQDriver : IDisposable
 
     private void FindHookAddresses()
     {
-        var matcher = new Process.NET.Patterns.PatternScanner(mqProcess.ModuleFactory.MainModule);
+        if (mqProcess == null)
+            return;
+
+        var matcher = new PatternScanner(mqProcess.ModuleFactory.MainModule);
 
         var match = matcher.Find(new DwordPattern(MagicQNativeMethods.PressMQKeySignature));
         if(match.Found)
@@ -166,7 +174,7 @@ internal partial class MagicQDriver : IDisposable
     {
         //using var buttonLightStatesPool = mqProcess.MemoryFactory.Allocate("buttonLightStatesPool", 0xff, MemoryProtectionFlags.ReadWrite);
 
-        while (!isDisposing)
+        while (!isDisposing && mqProcess != null)
         {
             if (ReadProcessMemory(mqProcess.Handle, mqKeyLightStateAddr, Unsafe.As<byte[]>(mqKeyLightStates), mqKeyLightStates.Length, out int _))
             {
@@ -286,7 +294,7 @@ internal partial class MagicQDriver : IDisposable
 
     public int GetExecItemState(ushort execPage, uint execItem, out ExecuteItemState execItemState, out string name, int mode = 0x1b)
     {
-        if (!initialized)
+        if (!initialized || mqProcess == null)
         {
             name = string.Empty;
             execItemState = default;
@@ -360,6 +368,7 @@ public class RemoteFunction : IDisposable
             asmFactory.Execute(functionWrapperAddr.BaseAddress, args);
     }
 
+    [MemberNotNull(nameof(functionWrapperAddr))]
     private void Inject()
     {
         string asm = $"""

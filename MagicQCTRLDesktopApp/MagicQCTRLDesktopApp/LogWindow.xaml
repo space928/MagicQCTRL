@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MagicQCTRLDesktopApp"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         Title="MagicQ CTRL Desktop App - Log Window" Height="450" Width="800" Style="{DynamicResource CustomWindowStyle}">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <local:ViewModel></local:ViewModel>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
-        <ListBox ItemsSource="{Binding LogList}" FontSize="11" FontFamily="Cascadia Mono" x:Name="LogListBox" ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Clear" Padding="10, 2" Margin="4,0" Click="ClearButton_Click"/>
+            <Button Content="Save To Disk" Padding="10, 2" Margin="4,0" Click="SaveToDiskButton_Click"/>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding LogList}" FontSize="11" FontFamily="Cascadia Mono" x:Name="LogListBox" ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged" Grid.Row="2"/>
     </Grid>
 </Window>
