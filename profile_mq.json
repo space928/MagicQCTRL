@@ -6,7 +6,9 @@
           "name": "Include",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 174,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 198,
             "g": 0,
@@ -16,13 +18,18 @@
             "r": 198,
             "g": 0,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Update",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 170,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 198,
             "g": 0,
@@ -32,13 +39,18 @@
             "r": 198,
             "g": 0,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Record",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 175,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 198,
             "g": 0,
@@ -48,13 +60,18 @@
             "r": 198,
             "g": 0,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Highlight",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 215,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 93,
@@ -64,13 +81,18 @@
             "r": 0,
             "g": 93,
             "b": 255
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Single",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 179,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 195,
@@ -80,13 +102,18 @@
             "r": 147,
             "g": 195,
             "b": 221
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "All",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 180,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 196,
@@ -96,29 +123,39 @@
             "r": 147,
             "g": 196,
             "b": 221
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "NxtWin",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 183,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 0,
-            "g": 0,
+            "r": 255,
+            "g": 102,
             "b": 0
           },
           "keyColourOff": {
-            "r": 0,
-            "g": 0,
+            "r": 255,
+            "g": 102,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Fan",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 177,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 196,
@@ -128,13 +165,18 @@
             "r": 147,
             "g": 196,
             "b": 221
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Odd/Even",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 178,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 147,
             "g": 196,
@@ -144,13 +186,18 @@
             "r": 147,
             "g": 196,
             "b": 221
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Clear",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 167,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 206,
             "g": 206,
@@ -160,13 +207,18 @@
             "r": 206,
             "g": 206,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "\u003C",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 287,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -176,13 +228,18 @@
             "r": 0,
             "g": 229,
             "b": 50
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "\u003E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 290,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -192,13 +249,18 @@
             "r": 0,
             "g": 229,
             "b": 50
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "A/Lay1/Pos/Col/Beam",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 7,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -208,13 +270,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "B/Lay2",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 6,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -224,13 +291,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "C/Lay3",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 5,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -240,13 +312,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "D",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 4,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -256,13 +333,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 3,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -272,13 +354,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "F",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 2,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -288,29 +375,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
-        },
-        {
-          "name": "X",
-          "oscMessagePress": "/",
-          "oscMessageRotate": "/",
-          "specialFunction": 0,
-          "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
           },
-          "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          }
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Y",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 1,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -320,7 +396,31 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
+        },
+        {
+          "name": "X",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         }
       ]
     },
@@ -330,7 +430,9 @@
           "name": "Rem",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 171,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 199,
             "g": 0,
@@ -340,13 +442,18 @@
             "r": 199,
             "g": 0,
             "b": 92
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Move",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 173,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 199,
             "g": 0,
@@ -356,13 +463,18 @@
             "r": 199,
             "g": 0,
             "b": 93
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Copy",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 169,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 199,
             "g": 0,
@@ -372,13 +484,18 @@
             "r": 199,
             "g": 0,
             "b": 93
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Set",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 172,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 84,
             "g": 79,
@@ -388,13 +505,18 @@
             "r": 84,
             "g": 79,
             "b": 181
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Blind",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 198,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 33,
             "g": 32,
@@ -404,29 +526,39 @@
             "r": 33,
             "g": 32,
             "b": 83
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "",
+          "name": "Lay 1",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 224,
+          "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 0,
-            "g": 0,
+            "r": 161,
+            "g": 98,
             "b": 0
           },
           "keyColourOff": {
-            "r": 0,
-            "g": 0,
+            "r": 161,
+            "g": 98,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Prog",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 208,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 97,
@@ -436,13 +568,18 @@
             "r": 161,
             "g": 97,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Out",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 209,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 98,
@@ -452,13 +589,18 @@
             "r": 161,
             "g": 98,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Setup",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 199,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 161,
             "g": 98,
@@ -468,13 +610,18 @@
             "r": 161,
             "g": 98,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Clear",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 167,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 206,
             "g": 207,
@@ -484,13 +631,18 @@
             "r": 206,
             "g": 207,
             "b": 0
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "\u003C",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 287,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -500,13 +652,18 @@
             "r": 0,
             "g": 229,
             "b": 50
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "\u003E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 290,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 0,
             "g": 229,
@@ -516,13 +673,18 @@
             "r": 0,
             "g": 229,
             "b": 50
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "A/Lay1/Pos/Col/Beam",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 7,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -532,13 +694,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "B/Lay2",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 6,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -548,13 +715,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "C/Lay3",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 5,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -564,13 +736,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "D",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 4,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -580,13 +757,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 3,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -596,13 +778,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "F",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 2,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -612,29 +799,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
-        },
-        {
-          "name": "X",
-          "oscMessagePress": "/",
-          "oscMessageRotate": "/",
-          "specialFunction": 0,
-          "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
           },
-          "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          }
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
           "name": "Y",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 1,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -644,17 +820,43 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
+        },
+        {
+          "name": "X",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 0,
+          "keyColourOn": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "keyColourOff": {
+            "r": 25,
+            "g": 25,
+            "b": 25
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         }
       ]
     },
     {
       "keys": [
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -664,29 +866,39 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "thomas",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
+            "r": 241,
+            "g": 255,
+            "b": 0
           },
           "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          }
+            "r": 241,
+            "g": 255,
+            "b": 0
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -696,13 +908,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -712,13 +929,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -728,13 +950,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -744,13 +971,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -760,13 +992,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -776,13 +1013,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -792,45 +1034,60 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "Preload",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
+            "r": 158,
+            "g": 170,
+            "b": 255
           },
           "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          }
+            "r": 158,
+            "g": 170,
+            "b": 255
+          },
+          "executeItemPage": 2,
+          "executeItemIndex": 108,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "Tap",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
+            "r": 178,
+            "g": 187,
+            "b": 30
           },
           "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
-          }
+            "r": 178,
+            "g": 187,
+            "b": 30
+          },
+          "executeItemPage": 2,
+          "executeItemIndex": 109,
+          "executeItemAction": 2
         },
         {
-          "name": "Button",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -840,13 +1097,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "A",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 7,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -856,13 +1118,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "B",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 6,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -872,13 +1139,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "C",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 5,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -888,13 +1160,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "D",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 4,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -904,13 +1181,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 3,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -920,13 +1202,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "F",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 2,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -936,13 +1223,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "Y",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 1,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -952,13 +1244,18 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         },
         {
-          "name": "Button",
+          "name": "X",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
+          "customKeyCode": 0,
+          "encoderFunction": 0,
           "keyColourOn": {
             "r": 25,
             "g": 25,
@@ -968,11 +1265,14 @@
             "r": 25,
             "g": 25,
             "b": 25
-          }
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
         }
       ]
     }
   ],
-  "baseBrightness": 0.6238556,
-  "pressedBrightness": 1.6159943
+  "baseBrightness": 0.5288723,
+  "pressedBrightness": 1.5989138
 }

@@ -16,7 +16,8 @@
 #define DEFAULT_BRIGHTNESS 128 // Default neopixel brightness 0-255
 #define KEY_NAME_LENGTH 6
 #define DISPLAY_WIDTH 128
-#define VERSION_STRING "1.5"
+#define DISPLAY_HEIGHT 64
+#define VERSION_STRING "1.6"
 #define PCF_L_ADDR 0x20
 #define PCF_R_ADDR 0x21
 #define ENCODER_MSG_RATE 40

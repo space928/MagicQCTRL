@@ -27,6 +27,7 @@ extern bool encoders_active;  // Is one of the encoders being turned?
 extern Adafruit_SH1106G display;
 extern int8_t display_page;
 extern uint8_t key_brightness;
+extern bool auto_clear_display;
 
 extern Adafruit_NeoPixel pixels;
 
