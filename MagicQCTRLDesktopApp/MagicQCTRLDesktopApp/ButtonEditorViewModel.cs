@@ -30,6 +30,7 @@ public class ButtonEditorViewModel : ObservableObject
     [Reactive] public ListCollectionView SpecialFunctionsView { get; private set; }
     [Reactive] public SpecialFunctionItem SpecialFunction { get; set; } = new() { SpecialFunction = MagicQCTRLSpecialFunction.None, Category = "" };
     [Reactive] public ObservableCollection<MagicQCTRLEncoderType> EncoderFunctions { get; private set; }
+    [Reactive] public ObservableCollection<string> EncoderFunctionNames { get; private set; }
     [Reactive] public MagicQCTRLEncoderType EncoderFunction { get; set; } = MagicQCTRLEncoderType.None;
     [Reactive] public int CustomKeyCode { get; set; } = -1;
     //[Reactive] public bool RespondToButtonLight { get; set; } = true;//MagicQCTRLButtonLight ButtonLightBinding { get; set; };
@@ -59,13 +60,15 @@ public class ButtonEditorViewModel : ObservableObject
             .Select(x => new SpecialFunctionItem()
             {
                 SpecialFunction = x,
-                Category = specialFunctionItemsCategories.GetValueOrDefault(x.ToString(), string.Empty)!
+                Category = specialFunctionItemsCategories.GetValueOrDefault(x.ToString(), string.Empty)!,
+                SpecialFunctionName = FormatEnumString(x.ToString())
             }));
 
         SpecialFunctionsView = new(SpecialFunctions);
         SpecialFunctionsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SpecialFunctionItem.Category)));
 
         EncoderFunctions = new(Enum.GetValues<MagicQCTRLEncoderType>());
+        EncoderFunctionNames = new(EncoderFunctions.Select(x => FormatEnumString(x.ToString())));
         EncoderFunction = MagicQCTRLEncoderType.None;
 
         ExecuteItemCommands = new(Enum.GetValues<ExecuteItemCommand>());
@@ -88,6 +91,7 @@ public struct SpecialFunctionItem
 
     public MagicQCTRLSpecialFunction SpecialFunction { get; set; } = MagicQCTRLSpecialFunction.None;
     public string Category { get; set; } = "";
+    public string SpecialFunctionName { get; set; } = "";
 }
 
 public static partial class ExtensionMethods
@@ -128,7 +132,8 @@ public static partial class ExtensionMethods
             ed.SpecialFunction = new()
             {
                 SpecialFunction = specialFunction,
-                Category = specialFunction.GetAttributeOfType<ItemCategoryAttribute>()?.Category ?? string.Empty
+                Category = specialFunction.GetAttributeOfType<ItemCategoryAttribute>()?.Category ?? string.Empty,
+                SpecialFunctionName = FormatEnumString(specialFunction.ToString())
             };
 
             var encoderFunction = key.encoderFunction;

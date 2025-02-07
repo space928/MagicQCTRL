@@ -637,7 +637,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "\u003C",
+          "name": "\u003C\u003C",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 287,
@@ -658,7 +658,7 @@
           "executeItemAction": 0
         },
         {
-          "name": "\u003E",
+          "name": "\u003E\u003E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 290,
@@ -872,27 +872,6 @@
           "executeItemAction": 0
         },
         {
-          "name": "thomas",
-          "oscMessagePress": "/",
-          "oscMessageRotate": "/",
-          "specialFunction": 0,
-          "customKeyCode": 0,
-          "encoderFunction": 65535,
-          "keyColourOn": {
-            "r": 241,
-            "g": 255,
-            "b": 0
-          },
-          "keyColourOff": {
-            "r": 241,
-            "g": 255,
-            "b": 0
-          },
-          "executeItemPage": 0,
-          "executeItemIndex": 0,
-          "executeItemAction": 0
-        },
-        {
           "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
@@ -1040,63 +1019,84 @@
           "executeItemAction": 0
         },
         {
-          "name": "Preload",
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
           "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 158,
-            "g": 170,
-            "b": 255
+            "r": 25,
+            "g": 25,
+            "b": 25
           },
           "keyColourOff": {
-            "r": 158,
-            "g": 170,
-            "b": 255
+            "r": 25,
+            "g": 25,
+            "b": 25
           },
-          "executeItemPage": 2,
-          "executeItemIndex": 108,
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
           "executeItemAction": 0
         },
         {
-          "name": "Tap",
+          "name": "STOP",
+          "oscMessagePress": "/",
+          "oscMessageRotate": "/",
+          "specialFunction": 287,
+          "customKeyCode": 0,
+          "encoderFunction": 65535,
+          "keyColourOn": {
+            "r": 255,
+            "g": 0,
+            "b": 11
+          },
+          "keyColourOff": {
+            "r": 255,
+            "g": 0,
+            "b": 11
+          },
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
+          "executeItemAction": 0
+        },
+        {
+          "name": "",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
           "specialFunction": 0,
           "customKeyCode": 0,
           "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 178,
-            "g": 187,
-            "b": 30
+            "r": 25,
+            "g": 25,
+            "b": 25
           },
           "keyColourOff": {
-            "r": 178,
-            "g": 187,
-            "b": 30
+            "r": 25,
+            "g": 25,
+            "b": 25
           },
-          "executeItemPage": 2,
-          "executeItemIndex": 109,
+          "executeItemPage": 0,
+          "executeItemIndex": 0,
           "executeItemAction": 2
         },
         {
-          "name": "",
+          "name": "GO",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 0,
+          "specialFunction": 290,
           "customKeyCode": 0,
           "encoderFunction": 65535,
           "keyColourOn": {
-            "r": 25,
-            "g": 25,
-            "b": 25
+            "r": 0,
+            "g": 229,
+            "b": 50
           },
           "keyColourOff": {
-            "r": 25,
-            "g": 25,
-            "b": 25
+            "r": 0,
+            "g": 229,
+            "b": 50
           },
           "executeItemPage": 0,
           "executeItemIndex": 0,

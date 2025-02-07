@@ -18,12 +18,7 @@ public struct MagicQCTRLProfile
 
     public MagicQCTRLProfile()
     {
-        pages = new MagicQCTRLPage[]
-        {
-            new(),
-            new(),
-            new()
-        };
+        pages = Enumerable.Range(0, ViewModel.MAX_PAGES).Select(x => new MagicQCTRLPage()).ToArray();
         baseBrightness = 0.5f;
         pressedBrightness = 3.0f;
     }
@@ -91,18 +86,54 @@ public enum MagicQCTRLSpecialFunction
     [ItemCategory("Window Management")] Vis = 221,
     [ItemCategory("Window Management")] Plot = 222,
     [ItemCategory("Window Management")] Execute = 229,
+    [ItemCategory("Window Management")] Page = 203,
+    [ItemCategory("Window Management")] StackStore = 204,
+    [ItemCategory("Window Management")] CueStore = 205,
+    [ItemCategory("Window Management")] FXStore = 210,
+    [ItemCategory("Window Management")] PlaybackStore = 212,
+    [ItemCategory("Window Management")] CueStack = 213,
+    [ItemCategory("Window Management")] Timeline = 227,
+    [ItemCategory("Window Management")] Media = 228,
 
     [ItemCategory("Window Management")] Group = 192,
     [ItemCategory("Window Management")] Intensity = 193,
     [ItemCategory("Window Management")] Pos = 194,
     [ItemCategory("Window Management")] Col = 195,
     [ItemCategory("Window Management")] Beam = 196,
+    [ItemCategory("Window Management")] Cue = 197,
 
     [ItemCategory("Window Management")] FocusNextWindow = 183,
     [ItemCategory("Window Management")] ActivateWindow = 185,
     [ItemCategory("Window Management")] Close = 186,
+    [ItemCategory("Window Management")] CloseAll = 230,
     [ItemCategory("Window Management")] Maximise = 187,
     [ItemCategory("Window Management")] Restore = 188,
+    [ItemCategory("Window Management")] ScrollLeft = 216,
+    [ItemCategory("Window Management")] ScrollRight = 217,
+    [ItemCategory("Window Management")] NextPage = 291,
+    [ItemCategory("Window Management")] PrevPage = 293,
+
+    [ItemCategory("Soft Keys")] Soft1 = 305,
+    [ItemCategory("Soft Keys")] Soft2 = 306,
+    [ItemCategory("Soft Keys")] Soft3 = 307,
+    [ItemCategory("Soft Keys")] Soft4 = 308,
+    [ItemCategory("Soft Keys")] Soft5 = 309,
+    [ItemCategory("Soft Keys")] Soft6 = 310,
+    [ItemCategory("Soft Keys")] Soft7 = 311,
+    [ItemCategory("Soft Keys")] Soft8 = 312,
+    [ItemCategory("Soft Keys")] Soft9 = 313,
+    [ItemCategory("Soft Keys")] Soft10 = 314,
+    [ItemCategory("Soft Keys")] Soft11 = 315,
+    [ItemCategory("Soft Keys")] Soft12 = 316,
+
+    [ItemCategory("Soft Keys")] SoftA = 317,
+    [ItemCategory("Soft Keys")] SoftB = 318,
+    [ItemCategory("Soft Keys")] SoftC = 319,
+    [ItemCategory("Soft Keys")] SoftD = 320,
+    [ItemCategory("Soft Keys")] SoftE = 321,
+    [ItemCategory("Soft Keys")] SoftF = 322,
+    [ItemCategory("Soft Keys")] SoftX = 323,
+    [ItemCategory("Soft Keys")] SoftY = 324,
 
     [ItemCategory("Selection")] Highlight = 215,
     [ItemCategory("Selection")] Single = 179,
@@ -112,6 +143,8 @@ public enum MagicQCTRLSpecialFunction
     [ItemCategory("Selection")] NextHead = 181,
     [ItemCategory("Selection")] PrevHead = 182,
     [ItemCategory("Selection")] Pair = 207,
+    [ItemCategory("Selection")] Sel = 164,
+    [ItemCategory("Selection")] Release = 214,
 
     [ItemCategory("Programming")] Include = 174,
     [ItemCategory("Programming")] Update = 170,
@@ -124,11 +157,21 @@ public enum MagicQCTRLSpecialFunction
     [ItemCategory("Programming")] Undo = 165,
     [ItemCategory("Programming")] Copy = 169,
     [ItemCategory("Programming")] Blind = 198,
+    [ItemCategory("Programming")] Locate = 176,
+    [ItemCategory("Programming")] Head = 189,
+    [ItemCategory("Programming")] Time = 190,
+    [ItemCategory("Programming")] Goto = 191,
 
     [ItemCategory("Programming")] InvertPan = 206,
+    [ItemCategory("Programming")] Thru = 160,
+    [ItemCategory("Programming")] Full = 161,
+    [ItemCategory("Programming")] At = 162,
 
     [ItemCategory("Playback")] Go = 290,
     [ItemCategory("Playback")] Pause = 287,
+    [ItemCategory("Playback")] JumpForward = 219,
+    [ItemCategory("Playback")] JumpBack = 220,
+    [ItemCategory("Playback")] AddSwap = 218,
     [ItemCategory("Playback")] GoPB1 = 276,
     [ItemCategory("Playback")] GoPB2 = 277,
     [ItemCategory("Playback")] GoPB3 = 278,

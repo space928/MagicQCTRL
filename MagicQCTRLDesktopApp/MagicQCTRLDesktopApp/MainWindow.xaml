@@ -83,7 +83,7 @@
                         <Separator Height="3" Background="#0000"/>
                         <DockPanel ToolTip="This field allows the button to emulate a MagicQ key press.">
                             <Label Content="Special Function:" Margin="10,2"/>
-                            <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunction" SelectedItem="{Binding SpecialFunction}" Margin="2">
+                            <ComboBox ItemsSource="{Binding SpecialFunctionsView}" DisplayMemberPath="SpecialFunctionName" SelectedItem="{Binding SpecialFunction}" Margin="2">
                                 <ComboBox.GroupStyle>
                                     <GroupStyle/>
                                 </ComboBox.GroupStyle>

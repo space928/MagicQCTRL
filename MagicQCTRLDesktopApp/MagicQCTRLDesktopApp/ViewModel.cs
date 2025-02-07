@@ -20,6 +20,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Text;
 
 namespace MagicQCTRLDesktopApp;
 
@@ -342,7 +343,7 @@ internal class ViewModel : ObservableObject
         OnPropertyChanged(nameof(ButtonEditors));
         OnPropertyChanged(nameof(ButtonEditor));
 
-        Log($"Switched to page {CurrentPage}");
+        Log($"Switched to page {CurrentPage}", LogLevel.Debug);
     }
 
     public void TestButtonsCommandExecute()
@@ -510,8 +511,8 @@ internal class ViewModel : ObservableObject
         {
             MagicQCTRLSpecialFunction.Go => MagicQCTRLButtonLight.Go,
             MagicQCTRLSpecialFunction.Pause => MagicQCTRLButtonLight.Pause,
-            //MagicQCTRLButtonLight.JumpPrevCue,
-            //MagicQCTRLButtonLight.JumpNextCue,
+            MagicQCTRLSpecialFunction.JumpBack => MagicQCTRLButtonLight.JumpPrevCue,
+            MagicQCTRLSpecialFunction.JumpForward => MagicQCTRLButtonLight.JumpNextCue,
 
             //MagicQCTRLButtonLight.SelPB1,
             //MagicQCTRLButtonLight.SelPB2,
@@ -580,6 +581,60 @@ internal class ViewModel : ObservableObject
 
             _ => MagicQCTRLButtonLight.None
         };
+    }
+
+    internal static string FormatEnumString(string name)
+    {
+        // Rules:
+        // Captialise first letter: setup -> Setup
+        // Remove prepended underscores: _1 -> 1
+        // Split numbers: Start12Now -> Start 12 Now
+        // Split Pascal case, keeping acronyms grouped: LaunchNow -> Launch Now
+        //                                              LaunchFXNow -> Launch FX Now
+        //                                              MoveABit -> Move A Bit
+        StringBuilder sb = new(name.Length + 5);
+        bool lastWasDigit = true;
+        bool lastWasUpper = true;
+        for (int i = 0; i < name.Length; i++)
+        {
+            char c = name[i];
+            if (sb.Length == 0)
+            {
+                if (c == '_')
+                    continue;
+                sb.Append(char.ToUpper(c));
+                lastWasDigit = char.IsDigit(c);
+            }
+            else
+            {
+                if (char.IsDigit(c))
+                {
+                    if (!lastWasDigit)
+                        sb.Append(' ');
+                    lastWasDigit = true;
+                }
+                else
+                {
+                    lastWasDigit = false;
+                }
+
+                if (char.IsUpper(c))
+                {
+                    bool nextIsLower = i + 1 < name.Length && char.IsLower(name[i + 1]);
+                    if (!lastWasUpper || nextIsLower)
+                        sb.Append(' '); ;
+                    lastWasUpper = true;
+                }
+                else
+                {
+                    lastWasUpper = false;
+                }
+
+                sb.Append(c);
+            }
+        }
+
+        return sb.ToString();
     }
 
     public static void Log(object message, LogLevel level = LogLevel.Info, [CallerMemberName] string caller = "")
