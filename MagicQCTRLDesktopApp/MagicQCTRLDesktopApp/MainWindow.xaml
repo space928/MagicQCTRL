@@ -222,7 +222,7 @@
             </StackPanel>
             <!--<Button Content="DBG -" Width="70" Height="30" Command="{Binding DebugMinusCommand}" HorizontalAlignment="Left" Margin="10,0,0,10" Grid.Row="2" VerticalAlignment="Bottom"/>-->
             <!--<Button Content="DBG +" Width="70" Height="30" Command="{Binding DebugPlusCommand}" HorizontalAlignment="Left" Margin="10,0,0,40" Grid.Row="2" VerticalAlignment="Bottom"/>-->
-            <TextBlock Text="Copyright Thomas Mathieson 2024" HorizontalAlignment="Right" Margin="5" Grid.Row="2" VerticalAlignment="Bottom" Foreground="{DynamicResource AREghZyBrush.Primary.2.Background.Disabled}" FontSize="10"/>
+            <TextBlock Text="Copyright Thomas Mathieson 2026" HorizontalAlignment="Right" Margin="5" Grid.Row="2" VerticalAlignment="Bottom" Foreground="{DynamicResource AREghZyBrush.Primary.2.Background.Disabled}" FontSize="10"/>
         </Grid>
     </Grid>
 </Window>

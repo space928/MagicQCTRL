@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using Rug.Osc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +11,6 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Net;
-using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -24,25 +21,24 @@ using System.Text;
 
 namespace MagicQCTRLDesktopApp;
 
-internal class ViewModel : ObservableObject
+internal partial class ViewModel : ObservableObject
 {
     #region Bindable propeties
-    [Reactive] public string USBConnectionStatus => isUSBConnected ? "Connected" : "Disconnected";
-    [Reactive] public string OSCConnectionStatus => isOSCConnected ? "Connected" : "Disconnected";
-    [Reactive] public string MQConnectionStatus => isMQConnected ? "Connected" : "Disconnected";
-    [Reactive] public string ConnectButtonText => (isUSBConnected || isOSCConnected || isMQConnected) ? "Reconnect" : "Connect";
-    [Reactive] public int OSCRXPort { get; set; } = 9000;
-    [Reactive] public int OSCTXPort { get; set; } = 8000;
-    [Reactive] public ObservableCollection<string> NICs => nics;
-    [Reactive] public int SelectedNIC { get; set; }
-    [Reactive] public RelayCommand ConnectCommand { get; private set; }
-    [Reactive] public RelayCommand OpenProfileCommand { get; private set; }
-    [Reactive] public RelayCommand SaveProfileCommand { get; private set; }
-    [Reactive] public RelayCommand OpenLogCommand { get; private set; }
-    [Reactive] public RelayCommand<string> EditControlCommand { get; private set; }
-    [Reactive] public RelayCommand<string> PageIncrementCommand { get; private set; }
-    [Reactive] public RelayCommand TestButtonsCommand { get; private set; }
-    [Reactive]
+    public string USBConnectionStatus => isUSBConnected ? "Connected" : "Disconnected";
+    public string OSCConnectionStatus => isOSCConnected ? "Connected" : "Disconnected";
+    public string MQConnectionStatus => isMQConnected ? "Connected" : "Disconnected";
+    public string ConnectButtonText => (isUSBConnected || isOSCConnected || isMQConnected) ? "Reconnect" : "Connect";
+    [ObservableProperty] public partial int OSCRXPort { get; set; } = 9000;
+    [ObservableProperty] public partial int OSCTXPort { get; set; } = 8000;
+    public ObservableCollection<string> NICs => nics;
+    [ObservableProperty] public partial int SelectedNIC { get; set; }
+    [ObservableProperty] public partial RelayCommand ConnectCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand OpenProfileCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand SaveProfileCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand OpenLogCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand<string> EditControlCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand<string> PageIncrementCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand TestButtonsCommand { get; private set; }
     public static ObservableCollection<string> LogList
     {
         get { return logList; }
@@ -52,21 +48,21 @@ internal class ViewModel : ObservableObject
             BindingOperations.EnableCollectionSynchronization(logList, logListLock);
         }
     }
-    [Reactive] public int CurrentPage { get; set; }
-    [Reactive] public string CurrentPageString => $"Page {CurrentPage + 1}";
-    [Reactive] public ObservableCollection<string> ButtonNames { get; private set; } = new(Enumerable.Repeat("Button", BUTTON_COUNT));
-    [Reactive] public ObservableCollection<Brush> ButtonColours { get; private set; } = new(Enumerable.Repeat(new SolidColorBrush(Colors.Black), BUTTON_COUNT));
-    [Reactive] public ObservableCollection<float> ButtonSelection { get; private set; } = new(Enumerable.Repeat(1f, BUTTON_COUNT));
-    [Reactive] public int SelectedButton => SelectedButtonLocal + CurrentPage * BUTTON_COUNT;
-    [Reactive] public int SelectedButtonLocal { get; private set; }
-    [Reactive] public ObservableCollection<ButtonEditorViewModel> ButtonEditors { get; private set; } = new(Enumerable.Range(0, BUTTON_COUNT * MAX_PAGES).Select(x => new ButtonEditorViewModel(x)));
-    [Reactive] public ButtonEditorViewModel ButtonEditor => ButtonEditors[SelectedButton];
-    [Reactive] public float BaseBrightness { get; set; } = 0.5f;
-    [Reactive] public float PressedBrightness { get; set; } = 2.5f;
-    [Reactive] public float TestButtonsEnabled { get; set; } = 1;
+    [ObservableProperty] public partial int CurrentPage { get; set; }
+    public string CurrentPageString => $"Page {CurrentPage + 1}";
+    public ObservableCollection<string> ButtonNames { get; private set; } = new(Enumerable.Repeat("Button", BUTTON_COUNT));
+    public ObservableCollection<Brush> ButtonColours { get; private set; } = new(Enumerable.Repeat(new SolidColorBrush(Colors.Black), BUTTON_COUNT));
+    public ObservableCollection<float> ButtonSelection { get; private set; } = new(Enumerable.Repeat(1f, BUTTON_COUNT));
+    public int SelectedButton => SelectedButtonLocal + CurrentPage * BUTTON_COUNT;
+    [ObservableProperty] public partial int SelectedButtonLocal { get; private set; }
+    public ObservableCollection<ButtonEditorViewModel> ButtonEditors { get; private set; } = new(Enumerable.Range(0, BUTTON_COUNT * MAX_PAGES).Select(x => new ButtonEditorViewModel(x)));
+    public ButtonEditorViewModel ButtonEditor => ButtonEditors[SelectedButton];
+    [ObservableProperty] public partial float BaseBrightness { get; set; } = 0.5f;
+    [ObservableProperty] public partial float PressedBrightness { get; set; } = 2.5f;
+    [ObservableProperty] public partial float TestButtonsEnabled { get; set; } = 1;
 
-    [Reactive] public RelayCommand DebugPlusCommand { get; private set; }
-    [Reactive] public RelayCommand DebugMinusCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand DebugPlusCommand { get; private set; }
+    [ObservableProperty] public partial RelayCommand DebugMinusCommand { get; private set; }
     #endregion
 
     public const int MAX_PAGES = 3;
@@ -79,7 +75,7 @@ internal class ViewModel : ObservableObject
 
     private readonly ObservableCollection<string> nics = [];
     private readonly List<IPAddress> nicAddresses = [];
-    private readonly HashSet<(int page, int id)> reactiveButtons = [];
+    private readonly HashSet<(int page, int id)> ObservablePropertyButtons = [];
     private readonly JsonSerializerOptions jsonSerializerOptions = new()
     {
         IncludeFields = true,
@@ -104,7 +100,7 @@ internal class ViewModel : ObservableObject
 
         Log("Starting MagicQCTRL Desktop App...");
         Log($"  Version: {Assembly.GetExecutingAssembly().GetName().Version}");
-        Log("  Copyright Thomas Mathieson 2024");
+        Log("  Copyright Thomas Mathieson 2026");
 
         // Bind commands
         ConnectCommand = new(ConnectExecute, CanConnect);
@@ -175,9 +171,9 @@ internal class ViewModel : ObservableObject
                     case nameof(ButtonEditorViewModel.SpecialFunction):
                         magicQCTRLProfile.pages[page].keys[id].specialFunction = ed.SpecialFunction.SpecialFunction;
                         if (GetButtonLight(ed.SpecialFunction.SpecialFunction) != MagicQCTRLButtonLight.None)
-                            reactiveButtons.Add((page, id));
+                            ObservablePropertyButtons.Add((page, id));
                         else
-                            reactiveButtons.Remove((page, id));
+                            ObservablePropertyButtons.Remove((page, id));
                         break;
                     case nameof(ButtonEditorViewModel.EncoderFunction):
                         magicQCTRLProfile.pages[page].keys[id].encoderFunction = ed.EncoderFunction; break;
@@ -193,29 +189,21 @@ internal class ViewModel : ObservableObject
             };
         }
 
-        this.WhenAnyValue(x => x.BaseBrightness).Throttle(TimeSpan.FromMilliseconds(2)).Subscribe(x =>
+        this.PropertyChanged += ViewModel_PropertyChanged;
+        var baseBrightnessChange = new Throttle(this, nameof(BaseBrightness), TimeSpan.FromMilliseconds(2), () =>
         {
-            magicQCTRLProfile.baseBrightness = x;
+            magicQCTRLProfile.baseBrightness = BaseBrightness;
             for (int page = 0; page < MAX_PAGES; page++)
                 for (int id = 0; id < COLOUR_BUTTON_COUNT; id++)
                     usbDriver.SendColourConfig(page, id, magicQCTRLProfile);
         });
-        this.WhenAnyValue(x => x.PressedBrightness).Throttle(TimeSpan.FromMilliseconds(30)).Subscribe(x =>
+
+        var pressedBrightnessChange = new Throttle(this, nameof(PressedBrightness), TimeSpan.FromMilliseconds(30), () =>
         {
-            magicQCTRLProfile.pressedBrightness = x;
+            magicQCTRLProfile.pressedBrightness = PressedBrightness;
             for (int page = 0; page < MAX_PAGES; page++)
                 for (int id = 0; id < COLOUR_BUTTON_COUNT; id++)
                     usbDriver.SendColourConfig(page, id, magicQCTRLProfile);
-        });
-        this.WhenAnyValue(x => x.USBConnectionStatus).Where(x => isUSBConnected).Subscribe(x =>
-        {
-            for (int page = 0; page < MAX_PAGES; page++)
-            {
-                for (int id = 0; id < COLOUR_BUTTON_COUNT; id++)
-                    usbDriver.SendColourConfig(page, id, magicQCTRLProfile);
-                for (int id = 0; id < BUTTON_COUNT; id++)
-                    usbDriver.SendKeyNameMessage(page, id, magicQCTRLProfile);
-            }
         });
 
         QueryNICs();
@@ -225,6 +213,25 @@ internal class ViewModel : ObservableObject
 
         // Auto load last profile
         OpenProfile(LAST_PROFILE);
+    }
+
+    private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(USBConnectionStatus):
+                if (isUSBConnected)
+                {
+                    for (int page = 0; page < MAX_PAGES; page++)
+                    {
+                        for (int id = 0; id < COLOUR_BUTTON_COUNT; id++)
+                            usbDriver.SendColourConfig(page, id, magicQCTRLProfile);
+                        for (int id = 0; id < BUTTON_COUNT; id++)
+                            usbDriver.SendKeyNameMessage(page, id, magicQCTRLProfile);
+                    }
+                }
+                break;
+        }
     }
 
     public void OnExit()
@@ -491,7 +498,7 @@ internal class ViewModel : ObservableObject
     private void MagicQDriver_OnKeyLightChange(MagicQCTRLButtonLight button, KeyLightState state)
     {
         // Not very efficient, but in practice arrays should be small, calls infrequent
-        foreach (var (page, id) in reactiveButtons)
+        foreach (var (page, id) in ObservablePropertyButtons)
         {
             var b = magicQCTRLProfile.pages[page].keys[id];
             if (GetButtonLight(b.specialFunction) == button)

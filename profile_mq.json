@@ -640,7 +640,7 @@
           "name": "\u003C\u003C",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 287,
+          "specialFunction": 220,
           "customKeyCode": 0,
           "encoderFunction": 65535,
           "keyColourOn": {
@@ -661,7 +661,7 @@
           "name": "\u003E\u003E",
           "oscMessagePress": "/",
           "oscMessageRotate": "/",
-          "specialFunction": 290,
+          "specialFunction": 219,
           "customKeyCode": 0,
           "encoderFunction": 65535,
           "keyColourOn": {

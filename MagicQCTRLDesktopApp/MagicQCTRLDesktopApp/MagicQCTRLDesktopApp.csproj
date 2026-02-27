@@ -1,70 +1,73 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>True</UseWPF>
-    <ApplicationIcon>Resources\IconFull.ico</ApplicationIcon>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
-    <Title>MagicQCTRL Desktop Application</Title>
-    <PackageIcon>IconMid.png</PackageIcon>
-    <Authors>Thomas Mathieson</Authors>
-    <Company>Thomas Mathieson</Company>
-    <Product>MagicQCTRL Desktop Application</Product>
-    <Platforms>AnyCPU;x86</Platforms>
-    <PackageProjectUrl>https://github.com/space928/MagicQCTRL</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/space928/MagicQCTRL</RepositoryUrl>
-    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-	<Version>1.5.4</Version>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>True</UseWPF>
+		<ApplicationIcon>Resources\IconFull.ico</ApplicationIcon>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
+		<Title>MagicQCTRL Desktop Application</Title>
+		<PackageIcon>IconMid.png</PackageIcon>
+		<Authors>Thomas Mathieson</Authors>
+		<Company>Thomas Mathieson</Company>
+		<Product>MagicQCTRL Desktop Application</Product>
+		<Platforms>AnyCPU;x86;x64</Platforms>
+		<PackageProjectUrl>https://github.com/space928/MagicQCTRL</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/space928/MagicQCTRL</RepositoryUrl>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<Version>1.6.1</Version>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>False</Optimize>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<Optimize>False</Optimize>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <Optimize>False</Optimize>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<Optimize>False</Optimize>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\IconFull.ico" />
-    <None Remove="Resources\Splash.png" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<Optimize>False</Optimize>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Resource Include="Resources\IconFull.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\IconFull.ico" />
+		<None Remove="Resources\Splash.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-    <PackageReference Include="HidSharpCore" Version="1.3.0" />
-    <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.1" />
-    <PackageReference Include="Process.NET" Version="1.0.8" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
-    <PackageReference Include="Reloaded.Assembler" Version="1.0.16" />
-    <PackageReference Include="Rug.Osc" Version="1.2.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\IconFull.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <SplashScreen Include="Resources\Splash.png">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </SplashScreen>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="HidSharpCore" Version="1.3.0" />
+		<PackageReference Include="PixiEditor.ColorPicker" Version="3.4.2.2" />
+		<PackageReference Include="Process.NET" Version="1.0.8" />
+		<PackageReference Include="Reloaded.Assembler" Version="1.0.16" />
+		<PackageReference Include="Rug.Osc" Version="1.2.5" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resources\IconFull.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Update="Resources\IconMid.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<SplashScreen Include="Resources\Splash.png">
+			<PackagePath>\</PackagePath>
+			<Pack>True</Pack>
+		</SplashScreen>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Resources\IconFull.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="Resources\IconMid.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

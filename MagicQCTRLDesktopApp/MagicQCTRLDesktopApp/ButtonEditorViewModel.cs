@@ -1,7 +1,5 @@
 ﻿using ColorPicker.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,34 +15,34 @@ using static MagicQCTRLDesktopApp.ViewModel;
 
 namespace MagicQCTRLDesktopApp;
 
-public class ButtonEditorViewModel : ObservableObject
+public partial class ButtonEditorViewModel : ObservableObject
 {
     private int executeItemPage = 0;
     private int executeItemIndex = 0;
     #region Bindable Properties
-    [Reactive] public int Id { get; init; }
-    [Reactive] public string Name { get; set; } = "Button";
-    [Reactive] public string OnPressOSC { get; set; } = "/";
-    [Reactive] public string OnRotateOSC { get; set; } = "/";
-    [Reactive] public ObservableCollection<SpecialFunctionItem> SpecialFunctions { get; private set; }
-    [Reactive] public ListCollectionView SpecialFunctionsView { get; private set; }
-    [Reactive] public SpecialFunctionItem SpecialFunction { get; set; } = new() { SpecialFunction = MagicQCTRLSpecialFunction.None, Category = "" };
-    [Reactive] public ObservableCollection<MagicQCTRLEncoderType> EncoderFunctions { get; private set; }
-    [Reactive] public ObservableCollection<string> EncoderFunctionNames { get; private set; }
-    [Reactive] public MagicQCTRLEncoderType EncoderFunction { get; set; } = MagicQCTRLEncoderType.None;
-    [Reactive] public int CustomKeyCode { get; set; } = -1;
-    //[Reactive] public bool RespondToButtonLight { get; set; } = true;//MagicQCTRLButtonLight ButtonLightBinding { get; set; };
-    [Reactive] public ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
-    [Reactive] public ColorState ActiveColour { get; set; }
-    [Reactive] public int ExecuteItemPage { get => executeItemPage; set { executeItemPage = value; OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
-    [Reactive] public int ExecuteItemIndex { get => executeItemIndex; set { executeItemIndex = value; OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
-    [Reactive] public ObservableCollection<ExecuteItemCommand> ExecuteItemCommands { get; private set; }
-    [Reactive] public ExecuteItemCommand ExecuteItemCommand { get; set; } = ExecuteItemCommand.Toggle;
-    [Reactive] public bool ColorFromExecuteItem { get; set; } = true;
+    [ObservableProperty] public partial int Id { get; private set; }
+    [ObservableProperty] public partial string Name { get; set; } = "Button";
+    [ObservableProperty] public partial string OnPressOSC { get; set; } = "/";
+    [ObservableProperty] public partial string OnRotateOSC { get; set; } = "/";
+    [ObservableProperty] public partial ObservableCollection<SpecialFunctionItem> SpecialFunctions { get; private set; }
+    [ObservableProperty] public partial ListCollectionView SpecialFunctionsView { get; private set; }
+    [ObservableProperty] public partial SpecialFunctionItem SpecialFunction { get; set; } = new() { SpecialFunction = MagicQCTRLSpecialFunction.None, Category = "" };
+    [ObservableProperty] public partial ObservableCollection<MagicQCTRLEncoderType> EncoderFunctions { get; private set; }
+    [ObservableProperty] public partial ObservableCollection<string> EncoderFunctionNames { get; private set; }
+    [ObservableProperty] public partial MagicQCTRLEncoderType EncoderFunction { get; set; } = MagicQCTRLEncoderType.None;
+    [ObservableProperty] public partial int CustomKeyCode { get; set; } = -1;
+    //[ObservableProperty] public bool RespondToButtonLight { get; set; } = true;//MagicQCTRLButtonLight ButtonLightBinding { get; set; };
+    [ObservableProperty] public partial ColorState Colour { get; set; } = new ColorState(0.1, 0.1, 0.1, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.05);
+    [ObservableProperty] public partial ColorState ActiveColour { get; set; }
+    public int ExecuteItemPage { get => executeItemPage; set { SetProperty(ref executeItemPage, value); OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
+    public int ExecuteItemIndex { get => executeItemIndex; set { SetProperty(ref executeItemIndex, value); OnPropertyChanged(nameof(ExecuteItemEnabled)); } }
+    [ObservableProperty] public partial ObservableCollection<ExecuteItemCommand> ExecuteItemCommands { get; private set; }
+    [ObservableProperty] public partial ExecuteItemCommand ExecuteItemCommand { get; set; } = ExecuteItemCommand.Toggle;
+    [ObservableProperty] public partial bool ColorFromExecuteItem { get; set; } = true;
 
-    [Reactive] public bool ExecuteItemEnabled => ExecuteItemPage > 0 && ExecuteItemIndex >= 0;
-    [Reactive] public Visibility IsEncoder => (Id % BUTTON_COUNT) >= KEY_COUNT ? Visibility.Visible : Visibility.Collapsed;
-    [Reactive] public Visibility IsKey => (Id % BUTTON_COUNT) < KEY_COUNT ? Visibility.Visible : Visibility.Collapsed;
+    public bool ExecuteItemEnabled => ExecuteItemPage > 0 && ExecuteItemIndex >= 0;
+    public Visibility IsEncoder => (Id % BUTTON_COUNT) >= KEY_COUNT ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility IsKey => (Id % BUTTON_COUNT) < KEY_COUNT ? Visibility.Visible : Visibility.Collapsed;
     #endregion
 
     public ButtonEditorViewModel(int id)
